@@ -30,9 +30,14 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.AddArduinoComponentAction;
+import org.pneditor.editor.actions.arduino.GenerateCodeAction;
+import org.pneditor.editor.actions.arduino.SetupBoardAction;
+import org.pneditor.editor.actions.arduino.UploadCodeAction;
 import org.pneditor.editor.canvas.*;
 import org.pneditor.editor.filechooser.EpsFileType;
 import org.pneditor.editor.filechooser.FileType;
@@ -332,6 +337,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //ARDUINO
     protected Action addArduinoComponent;
 
+    protected Action setBoard;
+    protected Action generateCode;
+    protected Action uploadCode;
+
     @Override
     public void openSubnet() {
         openSubnet.actionPerformed(null);
@@ -527,6 +536,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         //ARDUINO
         addArduinoComponent = new AddArduinoComponentAction(this);
+        setBoard = new SetupBoardAction(this);
+        generateCode = new GenerateCodeAction(this);
+        uploadCode = new UploadCodeAction(this);
 
 
         //UI
@@ -620,6 +632,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         JMenu timeMenu = new JMenu("Time");
         timeMenu.setMnemonic('T');
         menuBar.add(timeMenu);
+
+        JMenu arduinoMeno = new JMenu("Arduino");
+        arduinoMeno.setMnemonic('W');
+        menuBar.add(arduinoMeno);
         
         
         JMenu helpMenu = new JMenu("Help");
@@ -671,6 +687,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         
         timeMenu.add(setTimingPolicy);
         timeMenu.add(runTimer);
+
+        // ARDUINO RELATED
+        arduinoMeno.add(setBoard);
+        arduinoMeno.add(generateCode);
+        arduinoMeno.add(uploadCode);
+
+
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
@@ -806,5 +829,12 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     @Override
     public GlobalTimer getGlobalTimer() {
         return globalTimer;
+    }
+
+    BoardSettings boardSettings = new BoardSettings();
+
+    @Override
+    public BoardSettings getBoardSettings() {
+        return boardSettings;
     }
 }
