@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
+
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
@@ -64,7 +66,7 @@ public class PngFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
+    public void save(Document document, File file, GlobalTimer timer, ArduinoManager arduinoManager) throws FileTypeException {
         try {
             Marking initialMarking = document.petriNet.getInitialMarking();
             BufferedImage bufferedImage = document.petriNet.getCurrentSubnet().getPreview(initialMarking);

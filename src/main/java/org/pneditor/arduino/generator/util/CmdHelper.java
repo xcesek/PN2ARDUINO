@@ -1,15 +1,12 @@
-package org.pneditor.arduino.codeGeneration.util;
+package org.pneditor.arduino.generator.util;
 
 import org.apache.commons.exec.*;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.pneditor.arduino.codeGeneration.upload.response.UploadResponse;
+import org.pneditor.arduino.generator.upload.response.UploadResponse;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Pavol Cesek on 2/26/2016.
@@ -24,7 +21,7 @@ public class CmdHelper {
     public static UploadResponse runCommand(String board, String port,  List<File> sourceFiles) {
         UploadResponse uploadResponse = new UploadResponse();
 
-        String line = "arduino --upload --board " + board + " --port " + port + " " + getSourceFilesString(sourceFiles);
+        String line = "arduino --board " + board + " --port " + port + " --upload " + getSourceFilesString(sourceFiles);
         CommandLine cmdLine = CommandLine.parse(line);
 
         DefaultExecutor executor = new DefaultExecutor();
@@ -58,7 +55,10 @@ public class CmdHelper {
 
     private static String getSourceFilesString(List<File> sourceFiles){
         final StringBuffer buffer = new StringBuffer();
-        sourceFiles.forEach(f -> buffer.append(f.getAbsolutePath()).append(" "));
+        sourceFiles.forEach(f -> buffer
+                .append("\"")
+                .append(f.getAbsolutePath())
+                .append("\" "));
         return buffer.toString();
     }
 }

@@ -8,10 +8,20 @@ package org.pneditor.arduino.settings;
  * Under GNU GPL v3 licence
  */
 public class BoardSettings {
+    private static final String DEFAULT_PORT_WIN = "COM8";
+    private static final String DEFAULT_PORT_LIN = "/dev/ttyACM0";
     private String port;
     private BoardType boardType;
 
     public BoardSettings() {
+        String osName = System.getProperty("os.name");
+        if (osName.toLowerCase().contains("win")) {
+            port = DEFAULT_PORT_WIN;
+        } else {
+            port = DEFAULT_PORT_LIN;
+        }
+
+        boardType = BoardType.ARDUINO_UNO;
     }
 
     public BoardSettings(String port, BoardType boardType) {

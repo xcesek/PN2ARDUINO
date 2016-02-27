@@ -16,28 +16,24 @@
  */
 package org.pneditor.editor.actions.arduino;
 
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.io.FileUtils;
-import org.pneditor.arduino.codeGeneration.upload.board.ArduinoUnoUploader;
-import org.pneditor.arduino.codeGeneration.upload.response.UploadResponse;
+import org.pneditor.arduino.generator.upload.CodeUploaderFactory;
+import org.pneditor.arduino.generator.upload.board.ArduinoUnoUploader;
+import org.pneditor.arduino.generator.upload.board.CodeUploader;
+import org.pneditor.arduino.generator.upload.response.UploadResponse;
+import org.pneditor.arduino.manager.ArduinoManager;
+import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.Root;
-import org.pneditor.petrinet.Node;
 import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.concurrent.Callable;
 
 
 public class UploadCodeAction extends AbstractAction {
 
     private Root root;
+    private ArduinoManager arduinoManager;
 
     public UploadCodeAction(Root root) {
         this.root = root;
@@ -46,22 +42,36 @@ public class UploadCodeAction extends AbstractAction {
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/setupBoard.gif"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
+
+        arduinoManager = root.getArduinoManager();
     }
 
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
+            BoardSettings boardSettings = arduinoManager.getBoardSettings();
 
-            String[] extensions = { "ino" };
-            List<File> sourceFiles = (List<File>) FileUtils.listFiles(new File("Palo"), extensions, false);
+            CodeUploader codeUploader = CodeUploaderFactory.getCodeUploader(boardSettings.getBoardType());
+            codeUploader.setPort(boardSettings.getPort());
+            codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
 
-            ArduinoUnoUploader uploader = new ArduinoUnoUploader();
-            uploader.setPort("COM8");
-            uploader.setSketchFiles(sourceFiles);
+            Callable<UploadResponse> uploadTask = () -> {
+                UploadResponse response = codeUploader.upload();
 
-            UploadResponse response = uploader.upload();
+                System.out.println(response.getCmdOutput());
 
-            JOptionPane.showMessageDialog(root.getParentFrame(),
-                    response.getCmdOutput());
+                // todo integrate with laco
+               JOptionPane.showMessageDialog(root.getParentFrame(),
+                        response.getCmdOutput());
+
+
+                return response;
+            };
+
+            try {
+                uploadTask.call();  // todo asynch
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
 
 
         }

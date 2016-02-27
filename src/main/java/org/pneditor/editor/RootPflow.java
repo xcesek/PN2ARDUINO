@@ -31,6 +31,7 @@ import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
@@ -831,10 +832,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return globalTimer;
     }
 
-    BoardSettings boardSettings = new BoardSettings();
+    protected ArduinoManager arduinoManager = new ArduinoManager();
 
     @Override
-    public BoardSettings getBoardSettings() {
-        return boardSettings;
+    public ArduinoManager getArduinoManager() {
+        return arduinoManager;
     }
 }

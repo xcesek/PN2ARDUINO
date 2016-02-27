@@ -99,6 +99,9 @@ public class DocumentImporter {
             }
             document.roles.add(role);
         }
+
+        document.getArduinoManager().updateSettings(xmlDocument.arduinoManager.port, xmlDocument.arduinoManager.board);
+
         return document;
     }
 

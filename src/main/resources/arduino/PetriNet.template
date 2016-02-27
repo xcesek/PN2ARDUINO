@@ -1,0 +1,19 @@
+/*************************************************************
+${comments}
+**************************************************************/
+
+// imports
+${imports}
+
+// global variables
+${globalVariables}
+
+// initial setup
+void setup() {
+${setupBody}
+}
+
+// main infinite loop
+void loop() {
+${loopBody}
+}

@@ -29,6 +29,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
+
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Arc;
 import org.pneditor.petrinet.Document;
@@ -50,11 +52,10 @@ public class DocumentExporter {
 
     private XmlDocument xmlDocument = new XmlDocument();
 
-    public DocumentExporter(Document document, Marking marking, GlobalTimer timer) {
+    public DocumentExporter(Document document, Marking marking, GlobalTimer timer, ArduinoManager arduinoManager) {
 
         marking.getLock().readLock().lock();
         try {
-//			xmlDocument.rootSubnet = getXmlSubnet(document.petriNet.getRootSubnet(), marking);
             xmlDocument.rootSubnet = getXmlSubnet(marking.getPetriNet().getRootSubnet(), marking, timer);
         } finally {
             marking.getLock().readLock().unlock();
@@ -63,6 +64,9 @@ public class DocumentExporter {
         for (Role role : document.roles) {
             xmlDocument.roles.add(getXmlRole(role));
         }
+
+        xmlDocument.arduinoManager = new XmlArduinoManager(arduinoManager);
+
         //Rectangle bounds = document.petriNet.getRootSubnet().getBoundsRecursively();
         Rectangle bounds = marking.getPetriNet().getRootSubnet().getBoundsRecursively();
         xmlDocument.left = bounds.x;
@@ -103,7 +107,7 @@ public class DocumentExporter {
     }
 
     private XmlSubnet getXmlSubnet(Subnet subnet, Marking initialMarking, GlobalTimer timer) {
-        
+
         XmlSubnet xmlSubnet = new XmlSubnet();
         xmlSubnet.id = subnet.getId();
         xmlSubnet.label = subnet.getLabel();
@@ -147,7 +151,7 @@ public class DocumentExporter {
         xmlTransition.label = transition.getLabel();
         xmlTransition.earliestFiringTime = transition.getEarliestFiringTime();
         xmlTransition.latestFiringTime = transition.getLatestFiringTime();
-        
+
         return xmlTransition;
     }
 

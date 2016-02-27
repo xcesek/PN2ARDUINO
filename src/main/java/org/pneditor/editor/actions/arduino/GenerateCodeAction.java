@@ -17,6 +17,9 @@
 package org.pneditor.editor.actions.arduino;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.text.StrSubstitutor;
+import org.pneditor.arduino.generator.generate.CodeGenerator;
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.Root;
 import org.pneditor.util.GraphicsTools;
 
@@ -24,14 +27,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GenerateCodeAction extends AbstractAction {
 
     private Root root;
+    private ArduinoManager arduinoManager;
 
     public GenerateCodeAction(Root root) {
         this.root = root;
@@ -40,24 +42,19 @@ public class GenerateCodeAction extends AbstractAction {
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/compile.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
+
+        arduinoManager = root.getArduinoManager();
     }
 
     // FAKE: NOT GENERATING YET, INSTEAD JUST COPY SOME EXISTING SKETCH TO DESIRED DESTINATION
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
-            new File("generated").mkdir();
 
-            File source = new File("c:\\Users\\palo\\Documents\\Arduino\\Palo\\Palo.ino");
-            File dest = new File("c:\\Users\\palo\\school\\diplomovka\\PN2ARDUINO\\Palo\\Palo.ino");
+            CodeGenerator codeGenerator = new CodeGenerator(arduinoManager);
+            String generatedCode = codeGenerator.generate();
 
-
-            try {
-                FileUtils.copyFile(source, dest);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            JOptionPane.showMessageDialog(root.getParentFrame(),
+                    generatedCode);
         }
-
-
     }
 }

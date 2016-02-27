@@ -16,6 +16,7 @@
  */
 package org.pneditor.editor.actions.arduino;
 
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.arduino.settings.BoardType;
 import org.pneditor.editor.Root;
@@ -31,6 +32,10 @@ import java.awt.event.KeyEvent;
 public class SetupBoardAction extends AbstractAction {
 
     private Root root;
+    private ArduinoManager arduinoManager;
+
+    private JComboBox boardTypeCombo;
+    final JTextField portField;
 
     public SetupBoardAction(Root root) {
         this.root = root;
@@ -39,11 +44,17 @@ public class SetupBoardAction extends AbstractAction {
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/uploadCode.gif"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
+
+        arduinoManager = root.getArduinoManager();
+
+        boardTypeCombo = new JComboBox(BoardType.getBoardNames());
+        portField = new JTextField(2);
+
     }
 
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
-            BoardSettings boardSettings = root.getBoardSettings();
+            BoardSettings boardSettings = arduinoManager.getBoardSettings();
 
             final JOptionPane optionPane = new JOptionPane();
             optionPane.setMessage(popupContent(boardSettings));
@@ -51,8 +62,16 @@ public class SetupBoardAction extends AbstractAction {
             JDialog dialog = optionPane.createDialog(root.getParentFrame(), "Arduino Board Setup");
             dialog.setVisible(true);
 
-        }
+            // set values
+            boardSettings.setPort(portField.getText());
 
+            String boardTypeStr = (String) boardTypeCombo.getSelectedItem();
+            if (boardTypeStr != null && !boardTypeStr.isEmpty()) {
+                boardSettings.setBoardType(BoardType.byName((String) boardTypeCombo.getSelectedItem()));
+            } else {
+                boardSettings.setBoardType(BoardType.valueOf(BoardType.ARDUINO_UNO.getBoardName()));
+            }
+        }
     }
 
     private Object[] popupContent(final BoardSettings boardSettings) {
@@ -60,35 +79,14 @@ public class SetupBoardAction extends AbstractAction {
 
         objects[0] = (new JLabel("Arduino Board Type:"));
 
-        final JComboBox boardTypeCombo = new JComboBox(BoardType.getBoardNames());
-        boardTypeCombo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String boardTypeStr = (String) boardTypeCombo.getSelectedItem();
-                if (boardTypeStr != null && !boardTypeStr.isEmpty()) {
-                    boardSettings.setBoardType(BoardType.byName((String) boardTypeCombo.getSelectedItem()));
-                } else {
-                    boardSettings.setBoardType(BoardType.valueOf(BoardType.ARDUINO_UNO.getBoardName()));
-                }
-            }
-        });
         boardTypeCombo.setSelectedItem(boardSettings.getBoardType() == null ? BoardType.ARDUINO_UNO.getBoardName() : boardSettings.getBoardType().getBoardName());
         objects[1] = boardTypeCombo;
 
         objects[2] = (new JLabel("Port:"));
 
-        final JTextField portField = new JTextField(2);
-        portField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                boardSettings.setPort(portField.getText());
-            }
-        });
         portField.setText(boardSettings.getPort());
         objects[3] = portField;
 
-
         return objects;
     }
-
 }

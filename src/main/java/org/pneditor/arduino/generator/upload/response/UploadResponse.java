@@ -1,4 +1,4 @@
-package org.pneditor.arduino.codeGeneration.upload.response;
+package org.pneditor.arduino.generator.upload.response;
 
 /**
  * Created by Pavol Cesek on 2/26/2016.

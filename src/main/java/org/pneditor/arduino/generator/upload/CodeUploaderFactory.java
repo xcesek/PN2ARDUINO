@@ -1,8 +1,9 @@
-package org.pneditor.arduino.codeGeneration.upload;
+package org.pneditor.arduino.generator.upload;
 
-import org.pneditor.arduino.codeGeneration.upload.board.ArduinoUnoUploader;
+import org.pneditor.arduino.generator.upload.board.ArduinoNanoUploader;
+import org.pneditor.arduino.generator.upload.board.ArduinoUnoUploader;
 import org.pneditor.arduino.settings.BoardType;
-import org.pneditor.arduino.codeGeneration.upload.board.ICodeUploader;
+import org.pneditor.arduino.generator.upload.board.CodeUploader;
 
 /**
  * Created by Pavol Cesek on 2/26/2016.
@@ -13,15 +14,15 @@ import org.pneditor.arduino.codeGeneration.upload.board.ICodeUploader;
  */
 public class CodeUploaderFactory {
 
-    public ICodeUploader getCodeUploader(BoardType boardType) {
-        ICodeUploader selectedBoard;
+    public static CodeUploader getCodeUploader(BoardType boardType) {
+        CodeUploader selectedBoard;
 
         switch (boardType) {
             case ARDUINO_UNO:
                 selectedBoard = new ArduinoUnoUploader();
             break;
             case ARDUINO_NANO:
-                selectedBoard = new ArduinoUnoUploader();
+                selectedBoard = new ArduinoNanoUploader();
                 break;
             default:
                 selectedBoard = new ArduinoUnoUploader();

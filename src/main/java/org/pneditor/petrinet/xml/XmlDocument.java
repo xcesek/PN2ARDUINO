@@ -36,6 +36,9 @@ public class XmlDocument {
     @XmlElement(name = "role")
     public List<XmlRole> roles = new LinkedList<XmlRole>();
 
+    @XmlElement(name = "arduinoManager")
+    public XmlArduinoManager arduinoManager;
+
     @XmlElement(name = "left")
     public int left;
 

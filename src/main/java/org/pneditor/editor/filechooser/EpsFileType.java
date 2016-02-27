@@ -20,6 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.Icon;
+
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.DrawingOptions;
@@ -60,7 +62,7 @@ public class EpsFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
+    public void save(Document document, File file, GlobalTimer timer, ArduinoManager arduinoManager) throws FileTypeException {
         try {
             EPSGraphics2D epsGraphics2d = new EPSGraphics2D();
             DrawingOptions drawingOptions = new DrawingOptions();

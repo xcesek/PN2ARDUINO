@@ -23,6 +23,8 @@ import java.io.InputStream;
 import javax.swing.Icon;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
+
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
@@ -54,12 +56,12 @@ public class PflowFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
+    public void save(Document document, File file, GlobalTimer timer, ArduinoManager arduinoManager) throws FileTypeException {
         try {
             final InputStream xslt = getClass().getResourceAsStream("/xslt/save.xslt");
             PetriNet petriNet = document.petriNet;
             Marking initialMarking = petriNet.getInitialMarking();
-            new DocumentExporter(document, initialMarking, timer).writeToFileWithXslt(file, xslt);
+            new DocumentExporter(document, initialMarking, timer, arduinoManager).writeToFileWithXslt(file, xslt);
         } catch (FileNotFoundException ex) {
             throw new FileTypeException(ex.getMessage());
         } catch (JAXBException ex) {

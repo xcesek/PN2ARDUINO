@@ -14,47 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.pneditor.petrinet;
+package org.pneditor.petrinet.xml;
 
 import org.pneditor.arduino.manager.ArduinoManager;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
- * Represents Petri net document with subnets and role definitions.
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
-public class Document {
+public class XmlArduinoManager {
+    @XmlElement(name = "board")
+    public String board;
 
-    @Deprecated
-    public Roles roles = new Roles();
+    @XmlElement(name = "port")
+    public String port;
 
-    @Deprecated
-    public PetriNet petriNet = new PetriNet();
-
-    @Deprecated
-    public ArduinoManager arduinoManager = new ArduinoManager();
-
-    public PetriNet getPetriNet() {
-        return petriNet;
+    public XmlArduinoManager() {
     }
 
-    public Roles getRoles() {
-        return roles;
+    public XmlArduinoManager(ArduinoManager arduinoManager) {
+        port = arduinoManager.getBoardSettings().getPort();
+        board = arduinoManager.getBoardSettings().getBoardType().getBoardName();
     }
 
-    public void setPetriNet(PetriNet petriNet) {
-        this.petriNet = petriNet;
-    }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
-    }
-
-    public ArduinoManager getArduinoManager() {
-        return arduinoManager;
-    }
-
-    public void setArduinoManager(ArduinoManager arduinoManager) {
-        this.arduinoManager = arduinoManager;
-    }
 }

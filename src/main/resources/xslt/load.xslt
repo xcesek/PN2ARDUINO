@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <document>
             <xsl:call-template name="subnet"/>
             <xsl:call-template name="roles"/>
+            <xsl:call-template name="arduinoManager"/>
         </document>
     </xsl:template>
 
@@ -112,6 +113,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </role>
             </xsl:for-each>
         </roles>
+    </xsl:template>
+
+    <xsl:template name="arduinoManager">
+        <arduinoManager>
+            <board><xsl:value-of select="arduinoManager/board"/></board>
+            <port><xsl:value-of select="arduinoManager/port"/></port>
+        </arduinoManager>
     </xsl:template>
 
 </xsl:transform>

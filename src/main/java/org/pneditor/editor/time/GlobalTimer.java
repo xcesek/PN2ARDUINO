@@ -18,6 +18,7 @@ public class GlobalTimer {
     int seconds;
 
     public GlobalTimer() {
+        type = TimingPolicyType.Deterministic;
         running = false;
         seconds = 0;
     }

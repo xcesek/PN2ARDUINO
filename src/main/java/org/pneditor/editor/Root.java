@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.Set;
 import javax.swing.JPopupMenu;
 
+import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
@@ -120,5 +121,5 @@ public interface Root {
     
     public GlobalTimer getGlobalTimer();
 
-    public BoardSettings getBoardSettings();
+    public ArduinoManager getArduinoManager();
 }
