@@ -19,6 +19,8 @@ package org.pneditor.petrinet;
 import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.pneditor.arduino.ArduinoComponent;
 import org.pneditor.editor.PNEditor;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
@@ -33,6 +35,8 @@ public abstract class Node extends Element implements Comparable<Node> {
 
     private String id;
     private String label;
+    //ARDUINO
+    private ArduinoComponent arduinoComponent;
 
     public Node() {
         setSize(32, 32);
@@ -184,5 +188,14 @@ public abstract class Node extends Element implements Comparable<Node> {
         node.label = this.label;
         PNEditor.getRoot().getDocument().getPetriNet().getNodeSimpleIdGenerator().setUniqueId(node);
         return node;
+    }
+
+    //ARDUINO
+    public ArduinoComponent getArduinoComponent(){
+        return arduinoComponent;
+    }
+
+    public void setArduinoComponent(ArduinoComponent arduinoComponent){
+        this.arduinoComponent = arduinoComponent;
     }
 }

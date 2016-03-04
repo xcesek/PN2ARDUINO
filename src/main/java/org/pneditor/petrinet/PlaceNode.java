@@ -19,6 +19,8 @@ package org.pneditor.petrinet;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.pneditor.arduino.ArduinoComponentType;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;
@@ -80,7 +82,14 @@ public abstract class PlaceNode extends Node implements Cloneable {
     }
 
     protected void drawPlaceBackground(Graphics g) {
-        g.setColor(Color.white);
+        if(getArduinoComponent() != null)
+        {
+            if(getArduinoComponent().getType() == ArduinoComponentType.Output) {
+                g.setColor(Color.cyan);
+            }
+        } else {
+            g.setColor(Color.white);
+        }
         g.fillOval(getStart().x, getStart().y, getWidth(), getHeight());
     }
 

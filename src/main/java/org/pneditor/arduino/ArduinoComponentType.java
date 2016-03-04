@@ -1,17 +1,23 @@
 package org.pneditor.arduino;
 
 /**
- * Created by Betusa on 25.02.2016.
+ * Created by Alzbeta Cesekova
+ * xbuckuliakova@stuba.sk
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  */
 public enum ArduinoComponentType {
-    DigitalOutput{
+    OUTPUT{
         public String toString() {
-            return "Digital Output";
+            return "Output";
         }
     },
-    DigitalInput{
+    INPUT{
         public String toString() {
-            return "Digital Input";
+            return "Input";
         }
     }
 
