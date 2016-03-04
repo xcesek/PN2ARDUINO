@@ -16,6 +16,10 @@
  */
 package org.pneditor.editor.actions.arduino;
 
+import org.pneditor.arduino.generator.generate.CodeGenerator;
+import org.pneditor.arduino.generator.upload.CodeUploaderFactory;
+import org.pneditor.arduino.generator.upload.board.CodeUploader;
+import org.pneditor.arduino.generator.upload.response.UploadResponse;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.arduino.settings.BoardType;
@@ -24,35 +28,28 @@ import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.util.concurrent.Callable;
 
 
-public class SetupBoardAction extends AbstractAction {
+public class UploadWithPopupAction extends AbstractAction {
 
     private Root root;
     private ArduinoManager arduinoManager;
 
     private JComboBox boardTypeCombo;
-    private JTextField portField;
+    final JTextField portField;
 
-    private boolean alreadySetup;
-
-    public SetupBoardAction(Root root) {
+    public UploadWithPopupAction(Root root) {
         this.root = root;
-        String name = "Setup board";
+        String name = "Generate and upload code";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/uploadCode.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/compile.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
-        alreadySetup = false;
 
         arduinoManager = root.getArduinoManager();
-
         boardTypeCombo = new JComboBox(BoardType.getBoardNames());
         portField = new JTextField(2);
-
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -61,8 +58,9 @@ public class SetupBoardAction extends AbstractAction {
 
             final JOptionPane optionPane = new JOptionPane();
             optionPane.setMessage(popupContent(boardSettings));
+            optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
 
-            JDialog dialog = optionPane.createDialog(root.getParentFrame(), "Arduino Board Setup");
+            JDialog dialog = optionPane.createDialog(root.getParentFrame(), "Setup, compile and upload to Arduino");
             dialog.setVisible(true);
 
             // set values
@@ -77,10 +75,23 @@ public class SetupBoardAction extends AbstractAction {
 
             int value = (optionPane.getValue() != null) ? ((Integer) optionPane.getValue()).intValue() : JOptionPane.CANCEL_OPTION;
             if (value == JOptionPane.YES_OPTION) {
-                alreadySetup = true;
-                root.refreshAll();
-            }
 
+                // generate
+                CodeGenerator codeGenerator = new CodeGenerator(arduinoManager);
+                String generatedCode = codeGenerator.generate();
+                System.out.println(generatedCode);
+
+                // upload
+                CodeUploader codeUploader = CodeUploaderFactory.getCodeUploader(boardSettings.getBoardType());
+                codeUploader.setPort(boardSettings.getPort());
+                codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
+
+                new Thread(() -> {
+                    UploadResponse response = codeUploader.upload();
+                    System.out.println(response.getCmdOutput());
+                }).start();
+
+            }
         }
     }
 
@@ -98,9 +109,5 @@ public class SetupBoardAction extends AbstractAction {
         objects[3] = portField;
 
         return objects;
-    }
-
-    public boolean isAlreadySetup() {
-        return alreadySetup;
     }
 }

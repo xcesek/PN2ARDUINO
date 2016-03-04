@@ -41,7 +41,7 @@ public class UploadCodeAction extends AbstractAction {
         putValue(NAME, name);
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/setupBoard.gif"));
         putValue(SHORT_DESCRIPTION, name);
-        setEnabled(true);
+        setEnabled(false);
 
         arduinoManager = root.getArduinoManager();
     }
@@ -54,25 +54,13 @@ public class UploadCodeAction extends AbstractAction {
             codeUploader.setPort(boardSettings.getPort());
             codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
 
-            Callable<UploadResponse> uploadTask = () -> {
+            new Thread(() -> {
                 UploadResponse response = codeUploader.upload();
 
                 System.out.println(response.getCmdOutput());
-
-                // todo integrate with laco
-               JOptionPane.showMessageDialog(root.getParentFrame(),
+                JOptionPane.showMessageDialog(root.getParentFrame(),
                         response.getCmdOutput());
-
-
-                return response;
-            };
-
-            try {
-                uploadTask.call();  // todo asynch
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-
+            }).start();
 
         }
     }

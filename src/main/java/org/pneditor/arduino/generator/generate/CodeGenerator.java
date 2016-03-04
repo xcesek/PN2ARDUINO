@@ -107,9 +107,9 @@ public class CodeGenerator {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
                 "      digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)\\n +\n" +
-                "      delay(3000);              // wait for a second\\n +\n" +
+                "      delay(500);              // wait for a second\\n +\n" +
                 "      digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW\\n +\n" +
-                "      delay(1000);              // wait for a second");
+                "      delay(500);              // wait for a second");
 
         return buffer.toString();
     }

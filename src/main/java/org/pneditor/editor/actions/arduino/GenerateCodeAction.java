@@ -35,26 +35,35 @@ public class GenerateCodeAction extends AbstractAction {
     private Root root;
     private ArduinoManager arduinoManager;
 
+    private boolean alreadyGenerated;
+
     public GenerateCodeAction(Root root) {
         this.root = root;
         String name = "Generate code";
         putValue(NAME, name);
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/compile.png"));
         putValue(SHORT_DESCRIPTION, name);
-        setEnabled(true);
+        setEnabled(false);
+        alreadyGenerated = false;
 
         arduinoManager = root.getArduinoManager();
     }
 
-    // FAKE: NOT GENERATING YET, INSTEAD JUST COPY SOME EXISTING SKETCH TO DESIRED DESTINATION
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
 
             CodeGenerator codeGenerator = new CodeGenerator(arduinoManager);
             String generatedCode = codeGenerator.generate();
 
+            alreadyGenerated = true;
+            root.refreshAll();
+
             JOptionPane.showMessageDialog(root.getParentFrame(),
                     generatedCode);
         }
+    }
+
+    public boolean isAlreadyGenerated() {
+        return alreadyGenerated;
     }
 }

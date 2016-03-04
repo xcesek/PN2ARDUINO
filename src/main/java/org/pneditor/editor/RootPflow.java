@@ -35,10 +35,7 @@ import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
-import org.pneditor.editor.actions.arduino.AddArduinoComponentAction;
-import org.pneditor.editor.actions.arduino.GenerateCodeAction;
-import org.pneditor.editor.actions.arduino.SetupBoardAction;
-import org.pneditor.editor.actions.arduino.UploadCodeAction;
+import org.pneditor.editor.actions.arduino.*;
 import org.pneditor.editor.canvas.*;
 import org.pneditor.editor.filechooser.EpsFileType;
 import org.pneditor.editor.filechooser.FileType;
@@ -414,6 +411,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         //ARDUINO
         addArduinoComponent.setEnabled(isPlaceNode);
+        generateCode.setEnabled(((SetupBoardAction) setBoard).isAlreadySetup());
+        uploadCode.setEnabled(((GenerateCodeAction) generateCode).isAlreadyGenerated());
+
     }
 
     @Override
@@ -530,6 +530,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action selectTool_TransitionAction = new TransitionSelectToolAction(this);
         Action selectTool_ArcAction = new ArcSelectToolAction(this);
         Action selectTool_TokenAction = new TokenSelectToolAction(this);
+        Action uploadWithPopupAction = new UploadWithPopupAction(this);
 
         saveSubnetAs = new SaveSubnetAsAction(this);
         replaceSubnet = new ReplaceSubnetAction(this);
@@ -540,7 +541,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setBoard = new SetupBoardAction(this);
         generateCode = new GenerateCodeAction(this);
         uploadCode = new UploadCodeAction(this);
-
 
         //UI
 
@@ -594,6 +594,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         
         toolBar.addSeparator();
         toolBar.add(token);
+
+        toolBar.addSeparator();
+        toolBar.add(uploadWithPopupAction);
 
         JMenuBar menuBar = new JMenuBar();
         mainFrame.setJMenuBar(menuBar);

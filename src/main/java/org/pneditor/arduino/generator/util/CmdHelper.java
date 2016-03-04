@@ -25,19 +25,17 @@ public class CmdHelper {
         CommandLine cmdLine = CommandLine.parse(line);
 
         DefaultExecutor executor = new DefaultExecutor();
-        //DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
 
-        //ExecuteWatchdog watchdog = new ExecuteWatchdog(DEFAULT_WATCHDOG_TIME);
+        ExecuteWatchdog watchdog = new ExecuteWatchdog(DEFAULT_WATCHDOG_TIME);
 
         try {
-            //executor.setWatchdog(watchdog);
+            executor.setWatchdog(watchdog);
             executor.setStreamHandler(streamHandler);
 
             int exitValue = executor.execute(cmdLine);
 
-            //resultHandler.waitFor();
             String output = outputStream.toString();
 
             uploadResponse.setCustomMessage("Upload successfull!");
