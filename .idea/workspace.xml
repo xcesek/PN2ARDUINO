@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="197d2231-bfdc-482d-94dc-8c0abca25972" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadWithPopupAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/util/CmdHelper.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/util/CmdHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoNodeExtension.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinDirection.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinType.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AssociateNodeWithArduinoPinAction.java" />
+      <change type="DELETED" beforePath="C:\Users\palo\school\diplomovka\PN2ARDUINO\src\main\java\org\pneditor\arduino\ArduinoComponent.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\palo\school\diplomovka\PN2ARDUINO\src\main\java\org\pneditor\arduino\ArduinoComponentType.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\palo\school\diplomovka\PN2ARDUINO\src\main\java\org\pneditor\arduino\DigitalOutput.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\palo\school\diplomovka\PN2ARDUINO\src\main\java\org\pneditor\editor\actions\arduino\AddArduinoComponentAction.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Place.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Place.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/RootPflow.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/RootPflow.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Transition.java" afterPath="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Transition.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PN2ARDUINO.iws" />
@@ -37,92 +44,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RootPflow.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/RootPflow.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7586207">
-              <caret line="409" column="47" selection-start-line="409" selection-start-column="47" selection-end-line="409" selection-end-column="47" />
-              <folding>
-                <element signature="e#0#27261#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#10732#10733#0" expanded="true" />
-                <element signature="e#10781#10782#0" expanded="true" />
-                <element signature="e#10988#10989#0" expanded="true" />
-                <element signature="e#11020#11021#0" expanded="true" />
-                <element signature="e#14240#14241#0" expanded="true" />
-                <element signature="e#14273#14274#0" expanded="true" />
-                <element signature="e#25832#25833#0" expanded="true" />
-                <element signature="e#25865#25866#0" expanded="true" />
-                <element signature="e#26483#26484#0" expanded="true" />
-                <element signature="e#26517#26518#0" expanded="true" />
-                <element signature="e#27220#27221#0" expanded="true" />
-                <element signature="e#27257#27258#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GenerateCodeAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="58" column="30" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="30" />
-              <folding>
-                <element signature="e#2194#2195#0" expanded="true" />
-                <element signature="e#2233#2234#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CodeGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+              <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UploadCodeAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java">
+      <file leaf-file-name="ArduinoManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+              <caret line="15" column="51" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetupBoardAction.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java">
+      <file leaf-file-name="AssociateNodeWithArduinoPinAction.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AssociateNodeWithArduinoPinAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.626087">
-              <caret line="80" column="34" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.33207548">
+              <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
               <folding>
-                <element signature="e#3619#3620#0" expanded="true" />
-                <element signature="e#3654#3655#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CmdHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/util/CmdHelper.java">
+      <file leaf-file-name="ArduinoNodeExtension.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoNodeExtension.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SetupBoardAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.105263">
+              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UploadWithPopupAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadWithPopupAction.java">
+      <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Node.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="76" column="50" selection-start-line="75" selection-start-column="12" selection-end-line="76" selection-end-column="50" />
+              <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -160,16 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/board/BoardType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/CodeUploaderFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/LabelToTransition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetBoardAction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/RunTimerAction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AddArduinoComponentAction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/settings/BoardType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/board/AbstractUploader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/board/ArduinoNanoUploader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/board/ICodeUploader.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/upload/response/UploadResponse.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/codeGeneration/util/CmdHelper.java" />
@@ -192,7 +162,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/xslt/save.xslt" />
         <option value="$PROJECT_DIR$/src/main/resources/xslt/load.xslt" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/xml/XmlArduinoManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Document.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/filechooser/EpsFileType.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/xml/DocumentImporter.java" />
@@ -205,12 +174,23 @@
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/settings/BoardSettings.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/upload/board/ArduinoNanoUploader.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadWithPopupAction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/util/CmdHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/RootPflow.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoComponent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoComponentType.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinType.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinDirection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AddArduinoComponentAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ExtendedNode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoNodeExtension.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Transition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Place.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AssociateNodeWithArduinoPinAction.java" />
       </list>
     </option>
   </component>
@@ -230,10 +210,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1942" />
+    <option name="height" value="1042" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -305,8 +285,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -425,7 +406,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="editor" />
+              <option name="myItemId" value="petrinet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -456,10 +437,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="editor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="actions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -496,6 +473,40 @@
               <option name="myItemId" value="actions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PN2ARDUINO" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PN2ARDUINO" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pneditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="actions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="arduino" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -561,7 +572,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="generator" />
+              <option name="myItemId" value="manager" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -595,91 +606,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="upload" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PN2ARDUINO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PN2ARDUINO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pneditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="arduino" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="upload" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PN2ARDUINO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PN2ARDUINO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pneditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="arduino" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="generate" />
+              <option name="myItemId" value="component" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -707,14 +634,13 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/upload/board/ArduinoNanoUploader.java" />
     <property name="recentsLimit" value="5" />
@@ -729,6 +655,7 @@
       <recent name="F:\Skola\DIPLOMOVKA\VYVOJ\PN2ARDUINO\src\main\resources\pneditor\arduino" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.pneditor.arduino.component" />
       <recent name="org.pneditor.editor.actions.arduino" />
       <recent name="org.pneditor.petrinet.xml" />
     </key>
@@ -944,31 +871,37 @@
       <option name="project" value="LOCAL" />
       <updated>1456605375887</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- upload code in separate thread (not freezing GUI)&#10;- minor changes">
+      <created>1457107656576</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1457107656576</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32938388" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32850778" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32819906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26545843" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26530612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819906" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997773" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20734598" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -990,7 +923,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- Support for saving board setting to pflow XML&#10;- Basic support for code generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Support for saving board setting to pflow XML&#10;- Basic support for code generation" />
+    <MESSAGE value="- upload code in separate thread (not freezing GUI)&#10;- minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="- upload code in separate thread (not freezing GUI)&#10;- minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1019,11 +953,35 @@
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/PlaceNode.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/TransitionNode.java</url>
+          <line>28</line>
+          <properties />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java</url>
+          <line>100</line>
+          <properties />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java</url>
+          <line>111</line>
+          <properties />
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="43" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1032,73 +990,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/ReferenceArc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/SetTimingPolicyAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23652174">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/SetDelayAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3252174">
-          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/time/TimingPolicyType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20695652">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/xml/IdToXmlObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2994129">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/xml/XmlRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36594912">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/xpath/lib/xpath.jar!/org/intellij/lang/xpath/xslt/resources/xslt-schema.xsd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33268103">
-          <caret line="461" column="2" selection-start-line="461" selection-start-column="2" selection-end-line="461" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Role.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/SaveFileAsAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/util/Xslt.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.667319">
@@ -1190,7 +1081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.16438356">
           <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1205,7 +1095,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5322896">
           <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1227,10 +1116,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.60078275">
           <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
-          <folding>
-            <element signature="e#1507#1508#0" expanded="false" />
-            <element signature="e#1544#1545#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1253,7 +1138,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.6966732">
           <caret line="78" column="196" selection-start-line="78" selection-start-column="196" selection-end-line="78" selection-end-column="196" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1261,7 +1145,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.69863015">
           <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1272,34 +1155,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/PlaceNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7095652">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Place.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23652174">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/arduino/PetriNet.template">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.062043797">
           <caret line="2" column="60" selection-start-line="2" selection-start-column="60" selection-end-line="2" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4678261">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1317,19 +1176,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/upload/board/ArduinoNanoUploader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/ExportAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1337,7 +1187,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="41" column="77" selection-start-line="41" selection-start-column="7" selection-end-line="41" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1345,10 +1194,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5269565">
           <caret line="36" column="18" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
-          <folding>
-            <element signature="e#1103#1104#0" expanded="true" />
-            <element signature="e#1160#1161#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1356,7 +1201,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38434783">
           <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,7 +1208,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1372,56 +1218,90 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3321739">
           <caret line="362" column="16" selection-start-line="362" selection-start-column="16" selection-end-line="362" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/RootPflow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7586207">
+        <state vertical-scroll-proportion="0.0">
           <caret line="409" column="47" selection-start-line="409" selection-start-column="47" selection-end-line="409" selection-end-column="47" />
           <folding>
-            <element signature="e#0#27261#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#10732#10733#0" expanded="true" />
-            <element signature="e#10781#10782#0" expanded="true" />
-            <element signature="e#10988#10989#0" expanded="true" />
-            <element signature="e#11020#11021#0" expanded="true" />
-            <element signature="e#14240#14241#0" expanded="true" />
-            <element signature="e#14273#14274#0" expanded="true" />
-            <element signature="e#25832#25833#0" expanded="true" />
-            <element signature="e#25865#25866#0" expanded="true" />
-            <element signature="e#26483#26484#0" expanded="true" />
-            <element signature="e#26517#26518#0" expanded="true" />
-            <element signature="e#27220#27221#0" expanded="true" />
-            <element signature="e#27257#27258#0" expanded="true" />
+            <element signature="e#4862#4863#0" expanded="false" />
+            <element signature="e#4896#4897#0" expanded="false" />
+            <element signature="e#5032#5033#0" expanded="false" />
+            <element signature="e#5071#5072#0" expanded="false" />
+            <element signature="e#5147#5148#0" expanded="false" />
+            <element signature="e#5203#5204#0" expanded="false" />
+            <element signature="e#5363#5364#0" expanded="false" />
+            <element signature="e#5395#5396#0" expanded="false" />
+            <element signature="e#5523#5524#0" expanded="false" />
+            <element signature="e#5554#5555#0" expanded="false" />
+            <element signature="e#5951#5952#0" expanded="false" />
+            <element signature="e#5988#5989#0" expanded="false" />
+            <element signature="e#6286#6287#0" expanded="false" />
+            <element signature="e#6318#6319#0" expanded="false" />
+            <element signature="e#6370#6371#0" expanded="false" />
+            <element signature="e#6413#6414#0" expanded="false" />
+            <element signature="e#7258#7259#0" expanded="false" />
+            <element signature="e#7300#7301#0" expanded="false" />
+            <element signature="e#7625#7626#0" expanded="false" />
+            <element signature="e#7666#7667#0" expanded="false" />
+            <element signature="e#8011#8012#0" expanded="false" />
+            <element signature="e#8057#8058#0" expanded="false" />
+            <element signature="e#8372#8373#0" expanded="false" />
+            <element signature="e#8411#8412#0" expanded="false" />
+            <element signature="e#8743#8744#0" expanded="false" />
+            <element signature="e#8784#8785#0" expanded="false" />
+            <element signature="e#8845#8846#0" expanded="false" />
+            <element signature="e#8878#8879#0" expanded="false" />
+            <element signature="e#8933#8934#0" expanded="false" />
+            <element signature="e#8966#8967#0" expanded="false" />
+            <element signature="e#9026#9027#0" expanded="false" />
+            <element signature="e#9064#9065#0" expanded="false" />
+            <element signature="e#9121#9122#0" expanded="false" />
+            <element signature="e#9156#9157#0" expanded="false" />
+            <element signature="e#9212#9213#0" expanded="false" />
+            <element signature="e#9246#9247#0" expanded="false" />
+            <element signature="e#9302#9303#0" expanded="false" />
+            <element signature="e#9336#9337#0" expanded="false" />
+            <element signature="e#10585#10586#0" expanded="false" />
+            <element signature="e#10633#10634#0" expanded="false" />
+            <element signature="e#25440#25441#0" expanded="false" />
+            <element signature="e#25505#25506#0" expanded="false" />
+            <element signature="e#25680#25681#0" expanded="false" />
+            <element signature="e#25712#25713#0" expanded="false" />
+            <element signature="e#26659#26660#0" expanded="false" />
+            <element signature="e#26690#26691#0" expanded="false" />
+            <element signature="e#26728#26729#0" expanded="false" />
+            <element signature="e#26788#26789#0" expanded="false" />
+            <element signature="e#26847#26848#0" expanded="false" />
+            <element signature="e#26882#26883#0" expanded="false" />
+            <element signature="e#27010#27011#0" expanded="false" />
+            <element signature="e#27044#27045#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/PlaceNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="30" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="30" />
-          <folding>
-            <element signature="e#2194#2195#0" expanded="true" />
-            <element signature="e#2233#2234#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Arc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        <state vertical-scroll-proportion="-0.16455697">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/TransitionNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2879747">
+          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1434,13 +1314,130 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/UploadCodeAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3322785">
+          <caret line="274" column="11" selection-start-line="274" selection-start-column="11" selection-end-line="274" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/upload/board/ArduinoNanoUploader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.25660378">
+          <caret line="22" column="57" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/GenerateCodeAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7849057">
+          <caret line="43" column="72" selection-start-line="43" selection-start-column="61" selection-end-line="43" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/generator/generate/CodeGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="26" />
+          <folding>
+            <element signature="e#117#118#0" expanded="true" />
+            <element signature="e#157#158#0" expanded="true" />
+            <element signature="e#211#212#0" expanded="true" />
+            <element signature="e#250#251#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/component/ArduinoPinDirection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14716981">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="51" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/arduino/manager/ArduinoNodeExtension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Transition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="59" selection-start-line="82" selection-start-column="59" selection-end-line="82" selection-end-column="59" />
+          <folding>
+            <element signature="e#2945#2946#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/petrinet/Place.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9018868">
+          <caret line="46" column="5" selection-start-line="44" selection-start-column="83" selection-end-line="46" selection-end-column="5" />
+          <folding>
+            <element signature="e#1205#1206#0" expanded="true" />
+            <element signature="e#1245#1246#0" expanded="true" />
+            <element signature="e#1306#1307#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/SetupBoardAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.626087">
-          <caret line="80" column="34" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="34" />
+        <state vertical-scroll-proportion="-4.105263">
+          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pneditor/editor/actions/arduino/AssociateNodeWithArduinoPinAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33207548">
+          <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
           <folding>
-            <element signature="e#3619#3620#0" expanded="true" />
-            <element signature="e#3654#3655#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

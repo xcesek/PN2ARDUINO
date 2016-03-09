@@ -18,6 +18,8 @@ package org.pneditor.petrinet;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import org.pneditor.arduino.manager.ArduinoNodeExtension;
 import org.pneditor.editor.time.SimpleTimer;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
@@ -33,6 +35,7 @@ public class Transition extends TransitionNode implements Cloneable {
     Integer earliestFiringTime;
     Integer latestFiringTime;
     private SimpleTimer timer;
+    private ArduinoNodeExtension arduinoNodeExtension;
 
     @Override
     public void draw(Graphics g, DrawingOptions drawingOptions) {
@@ -75,6 +78,13 @@ public class Transition extends TransitionNode implements Cloneable {
     public void setTimer(SimpleTimer timer) {
         this.timer = timer;
     }
-    
-    
+
+
+    public ArduinoNodeExtension getArduinoNodeExtension() {
+        return arduinoNodeExtension;
+    }
+
+    public void setArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
+        this.arduinoNodeExtension = arduinoNodeExtension;
+    }
 }

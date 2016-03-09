@@ -13,6 +13,7 @@ import java.io.File;
  * Under GNU GPL v3 licence
  */
 public class ArduinoManager {
+    public final static String ARDUINO_RES_DIR_NAME = "src/main/resources/arduino";
     public final static String SOURCE_DIR_NAME = "generated";
     public final static String PROJECT_DIR_NAME = "PetriNet";
     public final static String MAIN_SKETCH_FILE_NAME = "PetriNet.ino";

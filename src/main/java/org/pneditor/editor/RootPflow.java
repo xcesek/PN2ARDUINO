@@ -32,7 +32,6 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import org.pneditor.arduino.manager.ArduinoManager;
-import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.*;
@@ -537,7 +536,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
 
         //ARDUINO
-        addArduinoComponent = new AddArduinoComponentAction(this);
+        addArduinoComponent = new AssociateNodeWithArduinoPinAction(this);
         setBoard = new SetupBoardAction(this);
         generateCode = new GenerateCodeAction(this);
         uploadCode = new UploadCodeAction(this);

@@ -16,12 +16,15 @@
  */
 package org.pneditor.petrinet;
 
+import org.pneditor.arduino.manager.ArduinoNodeExtension;
+
 /**
  * Represents place in Petri net
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class Place extends PlaceNode implements Cloneable {
+    private ArduinoNodeExtension arduinoNodeExtension;
 
     private boolean isStatic = false;
 
@@ -33,5 +36,13 @@ public class Place extends PlaceNode implements Cloneable {
     @Override
     public void setStatic(boolean isStatic) {
         this.isStatic = isStatic;
+    }
+
+    public ArduinoNodeExtension getArduinoNodeExtension() {
+        return arduinoNodeExtension;
+    }
+
+    public void setArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
+        this.arduinoNodeExtension = arduinoNodeExtension;
     }
 }

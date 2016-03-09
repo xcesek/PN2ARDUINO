@@ -65,18 +65,18 @@ public class SetupBoardAction extends AbstractAction {
             JDialog dialog = optionPane.createDialog(root.getParentFrame(), "Arduino Board Setup");
             dialog.setVisible(true);
 
-            // set values
-            boardSettings.setPort(portField.getText());
-
-            String boardTypeStr = (String) boardTypeCombo.getSelectedItem();
-            if (boardTypeStr != null && !boardTypeStr.isEmpty()) {
-                boardSettings.setBoardType(BoardType.byName((String) boardTypeCombo.getSelectedItem()));
-            } else {
-                boardSettings.setBoardType(BoardType.valueOf(BoardType.ARDUINO_UNO.getBoardName()));
-            }
-
             int value = (optionPane.getValue() != null) ? ((Integer) optionPane.getValue()).intValue() : JOptionPane.CANCEL_OPTION;
             if (value == JOptionPane.YES_OPTION) {
+                // set user values
+                boardSettings.setPort(portField.getText());
+
+                String boardTypeStr = (String) boardTypeCombo.getSelectedItem();
+                if (boardTypeStr != null && !boardTypeStr.isEmpty()) {
+                    boardSettings.setBoardType(BoardType.byName((String) boardTypeCombo.getSelectedItem()));
+                } else {
+                    boardSettings.setBoardType(BoardType.valueOf(BoardType.ARDUINO_UNO.getBoardName()));
+                }
+
                 alreadySetup = true;
                 root.refreshAll();
             }

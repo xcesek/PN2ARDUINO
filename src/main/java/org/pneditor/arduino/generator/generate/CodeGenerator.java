@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,12 +27,14 @@ public class CodeGenerator {
 
     private ArduinoManager arduinoManager;
 
+    private final static String[] extensions = { "h", "cpp" };
+
     public CodeGenerator(ArduinoManager arduinoManager) {
         this.arduinoManager = arduinoManager;
 
         projectDir = new File(arduinoManager.getProjectDirName());
         mainSketchFile = new File(projectDir + File.separator + arduinoManager.MAIN_SKETCH_FILE_NAME);
-        sketchTemplateFile = new File("src\\main\\resources\\arduino" + File.separator + arduinoManager.SKETCH_TEMPLATE_NAME);
+        sketchTemplateFile = new File(arduinoManager.ARDUINO_RES_DIR_NAME + File.separator + arduinoManager.SKETCH_TEMPLATE_NAME);
     }
 
     public String generate() {
@@ -44,8 +47,15 @@ public class CodeGenerator {
                 FileUtils.deleteDirectory(projectDir);
                 FileUtils.forceMkdir(projectDir);
 
-                generatedCodeStr = getGeneratedCodeStr();
+                // copy .h and .cpp files
+                List<File> headerAndClassfiles = (List<File>) FileUtils.listFiles(new File(arduinoManager.ARDUINO_RES_DIR_NAME),
+                        extensions, false);
+                for(File f : headerAndClassfiles) {
+                    FileUtils.copyFileToDirectory(f, projectDir);
+                }
 
+                // generate main sketch file with all logic inside
+                generatedCodeStr = getGeneratedCodeStr();
                 FileUtils.write(mainSketchFile, generatedCodeStr);
 
             } catch (IOException e) {
@@ -88,17 +98,32 @@ public class CodeGenerator {
     }
 
     private String getImportsStr() {
-        return "// no imports ";
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(
+                "#include \"Place.h\"\n" +
+                        "#include \"Transition.h\"\n" +
+                        "#include \"Arc.h\""
+        );
+
+        return buffer.toString();
     }
 
     private String getGlobalVariablesStr() {
-        return "// no variables ";
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(
+                "Place place1 = Place(13);\n" +
+                        "Transition transition1 = Transition(13);\n" +
+                        "Arc arc11 = Arc(&place1, &transition1);"
+        );
+
+        return buffer.toString();
     }
 
     private String getSetupStr() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("// initialize digital pin 13 as an output.").append("\n")
-                .append("pinMode(13, OUTPUT);");
+        buffer.append(
+                "// nothing \n"
+        );
 
         return buffer.toString();
     }
@@ -106,10 +131,12 @@ public class CodeGenerator {
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
         buffer.append(
-                "      digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)\\n +\n" +
-                "      delay(500);              // wait for a second\\n +\n" +
-                "      digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW\\n +\n" +
-                "      delay(500);              // wait for a second");
+                "place1.activate(); \n" +
+                        "  delay(1000);\n" +
+                        "  place1.deactivate(); \n" +
+                        "  delay(4000);\n" +
+                        "  transition1.fire();\n" +
+                        "  delay(4000);");
 
         return buffer.toString();
     }
