@@ -56,6 +56,7 @@ import org.pneditor.petrinet.TransitionNode;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.ListEditor;
+import org.pneditor.util.LogEditor;
 
 /**
  * This class is the main point of the application.
@@ -81,7 +82,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         roleEditor.deleteButton.setToolTipText("Delete role");
         roleEditor.addListSelectionListener(this);
 
-        logEditor = new ListEditor<Role>("Run:", document.roles, getParentFrame());
+        logEditor = new LogEditor("Run:", getParentFrame());
 
         setupMainFrame();
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -202,7 +203,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
     // List editor - per tab
     protected ListEditor<Role> roleEditor; //TODO
-    protected ListEditor<Role> logEditor; //TODO
+    protected LogEditor logEditor; //TODO
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
