@@ -16,6 +16,8 @@
  */
 package org.pneditor.petrinet.xml;
 
+import org.pneditor.arduino.manager.ArduinoNodeExtension;
+
 import javax.xml.bind.annotation.XmlElement;
 
 /**
@@ -32,5 +34,8 @@ public class XmlPlace extends XmlNode {
 
     @XmlElement(name = "isStatic")
     public boolean isStatic;
+
+    @XmlElement(name = "arduinoNodeExtension")
+    public XmlArduinoNodeExtension arduinoNodeExtension;
 
 }

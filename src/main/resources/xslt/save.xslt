@@ -41,6 +41,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label><xsl:value-of select="label"/></label>
                 <tokens><xsl:value-of select="tokens"/></tokens>
                 <isStatic><xsl:value-of select="isStatic"/></isStatic>
+                <arduinoNodeExtension>
+                    <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
+                    <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
+                </arduinoNodeExtension>
             </place>
         </xsl:for-each>
         <xsl:for-each select="transition">
@@ -53,6 +57,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label><xsl:value-of select="label"/></label>
                 <earliestFiringTime><xsl:value-of select="earliestFiringTime"/></earliestFiringTime>
                 <latestFiringTime><xsl:value-of select="latestFiringTime"/></latestFiringTime>
+                <arduinoNodeExtension>
+                    <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
+                    <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
+                </arduinoNodeExtension>
             </transition>
         </xsl:for-each>
         <xsl:for-each select="arc">

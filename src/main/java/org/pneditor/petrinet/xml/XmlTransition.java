@@ -16,21 +16,25 @@
  */
 package org.pneditor.petrinet.xml;
 
+import org.pneditor.arduino.manager.ArduinoNodeExtension;
+
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class XmlTransition extends XmlNode {
 
     @XmlElement(name = "label")
     public String label;
-    
+
     @XmlElement(name = "earliestFiringTime")
     public Integer earliestFiringTime;
-    
+
     @XmlElement(name = "latestFiringTime")
     public Integer latestFiringTime;
+
+    @XmlElement(name = "arduinoNodeExtension")
+    public XmlArduinoNodeExtension arduinoNodeExtension;
 
 }

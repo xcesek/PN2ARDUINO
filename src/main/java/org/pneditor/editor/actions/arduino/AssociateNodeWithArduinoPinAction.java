@@ -1,8 +1,8 @@
 package org.pneditor.editor.actions.arduino;
 
 
-import org.pneditor.arduino.component.ArduinoPinDirection;
-import org.pneditor.arduino.component.ArduinoPinType;
+import org.pneditor.arduino.component.ArduinoPin;
+import org.pneditor.arduino.component.ArduinoSupportedFunction;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
 import org.pneditor.editor.Root;
@@ -20,9 +20,8 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
     private Root root;
     private ArduinoManager arduinoManager;
 
-    private JComboBox pinTypeCombo;
-    private JComboBox pinNumberCombo;
-    private JComboBox pinDirectionCombo;
+    private JComboBox pinCombo;
+    private JComboBox supportedFunctionsCombo;
 
     public AssociateNodeWithArduinoPinAction(Root root) {
         this.root = root;
@@ -32,14 +31,13 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
 
-        pinTypeCombo = new JComboBox(ArduinoPinType.values());
-        pinNumberCombo = new JComboBox();
-        pinDirectionCombo = new JComboBox(ArduinoPinDirection.values());
+        pinCombo = new JComboBox(ArduinoPin.values());
+        supportedFunctionsCombo = new JComboBox(ArduinoSupportedFunction.values());
     }
 
     public void actionPerformed(ActionEvent e) {
         if (root.getClickedElement() != null
-                && root.getClickedElement() instanceof Node) {
+                && (root.getClickedElement() instanceof Place || root.getClickedElement() instanceof Transition)) {
             Node clickedNode = (Node) root.getClickedElement();
 
             final JOptionPane optionPane = new JOptionPane();
@@ -51,75 +49,51 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
             dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
 
-            //set user values
-            int value = ((Integer) optionPane.getValue()).intValue();
-            if (value == JOptionPane.YES_OPTION) {
-                ArduinoPinType pinType = (ArduinoPinType) pinTypeCombo.getSelectedItem();
-                ArduinoPinDirection pinDirection = (ArduinoPinDirection) pinDirectionCombo.getSelectedItem();
-                Integer pinNumber = (Integer) pinNumberCombo.getSelectedItem();
+            //save user input
+            if (JOptionPane.YES_OPTION == (Integer) optionPane.getValue()) {
+                ArduinoPin pin = (ArduinoPin) pinCombo.getSelectedItem();
+                ArduinoSupportedFunction selectedFunction = (ArduinoSupportedFunction) supportedFunctionsCombo.getSelectedItem();
 
-                ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension(pinType, pinDirection, pinNumber);
+                ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension(pin, selectedFunction);
                 if (clickedNode instanceof Place) {
                     ((Place) clickedNode).setArduinoNodeExtension(arduinoNodeExtension);
                 } else if (clickedNode instanceof Transition) {
                     ((Transition) clickedNode).setArduinoNodeExtension(arduinoNodeExtension);
                 }
             }
-
         }
-
     }
 
     public Object[] getPanel(Node clickedNode) {
-        Object[] objects = new Object[7];
-
-        // PIN models
-        final DefaultComboBoxModel digitalPins = new DefaultComboBoxModel(new Integer[]{13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2});
-        final DefaultComboBoxModel analogPins = new DefaultComboBoxModel(new Integer[]{5, 4, 3, 2, 1, 0});
+        Object[] objects = new Object[6];
 
         // select values to combo according to stored data
-        // todo
-        pinTypeCombo.setSelectedIndex(0);
-        pinNumberCombo.setModel(digitalPins);
-        pinNumberCombo.setSelectedIndex(0);
+        ArduinoNodeExtension extension = null;
+        if (clickedNode instanceof Place) {
+            extension = ((Place) clickedNode).getArduinoNodeExtension();
+        } else if (clickedNode instanceof Transition) {
+            extension = ((Transition) clickedNode).getArduinoNodeExtension();
+        }
 
-//        ArduinoNodeExtension arduinoNodeExtension;
-//        if (clickedNode instanceof Place) {
-//            arduinoNodeExtension = ((Place) clickedNode).getArduinoNodeExtension();
-//        } else if (clickedNode instanceof Transition) {
-//            arduinoNodeExtension = ((Transition) clickedNode).getArduinoNodeExtension();
-//        } else {
-//            arduinoNodeExtension = new ArduinoNodeExtension();
-//        }
-//
-//        pinTypeCombo.setSelectedItem(arduinoNodeExtension.getPinType());
-//        pinNumberCombo.setSelectedItem(arduinoNodeExtension.getPinNumber());
-//        pinDirectionCombo.setSelectedItem(arduinoNodeExtension.getPinDirection());
+        if (extension == null) {
+            // when clicked for the first time
+            extension = new ArduinoNodeExtension(ArduinoPin.D2, ArduinoSupportedFunction.DIGITAL_OUT);
+        }
+        pinCombo.setSelectedItem(extension.getPin());
+        supportedFunctionsCombo.setModel(new DefaultComboBoxModel(extension.getPin().getSupportedFunctions()));
+        supportedFunctionsCombo.setSelectedItem(extension.getFunction());
 
-
-        //  Arduino Pin Type
-        JPanel pinTypeComboPanel = new JPanel();
-        pinTypeComboPanel.add(new JLabel("Choose Arduino Component Type: "));
-        pinTypeComboPanel.add(pinTypeCombo);
-        objects[0] = pinTypeComboPanel;
-        objects[1] = new JSeparator(JSeparator.HORIZONTAL);
+        objects[0] = new JLabel("Choose Arduino Pin: ");
+        objects[1] = pinCombo;
         objects[2] = Box.createVerticalStrut(5);
+        objects[3] = new JSeparator(JSeparator.HORIZONTAL);
 
-        objects[3] = pinNumberCombo;
-        objects[4] = new JSeparator(JSeparator.HORIZONTAL);
+        objects[4] = new JLabel("Choose Function: ");
+        objects[5] = supportedFunctionsCombo;
 
-        JPanel pinDirectionComboPanel = new JPanel();
-        pinDirectionComboPanel.add(new JLabel("Choose Direction: "));
-        pinDirectionComboPanel.add(pinDirectionCombo);
-        objects[5] = pinDirectionComboPanel;
-        objects[6] = Box.createVerticalStrut(5);
-
-        pinTypeCombo.addActionListener(e -> {
-            if (ArduinoPinType.DIGITAL == pinTypeCombo.getSelectedItem()) {
-                pinNumberCombo.setModel(digitalPins);
-            } else {
-                pinNumberCombo.setModel(analogPins);
-            }
+        pinCombo.addActionListener(e -> {
+            ArduinoSupportedFunction[] supportedFunctions = ((ArduinoPin) pinCombo.getSelectedItem()).getSupportedFunctions();
+            supportedFunctionsCombo.setModel(new DefaultComboBoxModel(supportedFunctions));
         });
 
         return objects;

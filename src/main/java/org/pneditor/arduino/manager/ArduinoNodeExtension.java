@@ -1,8 +1,8 @@
 package org.pneditor.arduino.manager;
 
-import org.pneditor.arduino.component.ArduinoPinDirection;
+import org.pneditor.arduino.component.ArduinoPin;
 import org.pneditor.arduino.component.ArduinoPinType;
-import org.pneditor.petrinet.Node;
+import org.pneditor.arduino.component.ArduinoSupportedFunction;
 
 /**
  * Created by Pavol Cesek on 3/9/2016.
@@ -12,40 +12,36 @@ import org.pneditor.petrinet.Node;
  * Under GNU GPL v3 licence
  */
 public class ArduinoNodeExtension {
-    private ArduinoPinType pinType;
-    private ArduinoPinDirection pinDirection;
-    private int pinNumber;
+    private ArduinoPin pin;
+    private ArduinoSupportedFunction function;
+
 
     public ArduinoNodeExtension() {
     }
 
-    public ArduinoNodeExtension(ArduinoPinType pinType, ArduinoPinDirection pinDirection, int pinNumber) {
-        this.pinType = pinType;
-        this.pinDirection = pinDirection;
-        this.pinNumber = pinNumber;
+    public ArduinoNodeExtension(ArduinoPin pin, ArduinoSupportedFunction function) {
+        this.pin = pin;
+        this.function = function;
     }
 
-    public ArduinoPinType getPinType() {
-        return pinType;
+    public ArduinoNodeExtension(String pinStr, String functionStr) {
+        this.pin = ArduinoPin.valueOf(pinStr);
+        this.function = ArduinoSupportedFunction.valueOf(functionStr);
     }
 
-    public void setPinType(ArduinoPinType pinType) {
-        this.pinType = pinType;
+    public ArduinoPin getPin() {
+        return pin;
     }
 
-    public ArduinoPinDirection getPinDirection() {
-        return pinDirection;
+    public void setPin(ArduinoPin pin) {
+        this.pin = pin;
     }
 
-    public void setPinDirection(ArduinoPinDirection pinDirection) {
-        this.pinDirection = pinDirection;
+    public ArduinoSupportedFunction getFunction() {
+        return function;
     }
 
-    public int getPinNumber() {
-        return pinNumber;
-    }
-
-    public void setPinNumber(int pinNumber) {
-        this.pinNumber = pinNumber;
+    public void setFunction(ArduinoSupportedFunction function) {
+        this.function = function;
     }
 }

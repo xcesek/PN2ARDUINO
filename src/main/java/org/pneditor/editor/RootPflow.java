@@ -332,7 +332,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action closeSubnet;
 
     //ARDUINO
-    protected Action addArduinoComponent;
+    protected Action associateNodeWithArduinoPin;
 
     protected Action setBoard;
     protected Action generateCode;
@@ -409,7 +409,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setPlaceStatic.setEnabled(isPlaceNode);
 
         //ARDUINO
-        addArduinoComponent.setEnabled(isPlaceNode);
+        associateNodeWithArduinoPin.setEnabled(isPlaceNode || isTransitionNode);
         generateCode.setEnabled(((SetupBoardAction) setBoard).isAlreadySetup());
         uploadCode.setEnabled(((GenerateCodeAction) generateCode).isAlreadyGenerated());
 
@@ -536,7 +536,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
 
         //ARDUINO
-        addArduinoComponent = new AssociateNodeWithArduinoPinAction(this);
+        associateNodeWithArduinoPin = new AssociateNodeWithArduinoPinAction(this);
         setBoard = new SetupBoardAction(this);
         generateCode = new GenerateCodeAction(this);
         uploadCode = new UploadCodeAction(this);
@@ -708,7 +708,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup.add(delete);
         //ARDUINO
         placePopup.addSeparator();
-        placePopup.add(addArduinoComponent);
+        placePopup.add(associateNodeWithArduinoPin);
 
         transitionPopup = new JPopupMenu();
         transitionPopup.add(setLabel);
@@ -720,6 +720,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         transitionPopup.add(cutAction);
         transitionPopup.add(copyAction);
         transitionPopup.add(delete);
+        transitionPopup.add(associateNodeWithArduinoPin);
 
         Font boldFont = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 

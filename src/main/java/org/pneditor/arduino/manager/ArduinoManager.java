@@ -35,10 +35,6 @@ public class ArduinoManager {
         return boardSettings;
     }
 
-    public void setBoardSettings(BoardSettings boardSettings) {
-        this.boardSettings = boardSettings;
-    }
-
     public String getProjectDirName() {
         return SOURCE_DIR_NAME + File.separator + PROJECT_DIR_NAME;
     }

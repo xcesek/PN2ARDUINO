@@ -140,6 +140,7 @@ public class DocumentExporter {
         xmlPlace.isStatic = place.isStatic();
         xmlPlace.label = place.getLabel();
         xmlPlace.tokens = initialMarking.getTokens(place);
+        xmlPlace.arduinoNodeExtension = new XmlArduinoNodeExtension(place.getArduinoNodeExtension());
         return xmlPlace;
     }
 
@@ -151,6 +152,7 @@ public class DocumentExporter {
         xmlTransition.label = transition.getLabel();
         xmlTransition.earliestFiringTime = transition.getEarliestFiringTime();
         xmlTransition.latestFiringTime = transition.getLatestFiringTime();
+        xmlTransition.arduinoNodeExtension = new XmlArduinoNodeExtension(transition.getArduinoNodeExtension());
 
         return xmlTransition;
     }
