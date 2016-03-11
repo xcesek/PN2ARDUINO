@@ -1,7 +1,6 @@
 package org.pneditor.arduino.manager;
 
 import org.pneditor.arduino.component.ArduinoPin;
-import org.pneditor.arduino.component.ArduinoPinType;
 import org.pneditor.arduino.component.ArduinoSupportedFunction;
 
 /**
@@ -14,34 +13,43 @@ import org.pneditor.arduino.component.ArduinoSupportedFunction;
 public class ArduinoNodeExtension {
     private ArduinoPin pin;
     private ArduinoSupportedFunction function;
+    private boolean enabled;
 
 
     public ArduinoNodeExtension() {
+        enabled = false;
     }
 
     public ArduinoNodeExtension(ArduinoPin pin, ArduinoSupportedFunction function) {
         this.pin = pin;
         this.function = function;
+        enabled = true;
     }
 
     public ArduinoNodeExtension(String pinStr, String functionStr) {
-        this.pin = ArduinoPin.valueOf(pinStr);
-        this.function = ArduinoSupportedFunction.valueOf(functionStr);
+        try {
+            this.pin = ArduinoPin.valueOf(pinStr);
+            this.function = ArduinoSupportedFunction.valueOf(functionStr);
+            enabled = true;
+        } catch (Exception e) {
+            enabled = false;
+        }
     }
 
     public ArduinoPin getPin() {
         return pin;
     }
 
-    public void setPin(ArduinoPin pin) {
-        this.pin = pin;
-    }
 
     public ArduinoSupportedFunction getFunction() {
         return function;
     }
 
-    public void setFunction(ArduinoSupportedFunction function) {
-        this.function = function;
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -703,24 +703,26 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup.add(setTokens);
         placePopup.add(setPlaceStatic);
         placePopup.addSeparator();
+        placePopup.add(associateNodeWithArduinoPin);
+        placePopup.addSeparator();
         placePopup.add(cutAction);
         placePopup.add(copyAction);
         placePopup.add(delete);
-        //ARDUINO
-        placePopup.addSeparator();
-        placePopup.add(associateNodeWithArduinoPin);
+
+
 
         transitionPopup = new JPopupMenu();
         transitionPopup.add(setLabel);
-        transitionPopup.add(setDelay);
         transitionPopup.add(convertTransitionToSubnet);
         transitionPopup.add(addSelectedTransitionsToSelectedRoles);
         transitionPopup.add(removeSelectedTransitionsFromSelectedRoles);
         transitionPopup.addSeparator();
+        transitionPopup.add(associateNodeWithArduinoPin);
+        transitionPopup.add(setDelay);
+        transitionPopup.addSeparator();
         transitionPopup.add(cutAction);
         transitionPopup.add(copyAction);
         transitionPopup.add(delete);
-        transitionPopup.add(associateNodeWithArduinoPin);
 
         Font boldFont = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 

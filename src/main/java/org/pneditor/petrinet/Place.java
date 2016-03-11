@@ -24,7 +24,7 @@ import org.pneditor.arduino.manager.ArduinoNodeExtension;
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class Place extends PlaceNode implements Cloneable {
-    private ArduinoNodeExtension arduinoNodeExtension;
+    private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
 
     private boolean isStatic = false;
 

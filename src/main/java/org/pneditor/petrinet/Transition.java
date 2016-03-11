@@ -35,7 +35,7 @@ public class Transition extends TransitionNode implements Cloneable {
     Integer earliestFiringTime;
     Integer latestFiringTime;
     private SimpleTimer timer;
-    private ArduinoNodeExtension arduinoNodeExtension;
+    private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
 
     @Override
     public void draw(Graphics g, DrawingOptions drawingOptions) {

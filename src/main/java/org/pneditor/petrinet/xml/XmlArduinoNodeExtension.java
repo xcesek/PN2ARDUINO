@@ -22,8 +22,10 @@ public class XmlArduinoNodeExtension {
     }
 
     public XmlArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
-        pin = arduinoNodeExtension.getPin().name();
-        function = arduinoNodeExtension.getFunction().name();
+        if (arduinoNodeExtension.isEnabled()) {
+            pin = arduinoNodeExtension.getPin().name();
+            function = arduinoNodeExtension.getFunction().name();
+        }
     }
 
 }

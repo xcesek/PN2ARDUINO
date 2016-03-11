@@ -31,6 +31,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.editor.time.SimpleTimer;
@@ -220,7 +221,14 @@ public class DocumentImporter {
         
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
-        transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));
+        if (xmlTransition.arduinoNodeExtension != null) {
+            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function )) {
+                transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));
+            }
+        } else {
+            transition.setArduinoNodeExtension(new ArduinoNodeExtension());
+        }
+
 
         return transition;
     }
