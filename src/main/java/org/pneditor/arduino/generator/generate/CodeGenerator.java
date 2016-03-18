@@ -27,7 +27,7 @@ public class CodeGenerator {
 
     private ArduinoManager arduinoManager;
 
-    private final static String[] extensions = { "h", "cpp" };
+    private final static String[] extensions = {"h", "cpp"};
 
     public CodeGenerator(ArduinoManager arduinoManager) {
         this.arduinoManager = arduinoManager;
@@ -48,9 +48,9 @@ public class CodeGenerator {
                 FileUtils.forceMkdir(projectDir);
 
                 // copy .h and .cpp files
-                List<File> headerAndClassfiles = (List<File>) FileUtils.listFiles(new File(arduinoManager.ARDUINO_RES_DIR_NAME),
+                List<File> headerAndClassFiles = (List<File>) FileUtils.listFiles(new File(arduinoManager.ARDUINO_RES_DIR_NAME),
                         extensions, false);
-                for(File f : headerAndClassfiles) {
+                for (File f : headerAndClassFiles) {
                     FileUtils.copyFileToDirectory(f, projectDir);
                 }
 
@@ -99,44 +99,59 @@ public class CodeGenerator {
 
     private String getImportsStr() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(
-                "#include \"Place.h\"\n" +
-                        "#include \"Transition.h\"\n" +
-                        "#include \"Arc.h\""
-        );
+        buffer.append("#include <Servo.h>\n");
+        buffer.append("#include \"Helper.h\"\n");
+        buffer.append("#include \"Enums.h\"\n");
+        buffer.append("#include \"Place.h\"\n");
+        buffer.append("#include \"Transition.h\"\n");
+        buffer.append("#include \"Arc.h\"\n");
+        buffer.append("\n");
 
         return buffer.toString();
     }
 
     private String getGlobalVariablesStr() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(
-                "Place place1 = Place(13);\n" +
-                        "Transition transition1 = Transition(13);\n" +
-                        "Arc arc11 = Arc(&place1, &transition1);"
-        );
+        buffer.append("// ====== places ======\n");
+        //todo Place *place0;
+        buffer.append("Place **allPlaces;\n");
+        buffer.append("int allPlacesCount;\n");
+        buffer.append("\n");
+
+        buffer.append("// ====== transitions ======\n");
+        //todo Transition *transition0;
+        buffer.append("Transition **allTransitions;\n");
+        buffer.append("int allTransitionsCount;\n");
+        buffer.append("\n");
+
+        buffer.append("// ====== arcs ======\n");
+        //todo Arc *arc0;
+        buffer.append("Arc **allArcs;\n");
+        buffer.append("int allArcsCount;\n");
+        buffer.append("\n");
 
         return buffer.toString();
     }
 
     private String getSetupStr() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(
-                "// nothing \n"
-        );
+        buffer.append("Serial.begin(9600);\n\n");
+        buffer.append("// ====== general ======\n");
+        buffer.append("allPlacesCount = 2;\n");
+        buffer.append("allPlaces = (Place**) malloc(allPlacesCount*sizeof(Place*));\n");
+        buffer.append("allTransitionsCount = 2;\n");
+        buffer.append("allTransitions = (Transition**) malloc(allTransitionsCount*sizeof(Transition*));\n");
+        buffer.append("allArcsCount = 4;\n");
+        buffer.append("allArcs = (Arc**) malloc(allArcsCount*sizeof(Arc*));\n");
+        buffer.append("\n");
+
 
         return buffer.toString();
     }
 
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(
-                "place1.activate(); \n" +
-                        "  delay(1000);\n" +
-                        "  place1.deactivate(); \n" +
-                        "  delay(4000);\n" +
-                        "  transition1.fire();\n" +
-                        "  delay(4000);");
+
 
         return buffer.toString();
     }

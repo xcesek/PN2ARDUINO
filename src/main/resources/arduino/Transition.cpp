@@ -79,12 +79,17 @@ int Transition::isActive()
   Serial.print("(transition) isActive? "); Serial.println(id);
   int internalTriggerActive = 0;
 
-  //todo
+  // internal guard
   internalTriggerActive = 1;
-  
+  for (int i = 0; i < inPlacesCount; i++) {
+    if (inPlaces[i]->getTokens() < 1) internalTriggerActive = 0;
+  }
+  Serial.print("(transition) internal > "); Serial.println(internalTriggerActive);
   if (!extended) {
     return internalTriggerActive; 
   }
+  
+  // external guard
   int readValue;
   int externalTriggerActive = 0;
   switch (functionType) {

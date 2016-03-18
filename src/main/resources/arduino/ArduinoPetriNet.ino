@@ -79,7 +79,7 @@ void loop()
     allPlaces[i]->apply();
   }
     
-  Serial.println("=================================================");
+  Serial.println("");
   delay(300);
 }
 
