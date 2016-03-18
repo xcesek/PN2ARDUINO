@@ -32,6 +32,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import org.pneditor.arduino.manager.ArduinoManager;
+
+import org.pneditor.Log;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.*;
@@ -56,6 +58,7 @@ import org.pneditor.petrinet.TransitionNode;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.ListEditor;
+import org.pneditor.util.LogEditor;
 
 /**
  * This class is the main point of the application.
@@ -80,6 +83,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         roleEditor.editButton.setToolTipText("Edit role properties");
         roleEditor.deleteButton.setToolTipText("Delete role");
         roleEditor.addListSelectionListener(this);
+
+        logEditor = new LogEditor("Run:", getParentFrame());
 
         setupMainFrame();
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -200,6 +205,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
     // List editor - per tab
     protected ListEditor<Role> roleEditor; //TODO
+    protected LogEditor logEditor; //TODO
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -639,7 +645,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         JMenu arduinoMeno = new JMenu("Arduino");
         arduinoMeno.setMnemonic('W');
         menuBar.add(arduinoMeno);
-        
+
         
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(new AboutAction(this));
@@ -760,6 +766,15 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         mainFrame.add(splitPane, BorderLayout.CENTER);
         mainFrame.add(toolBar, BorderLayout.NORTH);
+
+        JSplitPane splitPaneForLog = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPaneForLog.setDividerSize(12);
+        splitPaneForLog.setOneTouchExpandable(true);
+        splitPaneForLog.setLeftComponent(splitPane);
+        splitPaneForLog.setRightComponent(logEditor);
+        splitPaneForLog.setDividerLocation(220);
+
+        mainFrame.add(splitPaneForLog, BorderLayout.CENTER);
 
         mainFrame.addWindowListener(this);
         mainFrame.setLocation(50, 50);
