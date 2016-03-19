@@ -48,26 +48,26 @@ public class AddSelectedTransitionsToSelectedRolesAction extends AbstractAction 
     }
 
     public void actionPerformed(ActionEvent e) {
-        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
-        Set<Transition> selectedTransitions = new HashSet<Transition>();
-        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively());
-        if (root.getClickedElement() instanceof Subnet) {
-            Subnet subnet = (Subnet) root.getClickedElement();
-            selectedTransitions.addAll(subnet.getTransitionsRecursively());
-        } else if (root.getClickedElement() instanceof Transition) {
-            selectedTransitions.add((Transition) root.getClickedElement());
-        }
-
-        boolean change = false;
-        for (Role role : selectedRoles) {
-            if (!role.transitions.containsAll(selectedTransitions)) {
-                change = true;
-                break;
-            }
-        }
-
-        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
-            root.getUndoManager().executeCommand(new AddTransitionsToRolesCommand(selectedTransitions, selectedRoles));
-        }
-    }
+//        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
+//        Set<Transition> selectedTransitions = new HashSet<Transition>();
+//        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively());
+//        if (root.getClickedElement() instanceof Subnet) {
+//            Subnet subnet = (Subnet) root.getClickedElement();
+//            selectedTransitions.addAll(subnet.getTransitionsRecursively());
+//        } else if (root.getClickedElement() instanceof Transition) {
+//            selectedTransitions.add((Transition) root.getClickedElement());
+//        }
+//
+//        boolean change = false;
+//        for (Role role : selectedRoles) {
+//            if (!role.transitions.containsAll(selectedTransitions)) {
+//                change = true;
+//                break;
+//            }
+//        }
+//
+//        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
+//            root.getUndoManager().executeCommand(new AddTransitionsToRolesCommand(selectedTransitions, selectedRoles));
+//        }
+   }
 }

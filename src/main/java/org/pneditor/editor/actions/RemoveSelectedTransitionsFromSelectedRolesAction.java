@@ -49,26 +49,26 @@ public class RemoveSelectedTransitionsFromSelectedRolesAction extends AbstractAc
     }
 
     public void actionPerformed(ActionEvent e) {
-        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
-        Set<Transition> selectedTransitions = new HashSet<Transition>();
-        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively()); //TODO: cleanup - selection - included clickedElement
-        if (root.getClickedElement() instanceof Subnet) {
-            Subnet subnet = (Subnet) root.getClickedElement();
-            selectedTransitions.addAll(subnet.getTransitionsRecursively());
-        } else if (root.getClickedElement() instanceof Transition) {
-            selectedTransitions.add((Transition) root.getClickedElement());
-        }
-
-        boolean change = false;
-        for (Role role : selectedRoles) {
-            if (CollectionTools.containsAtLeastOne(role.transitions, selectedTransitions)) {
-                change = true;
-                break;
-            }
-        }
-
-        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
-            root.getUndoManager().executeCommand(new RemoveTransitionsFromRolesCommand(selectedTransitions, selectedRoles));
-        }
+//        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
+//        Set<Transition> selectedTransitions = new HashSet<Transition>();
+//        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively()); //TODO: cleanup - selection - included clickedElement
+//        if (root.getClickedElement() instanceof Subnet) {
+//            Subnet subnet = (Subnet) root.getClickedElement();
+//            selectedTransitions.addAll(subnet.getTransitionsRecursively());
+//        } else if (root.getClickedElement() instanceof Transition) {
+//            selectedTransitions.add((Transition) root.getClickedElement());
+//        }
+//
+//        boolean change = false;
+//        for (Role role : selectedRoles) {
+//            if (CollectionTools.containsAtLeastOne(role.transitions, selectedTransitions)) {
+//                change = true;
+//                break;
+//            }
+//        }
+//
+//        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
+//            root.getUndoManager().executeCommand(new RemoveTransitionsFromRolesCommand(selectedTransitions, selectedRoles));
+//        }
     }
 }

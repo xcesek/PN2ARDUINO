@@ -52,30 +52,30 @@ public class RoleFeature implements Feature {
         Set<TransitionNode> fullyIncluded = null;
         Set<Subnet> mixedIncluded = new HashSet<Subnet>();
 
-        for (Role role : PNEditor.getRoot().getRoleEditor().getSelectedElements()) {
-            Set<TransitionNode> included = new HashSet<TransitionNode>();
-
-            for (Transition transition : PNEditor.getRoot().getDocument().petriNet.getCurrentSubnet().getTransitions()) {
-                if (role.transitions.contains(transition)) {
-                    included.add(transition);
-                }
-            }
-            for (Subnet subnet : PNEditor.getRoot().getDocument().petriNet.getCurrentSubnet().getSubnets()) {
-                Set<Transition> transitions = subnet.getTransitionsRecursively();
-                if (role.transitions.containsAll(transitions)) {
-                    included.add(subnet);
-                } else if (CollectionTools.containsAtLeastOne(role.transitions, transitions)) {
-                    mixedIncluded.add(subnet);
-                }
-            }
-
-            if (fullyIncluded == null) {
-                fullyIncluded = new HashSet<TransitionNode>();
-                fullyIncluded.addAll(included);
-            }
-            partiallyIncluded.addAll(included);
-            fullyIncluded.retainAll(included);
-        }
+//        for (Role role : PNEditor.getRoot().getRoleEditor().getSelectedElements()) {
+//            Set<TransitionNode> included = new HashSet<TransitionNode>();
+//
+//            for (Transition transition : PNEditor.getRoot().getDocument().petriNet.getCurrentSubnet().getTransitions()) {
+//                if (role.transitions.contains(transition)) {
+//                    included.add(transition);
+//                }
+//            }
+//            for (Subnet subnet : PNEditor.getRoot().getDocument().petriNet.getCurrentSubnet().getSubnets()) {
+//                Set<Transition> transitions = subnet.getTransitionsRecursively();
+//                if (role.transitions.containsAll(transitions)) {
+//                    included.add(subnet);
+//                } else if (CollectionTools.containsAtLeastOne(role.transitions, transitions)) {
+//                    mixedIncluded.add(subnet);
+//                }
+//            }
+//
+//            if (fullyIncluded == null) {
+//                fullyIncluded = new HashSet<TransitionNode>();
+//                fullyIncluded.addAll(included);
+//            }
+//            partiallyIncluded.addAll(included);
+//            fullyIncluded.retainAll(included);
+//        }
 
         if (fullyIncluded != null) {
             partiallyIncluded.removeAll(fullyIncluded);

@@ -76,13 +76,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         loadPreferences();
         selection.setSelectionChangedListener(this);
 
-        roleEditor = new ListEditor<Role>("Roles", document.roles, getParentFrame());
-        roleEditor.addButton.setIcon(GraphicsTools.getIcon("pneditor/addrole.gif"));
-        roleEditor.deleteButton.setIcon(GraphicsTools.getIcon("pneditor/deleterole.gif"));
-        roleEditor.addButton.setToolTipText("Add role");
-        roleEditor.editButton.setToolTipText("Edit role properties");
-        roleEditor.deleteButton.setToolTipText("Delete role");
-        roleEditor.addListSelectionListener(this);
+//        roleEditor = new ListEditor<Role>("Roles", document.roles, getParentFrame());
+//        roleEditor.addButton.setIcon(GraphicsTools.getIcon("pneditor/addrole.gif"));
+//        roleEditor.deleteButton.setIcon(GraphicsTools.getIcon("pneditor/deleterole.gif"));
+//        roleEditor.addButton.setToolTipText("Add role");
+//        roleEditor.editButton.setToolTipText("Edit role properties");
+//        roleEditor.deleteButton.setToolTipText("Delete role");
+//        roleEditor.addListSelectionListener(this);
 
         logEditor = new LogEditor("Run:", getParentFrame());
 
@@ -162,7 +162,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     public void setDocument(Document document) {
         this.document = document;
         getDocument().petriNet.resetView();
-        getRoleEditor().setModel(getDocument().roles);
+//        getRoleEditor().setModel(getDocument().roles);
         getUndoManager().eraseAll();
         refreshAll();
     }
@@ -204,7 +204,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     }
 
     // List editor - per tab
-    protected ListEditor<Role> roleEditor; //TODO
+//    protected ListEditor<Role> roleEditor; //TODO
     protected LogEditor logEditor; //TODO
 
     @Override
@@ -279,10 +279,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return token.isSelected();
     }
 
-    @Override
-    public ListEditor<Role> getRoleEditor() {
-        return roleEditor;
-    }
+//    @Override
+//    public ListEditor<Role> getRoleEditor() {
+//        return roleEditor;
+//    }
 
     @Override
     public JPopupMenu getPlacePopup() {
@@ -358,7 +358,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     public void refreshAll() {
         canvas.repaint();
         enableOnlyPossibleActions();
-        getRoleEditor().refreshSelected();
+//        getRoleEditor().refreshSelected();
     }
 
     @Override
@@ -382,7 +382,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         boolean areSubnets = !selection.getSubnets().isEmpty();
         boolean areTransitionNodes = !selection.getTransitionNodes().isEmpty();
         boolean areTransitions = !selection.getTransitions().isEmpty();
-        boolean roleSelected = !roleEditor.getSelectedElements().isEmpty();
+//        boolean roleSelected = !roleEditor.getSelectedElements().isEmpty();
         boolean isParent = !document.petriNet.isCurrentSubnetRoot();
         boolean isPtoT = false;
 
@@ -403,8 +403,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setTokens.setEnabled(isPlaceNode);
         setLabel.setEnabled(isPlaceNode || isTransitionNode);
         setDelay.setEnabled(isTransitionNode);
-        addSelectedTransitionsToSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
-        removeSelectedTransitionsFromSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
+//        addSelectedTransitionsToSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
+//        removeSelectedTransitionsFromSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
         convertTransitionToSubnet.setEnabled(isTransition || areTransitions || isSubnet || areSubnets);
         replaceSubnet.setEnabled(isSubnet || areSubnets);
         saveSubnetAs.setEnabled(isSubnet);
@@ -758,9 +758,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arcEdgePopup.add(delete);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
-        splitPane.setDividerSize(6);
+        splitPane.setDividerSize(1);
         splitPane.setOneTouchExpandable(true);
-        splitPane.setLeftComponent(getRoleEditor());
+//        splitPane.setLeftComponent(getRoleEditor());
         splitPane.setRightComponent(drawingBoard);
         splitPane.setDividerLocation(120);
 

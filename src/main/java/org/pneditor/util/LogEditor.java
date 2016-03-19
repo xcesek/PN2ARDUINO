@@ -11,25 +11,30 @@ import java.util.Date;
  * Created by Laci on 07.03.2016.
  */
 public class LogEditor extends JPanel implements ActionListener {
-    private JScrollPane scrollPanelPNeditor, scrollPanelArduino;
-    private JTextArea textAreaPNeditorLog, textAreaArduinoLog;
+    private JScrollPane scrollPanelPneditor, scrollPanelArduino;
+    private JTextArea textAreaPneditorLog, textAreaArduinoLog;
     private JPanel topPanel, buttonBar;
     public JButton pneditorButton, arduinoButton;
     private JLabel title;
-    private Frame parent;
+    private Frame parentFrame;
     private final static String newline = "\n";
 
+    public enum logType {
+        ARDUINO, PNEDITOR
+    }
+    private logType textAreaType;
+
     public LogEditor(String title, Frame parent) {
-        this.parent = parent;
-        textAreaPNeditorLog = new JTextArea(5, 20);
+        this.parentFrame = parent;
+        textAreaPneditorLog = new JTextArea(5, 20);
         textAreaArduinoLog = new JTextArea(5, 20);
 
-        textAreaPNeditorLog.setEditable(false);
+        textAreaPneditorLog.setEditable(false);
         textAreaArduinoLog.setEditable(false);
 
         setLayout(new BorderLayout());
 
-        scrollPanelPNeditor = new JScrollPane(textAreaPNeditorLog);
+        scrollPanelPneditor = new JScrollPane(textAreaPneditorLog);
         scrollPanelArduino = new JScrollPane(textAreaArduinoLog);
 
         buttonBar = new JPanel(new GridLayout(1, 3));
@@ -51,32 +56,48 @@ public class LogEditor extends JPanel implements ActionListener {
         topPanel = new JPanel(new BorderLayout());
         topPanel.add(this.title, BorderLayout.NORTH);
         topPanel.add(buttonBar, BorderLayout.CENTER);
-
         this.add(topPanel, BorderLayout.NORTH);
-        this.add(scrollPanelPNeditor, BorderLayout.CENTER);
+
+        this.add(scrollPanelArduino, BorderLayout.CENTER);
+        this.add(scrollPanelPneditor, BorderLayout.CENTER);
 
         pneditorButton.addActionListener(this);
         arduinoButton.addActionListener(this);
-
-        this.setEntry("test log message for PNeditor",textAreaPNeditorLog);
     }
 
-    public void setEntry(String entry, JTextArea textarea) {
+    public void log(String logMessage, logType textAreaType) {
+
         SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");
         Date d = new Date();
 
-        textarea.append("[" + s.format(d) + "] " + entry + newline);
-        textarea.setCaretPosition(textarea.getDocument().getLength());
+        switch(textAreaType){
+            case ARDUINO:
+                textAreaArduinoLog.append("[" + s.format(d) + "] " + logMessage + newline);
+                textAreaArduinoLog.setCaretPosition(textAreaArduinoLog.getDocument().getLength());
+                break;
+            case PNEDITOR:
+                textAreaPneditorLog.append("[" + s.format(d) + "] " + logMessage + newline);
+                textAreaPneditorLog.setCaretPosition(textAreaPneditorLog.getDocument().getLength());
+                break;
+            default:
+                System.out.println("LogType not found!");
+                break;
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
+
+        this.revalidate();
         if (e.getSource().equals(pneditorButton)) {
             this.remove(scrollPanelArduino);
-            this.add(scrollPanelPNeditor, BorderLayout.CENTER);
+            this.add(scrollPanelPneditor, BorderLayout.CENTER);
+            this.log("test log message for PNeditor",textAreaType.PNEDITOR);
+            this.repaint();
         } else if (e.getSource().equals(arduinoButton)) {
-            this.remove(scrollPanelPNeditor);
+            this.remove(scrollPanelPneditor);
             this.add(scrollPanelArduino, BorderLayout.CENTER);
-            this.setEntry("test log message for arduino board",textAreaArduinoLog);
+            this.log("test log message for arduino board",textAreaType.ARDUINO);
+            this.repaint();
         }
     }
 

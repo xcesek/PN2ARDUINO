@@ -79,7 +79,7 @@ public interface Root {
 
     public boolean isSelectedTool_Token();
 
-    public ListEditor<Role> getRoleEditor();
+//    public ListEditor<Role> getRoleEditor();
 
     public JPopupMenu getPlacePopup();
 
