@@ -16,49 +16,35 @@
  */
 package org.pneditor.editor;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.*;
-import java.io.File;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.prefs.Preferences;
-import javax.swing.*;
-import javax.swing.event.*;
-
 import org.pneditor.arduino.manager.ArduinoManager;
-
-import org.pneditor.Log;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.*;
-import org.pneditor.editor.canvas.*;
-import org.pneditor.editor.filechooser.EpsFileType;
-import org.pneditor.editor.filechooser.FileType;
-import org.pneditor.editor.filechooser.FileTypeException;
-import org.pneditor.editor.filechooser.PflowFileType;
-import org.pneditor.editor.filechooser.PngFileType;
-import org.pneditor.editor.filechooser.ViptoolPnmlFileType;
+import org.pneditor.editor.canvas.Canvas;
+import org.pneditor.editor.canvas.Selection;
+import org.pneditor.editor.canvas.SelectionChangedListener;
+import org.pneditor.editor.filechooser.*;
 import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.petrinet.Arc;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.Element;
-import org.pneditor.petrinet.Marking;
-import org.pneditor.petrinet.PlaceNode;
-import org.pneditor.petrinet.ReferencePlace;
-import org.pneditor.petrinet.Role;
-import org.pneditor.petrinet.Subnet;
-import org.pneditor.petrinet.Transition;
-import org.pneditor.petrinet.TransitionNode;
+import org.pneditor.petrinet.*;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.ListEditor;
 import org.pneditor.util.LogEditor;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 /**
  * This class is the main point of the application.
@@ -329,7 +315,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action replaceSubnet;
     protected Action saveSubnetAs;
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
-    
+
     protected Action runTimer;
     protected Action setTimingPolicy;
 
@@ -521,7 +507,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         openSubnet = new OpenSubnetAction(this);
         closeSubnet = new CloseSubnetAction(this);
         delete = new DeleteAction(this);
-        
+
         runTimer = new RunTimerAction(this);
         setTimingPolicy = new SetTimingPolicyAction(this);
 
@@ -555,7 +541,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         transition = new JToggleButton(selectTool_TransitionAction);
         arc = new JToggleButton(selectTool_ArcAction);
         token = new JToggleButton(selectTool_TokenAction);
-        
+
 
         select.setText("");
         place.setText("");
@@ -596,7 +582,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.addSeparator();
         toolBar.add(addSelectedTransitionsToSelectedRoles);
         toolBar.add(removeSelectedTransitionsFromSelectedRoles);
-        
+
         toolBar.addSeparator();
         toolBar.add(token);
 
@@ -637,7 +623,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         //asus 2012 algorithms submenu items
         algorithmsMenu.add(new BoundednessAction(this));
-        
+
         JMenu timeMenu = new JMenu("Time");
         timeMenu.setMnemonic('T');
         menuBar.add(timeMenu);
@@ -646,7 +632,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoMeno.setMnemonic('W');
         menuBar.add(arduinoMeno);
 
-        
+
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(new AboutAction(this));
         menuBar.add(helpMenu);
@@ -693,7 +679,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         subnetMenu.add(replaceSubnet);
         subnetMenu.add(saveSubnetAs);
         subnetMenu.add(convertTransitionToSubnet);
-        
+
         timeMenu.add(setTimingPolicy);
         timeMenu.add(runTimer);
 
@@ -701,7 +687,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoMeno.add(setBoard);
         arduinoMeno.add(generateCode);
         arduinoMeno.add(uploadCode);
-
 
 
         placePopup = new JPopupMenu();
@@ -714,7 +699,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup.add(cutAction);
         placePopup.add(copyAction);
         placePopup.add(delete);
-
 
 
         transitionPopup = new JPopupMenu();
@@ -751,7 +735,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         arcEdgePopup = new JPopupMenu();
         arcEdgePopup.add(setArcMultiplicity);
-        
+
         arcEdgePopup.add(setArcInhibitory);
         arcEdgePopup.add(setArcReset);
 
@@ -843,10 +827,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     public DrawingBoard getDrawingBoard() {
         return drawingBoard;
     }
-   
-    
+
+
     protected GlobalTimer globalTimer = new GlobalTimer();
-   
+
     @Override
     public GlobalTimer getGlobalTimer() {
         return globalTimer;
