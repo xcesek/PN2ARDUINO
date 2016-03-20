@@ -91,12 +91,10 @@ public class LogEditor extends JPanel implements ActionListener {
         if (e.getSource().equals(pneditorButton)) {
             this.remove(scrollPanelArduino);
             this.add(scrollPanelPneditor, BorderLayout.CENTER);
-            this.log("test log message for PNeditor",textAreaType.PNEDITOR);
             this.repaint();
         } else if (e.getSource().equals(arduinoButton)) {
             this.remove(scrollPanelPneditor);
             this.add(scrollPanelArduino, BorderLayout.CENTER);
-            this.log("test log message for arduino board",textAreaType.ARDUINO);
             this.repaint();
         }
     }

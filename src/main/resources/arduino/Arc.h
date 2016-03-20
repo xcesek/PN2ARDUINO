@@ -2,18 +2,27 @@
 #define Arc_h
 
 #include "Arduino.h"
-#include "Place.h"
-#include "Transition.h"
+#include "Helper.h"
+#include "Enums.h"
+#include "Node.h"
 
 class Arc
 {
   private:
-    int type;
-    Place *place;
-    Transition *transition;
+    Node *source;
+    Node *destination;
+    ArcType type;
+    int multiplicity;
     
   public:
-    Arc(Place *_place, Transition *_transition);
+    Arc(Node *source, Node *destination);
+    Arc(Node *source, Node *destination, ArcType type, int multiplicity);
+    int getMultiplicity();
+    ArcType getType();
+    Node* getSource();
+    Node* getDestination();
+    Node* getPlaceNode();
+    Node* getTransitionNode();
 };
 
 #endif

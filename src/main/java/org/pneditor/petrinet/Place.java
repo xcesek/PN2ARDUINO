@@ -25,7 +25,7 @@ import org.pneditor.arduino.manager.ArduinoNodeExtension;
  */
 public class Place extends PlaceNode implements Cloneable {
     private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
-
+    private int capacity = 10;
     private boolean isStatic = false;
 
     @Override
@@ -44,5 +44,13 @@ public class Place extends PlaceNode implements Cloneable {
 
     public void setArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
         this.arduinoNodeExtension = arduinoNodeExtension;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

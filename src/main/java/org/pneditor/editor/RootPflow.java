@@ -193,6 +193,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //    protected ListEditor<Role> roleEditor; //TODO
     protected LogEditor logEditor; //TODO
 
+    public LogEditor getLogEditor() {
+        return logEditor;
+    }
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
         enableOnlyPossibleActions();

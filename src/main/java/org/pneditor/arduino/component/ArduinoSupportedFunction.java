@@ -14,25 +14,25 @@ public enum ArduinoSupportedFunction {
             return "Digital IN";
         }
     },
-    DIGITAL_OUT{
+    DIGITAL_OUT {
         @Override
         public String toString() {
             return "Digital OUT";
         }
     },
-    ANALOG_IN{
+    ANALOG_IN {
         @Override
         public String toString() {
             return "Analog IN";
         }
     },
-    ANALOG_OUT{
+    ANALOG_OUT {
         @Override
         public String toString() {
             return "Analog OUT (PWM)";
         }
     },
-    SERVO{
+    SERVO {
         @Override
         public String toString() {
             return "Servo";

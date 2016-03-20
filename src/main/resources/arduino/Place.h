@@ -3,15 +3,15 @@
 
 #include <Servo.h> 
 #include "Arduino.h"
+#include "Node.h"
 #include "Helper.h"
+#include "Enums.h"
 
-class Place
+
+
+class Place : public Node
 {
   private:
-    char *id;
-    int pin;
-    FunctionType functionType;
-    int extended;
     int tokens;
     int capacity;
     

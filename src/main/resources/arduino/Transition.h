@@ -3,31 +3,32 @@
 
 #include "Arduino.h"
 #include "Helper.h"
+#include "Enums.h"
+#include "Arc.h"
 #include "Place.h"
 
-class Transition
+class Transition : public Node
 {
   private:
-    char *id;
-    int pin;
-    FunctionType functionType;
-    int extended;
+    Arc **connectedArcs;
+    int connectedArcsCount;
     
-    Place **inPlaces;
-    int inPlacesCount;
-    Place **outPlaces;
-    int outPlacesCount;
-    int analogTreshold;
-    int analogTresholdRangeLow;
-    int analogTresholdRangeHigh;
+    int analogThreshold;
+    int analogThresholdRangeLow;
+    int analogThresholdRangeHigh;
     
   public:
-    Transition(char* id, Place **_inPlaces, int _inPlacesCount, Place **_outPlaces, int _outPlacesCount);
-    Transition(char* id, int _pin, FunctionType _functionType, Place **_inPlaces, int _inPlacesCount, Place **_outPlaces, int _outPlacesCount);
+    Transition(char* id);
+    Transition(char* id, int _pin, FunctionType _functionType);
     void fire();
-    int isActive();
-    void setAnalogTreshold(int _analogTreshold);
-    void setAnalogTresholdRange(int _analogTresholdRangeLow, int _analogTresholdRangeHigh);
+    int isEnabled();
+    void setConnectedArcs(Arc **arcs);
+    void setConnectedArcsCount(int count);
+    Arc **getConnectedArcs();
+    int getConnectedArcsCount();
+    
+    void setAnalogThreshold(int _analogTreshold);
+    void setAnalogThresholdRange(int _analogTresholdRangeLow, int _analogTresholdRangeHigh);
 };
 
 #endif

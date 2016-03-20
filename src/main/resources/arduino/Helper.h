@@ -2,10 +2,12 @@
 #define Helper_h
 
 #include "Arduino.h"
+#include "Node.h"
 
-enum FunctionType {
-  digitalIn, digitalOut, analogIn, analogOut, servo 
+class Helper
+{
+public:
+    static void log(int enabled, char *str1, char *str2);
 };
-
 
 #endif

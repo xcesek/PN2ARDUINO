@@ -24,7 +24,9 @@ import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.arduino.settings.BoardType;
 import org.pneditor.editor.Root;
+import org.pneditor.editor.RootPflow;
 import org.pneditor.util.GraphicsTools;
+import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -77,18 +79,21 @@ public class UploadWithPopupAction extends AbstractAction {
             if (value == JOptionPane.YES_OPTION) {
 
                 // generate
-                CodeGenerator codeGenerator = new CodeGenerator(arduinoManager);
+                CodeGenerator codeGenerator = new CodeGenerator(arduinoManager, root.getCurrentMarking());
+                writeCodeToConsole("Generating code for Arduino from current Petri Net.");
                 String generatedCode = codeGenerator.generate();
-                System.out.println(generatedCode);
+                writeCodeToConsole(generatedCode);
 
                 // upload
                 CodeUploader codeUploader = CodeUploaderFactory.getCodeUploader(boardSettings.getBoardType());
                 codeUploader.setPort(boardSettings.getPort());
                 codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
 
+                writeCodeToConsole("Starting to upload code.");
                 new Thread(() -> {
                     UploadResponse response = codeUploader.upload();
-                    System.out.println(response.getCmdOutput());
+                    writeCodeToConsole("Uploading finished.");
+
                 }).start();
 
             }
@@ -109,5 +114,10 @@ public class UploadWithPopupAction extends AbstractAction {
         objects[3] = portField;
 
         return objects;
+    }
+
+    private void writeCodeToConsole(String logMessage) {
+        LogEditor logEditor = ((RootPflow) root).getLogEditor();
+        logEditor.log(logMessage, LogEditor.logType.ARDUINO);
     }
 }

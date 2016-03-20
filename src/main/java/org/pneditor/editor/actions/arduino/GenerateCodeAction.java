@@ -16,19 +16,15 @@
  */
 package org.pneditor.editor.actions.arduino;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.text.StrSubstitutor;
 import org.pneditor.arduino.generator.generate.CodeGenerator;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.Root;
+import org.pneditor.editor.RootPflow;
 import org.pneditor.util.GraphicsTools;
+import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GenerateCodeAction extends AbstractAction {
 
@@ -52,18 +48,23 @@ public class GenerateCodeAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
 
-            CodeGenerator codeGenerator = new CodeGenerator(arduinoManager);
+            writeCodeToConsole("Generating code for Arduino from current Petri Net.");
+            CodeGenerator codeGenerator = new CodeGenerator(arduinoManager,
+                    root.getCurrentMarking());
             String generatedCode = codeGenerator.generate();
+            writeCodeToConsole(generatedCode);
 
             alreadyGenerated = true;
             root.refreshAll();
-
-            JOptionPane.showMessageDialog(root.getParentFrame(),
-                    generatedCode);
         }
     }
 
     public boolean isAlreadyGenerated() {
         return alreadyGenerated;
+    }
+
+    private void writeCodeToConsole(String logMessage) {
+        LogEditor logEditor = ((RootPflow) root).getLogEditor();
+        logEditor.log(logMessage, LogEditor.logType.ARDUINO);
     }
 }

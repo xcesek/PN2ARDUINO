@@ -3,15 +3,13 @@ package org.pneditor.arduino.generator.generate;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.pneditor.arduino.manager.ArduinoManager;
+import org.pneditor.petrinet.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Pavol Cesek on 2/27/2016.
@@ -26,11 +24,15 @@ public class CodeGenerator {
     private File sketchTemplateFile;
 
     private ArduinoManager arduinoManager;
+    private Subnet subnet;
+    private Marking marking;
 
     private final static String[] extensions = {"h", "cpp"};
 
-    public CodeGenerator(ArduinoManager arduinoManager) {
+    public CodeGenerator(ArduinoManager arduinoManager, Marking marking) {
         this.arduinoManager = arduinoManager;
+        this.marking = marking;
+        this.subnet = marking.getPetriNet().getCurrentSubnet();
 
         projectDir = new File(arduinoManager.getProjectDirName());
         mainSketchFile = new File(projectDir + File.separator + arduinoManager.MAIN_SKETCH_FILE_NAME);
@@ -113,19 +115,23 @@ public class CodeGenerator {
     private String getGlobalVariablesStr() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("// ====== places ======\n");
-        //todo Place *place0;
+
+        Set<Place> places = subnet.getPlaces();
+        places.forEach(p -> buffer.append("Place *p_" + p.getId() + ";\n"));
         buffer.append("Place **allPlaces;\n");
         buffer.append("int allPlacesCount;\n");
         buffer.append("\n");
 
         buffer.append("// ====== transitions ======\n");
-        //todo Transition *transition0;
+        Set<Transition> transitions = subnet.getTransitions();
+        transitions.forEach(t -> buffer.append("Transition *t_" + t.getId() + ";\n"));
         buffer.append("Transition **allTransitions;\n");
         buffer.append("int allTransitionsCount;\n");
         buffer.append("\n");
 
         buffer.append("// ====== arcs ======\n");
-        //todo Arc *arc0;
+        Set<Arc> arcs = subnet.getArcs();
+        arcs.forEach(a -> buffer.append("Arc *a_" + a.hashCode() + ";\n"));
         buffer.append("Arc **allArcs;\n");
         buffer.append("int allArcsCount;\n");
         buffer.append("\n");
@@ -134,17 +140,82 @@ public class CodeGenerator {
     }
 
     private String getSetupStr() {
+        Set<Place> places = subnet.getPlaces();
+        Set<Transition> transitions = subnet.getTransitions();
+        Set<Arc> arcs = subnet.getArcs();
+
         StringBuffer buffer = new StringBuffer();
         buffer.append("Serial.begin(9600);\n\n");
         buffer.append("// ====== general ======\n");
-        buffer.append("allPlacesCount = 2;\n");
+        buffer.append("allPlacesCount = " + places.size() + ";\n");
         buffer.append("allPlaces = (Place**) malloc(allPlacesCount*sizeof(Place*));\n");
-        buffer.append("allTransitionsCount = 2;\n");
+        buffer.append("allTransitionsCount = " + transitions.size() + ";\n");
         buffer.append("allTransitions = (Transition**) malloc(allTransitionsCount*sizeof(Transition*));\n");
-        buffer.append("allArcsCount = 4;\n");
+        buffer.append("allArcsCount = " + arcs.size() + ";\n");
         buffer.append("allArcs = (Arc**) malloc(allArcsCount*sizeof(Arc*));\n");
         buffer.append("\n");
 
+        buffer.append("// ====== places ======\n");
+        CustomCounter placeOrd = new CustomCounter();
+        places.forEach(p -> {
+            if (p.getArduinoNodeExtension().isEnabled()) {
+                buffer.append("p_" + p.getId()
+                        + " = new Place(\"p_" + p.getId() + "\", "
+                        + p.getArduinoNodeExtension().getPin().getNumber() + ", "
+                        + p.getArduinoNodeExtension().getFunction().name() + ");\n");
+            } else {
+                buffer.append("p_" + p.getId()
+                        + " = new Place(\"p_" + p.getId() + "\");\n");
+            }
+
+            buffer.append("p_" + p.getId()
+                    + "->setCapacity(" + p.getCapacity() + ");\n");
+            buffer.append("p_" + p.getId()
+                    + "->setTokens(" + marking.getTokens(p) + ");\n");
+            buffer.append("allPlaces[" + placeOrd.getNumber() + "] = p_" + p.getId() + ";\n");
+
+        });
+
+        buffer.append("\n// ====== transitions ======\n");
+        CustomCounter transOrd = new CustomCounter();
+        transitions.forEach(t -> {
+            if (t.getArduinoNodeExtension().isEnabled()) {
+                buffer.append("t_" + t.getId()
+                        + " = new Transition(\"t_" + t.getId() + "\", "
+                        + t.getArduinoNodeExtension().getPin().getNumber() + ", "
+                        + t.getArduinoNodeExtension().getFunction().name() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setAnalogThreshold(80);\n"); // todo
+            } else {
+                buffer.append("t_" + t.getId()
+                        + " = new Transition(\"t_" + t.getId() + "\");\n");
+            }
+
+            buffer.append("allTransitions[" + transOrd.getNumber() + "] = t_" + t.getId() + ";\n");
+        });
+
+        buffer.append("\n// ====== arcs ======\n");
+        CustomCounter arcsOrd = new CustomCounter();
+        arcs.forEach(a -> {
+            buffer.append("a_" + a.hashCode()
+                    + " = new Arc("
+                    + (a.getSource() instanceof Place ? "p_" : "t_") + a.getSource().getId() + ", "     // just a simple hack :)
+                    + (a.getDestination() instanceof Place ? "p_" : "t_") + a.getDestination().getId() + ");\n");
+
+            buffer.append("allArcs[" + arcsOrd.getNumber() + "] = a_" + a.hashCode() + ";\n");
+        });
+
+        buffer.append("\n// ====== wiring parts together ======\n");
+        transOrd.reset();
+        transitions.forEach(t -> {
+            buffer.append("Arc** ta_" + t.getId() + " = (Arc**) malloc( " + t.getConnectedArcs().size() + "*sizeof(Arc*));\n");
+            CustomCounter conArcsOrd = new CustomCounter();
+            t.getConnectedArcs().forEach(a -> {
+                buffer.append("ta_" + t.getId() + "[" + conArcsOrd.getNumber() + "] = a_" + a.hashCode() + ";\n");
+            });
+            buffer.append("t_" + t.getId() + "->setConnectedArcs(ta_" + t.getId() + ");\n");
+            buffer.append("t_" + t.getId() + "->setConnectedArcsCount(" + t.getConnectedArcs().size() + ");\n");
+        });
 
         return buffer.toString();
     }
@@ -152,7 +223,32 @@ public class CodeGenerator {
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
 
+        buffer.append("for (int i = 0; i < allTransitionsCount; i++) {\n" +
+                "    if (allTransitions[i]->isEnabled()) {     // todo: more facny logic\n" +
+                "      allTransitions[i]->fire();\n" +
+                "    }\n" +
+                "  }\n" +
+                "  \n" +
+                "  for (int i = 0; i < allPlacesCount; i++) {\n" +
+                "    allPlaces[i]->apply();\n" +
+                "  }\n" +
+                "    \n" +
+                "  Serial.println(\"=================================================\");\n" +
+                "  delay(70);");
 
         return buffer.toString();
+    }
+
+
+    private class CustomCounter {
+        private int i = 0;
+
+        public int getNumber() {
+            return i++;
+        }
+
+        public void reset() {
+            i = 0;
+        }
     }
 }
