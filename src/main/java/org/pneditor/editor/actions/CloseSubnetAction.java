@@ -26,25 +26,25 @@ import org.pneditor.util.GraphicsTools;
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
-public class CloseSubnetAction extends AbstractAction {
-
-    private Root root;
-
-    public CloseSubnetAction(Root root) {
-        this.root = root;
-        String name = "Close subnet";
-        putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/closesubnet.gif"));
-        putValue(SHORT_DESCRIPTION, name);
-        putValue(MNEMONIC_KEY, KeyEvent.VK_C);
-        setEnabled(false);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (root.getDocument().petriNet.isCurrentSubnetRoot() == false) {
-            root.getDocument().petriNet.closeSubnet();
-            root.setClickedElement(null);
-            root.refreshAll();
-        }
-    }
-}
+//public class CloseSubnetAction extends AbstractAction {
+//
+//    private Root root;
+//
+//    public CloseSubnetAction(Root root) {
+//        this.root = root;
+//        String name = "Close subnet";
+//        putValue(NAME, name);
+//        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/closesubnet.gif"));
+//        putValue(SHORT_DESCRIPTION, name);
+//        putValue(MNEMONIC_KEY, KeyEvent.VK_C);
+//        setEnabled(false);
+//    }
+//
+//    public void actionPerformed(ActionEvent e) {
+//        if (root.getDocument().petriNet.isCurrentSubnetRoot() == false) {
+//            root.getDocument().petriNet.closeSubnet();
+//            root.setClickedElement(null);
+//            root.refreshAll();
+//        }
+//    }
+//}

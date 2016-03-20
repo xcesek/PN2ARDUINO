@@ -33,21 +33,21 @@ import org.pneditor.util.GraphicsTools;
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
-public class AddSelectedTransitionsToSelectedRolesAction extends AbstractAction {
-
-    private Root root;
-
-    public AddSelectedTransitionsToSelectedRolesAction(Root root) {
-        this.root = root;
-        String name = "Add transition(s) to role(s)";
-        putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/addtorole16.gif"));
-        putValue(SHORT_DESCRIPTION, name);
-        putValue(MNEMONIC_KEY, KeyEvent.VK_A);
-        setEnabled(false);
-    }
-
-    public void actionPerformed(ActionEvent e) {
+//public class AddSelectedTransitionsToSelectedRolesAction extends AbstractAction {
+//
+//    private Root root;
+//
+//    public AddSelectedTransitionsToSelectedRolesAction(Root root) {
+//        this.root = root;
+//        String name = "Add transition(s) to role(s)";
+//        putValue(NAME, name);
+//        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/addtorole16.gif"));
+//        putValue(SHORT_DESCRIPTION, name);
+//        putValue(MNEMONIC_KEY, KeyEvent.VK_A);
+//        setEnabled(false);
+//    }
+//
+//    public void actionPerformed(ActionEvent e) {
 //        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
 //        Set<Transition> selectedTransitions = new HashSet<Transition>();
 //        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively());
@@ -69,5 +69,5 @@ public class AddSelectedTransitionsToSelectedRolesAction extends AbstractAction 
 //        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
 //            root.getUndoManager().executeCommand(new AddTransitionsToRolesCommand(selectedTransitions, selectedRoles));
 //        }
-   }
-}
+//   }
+//}

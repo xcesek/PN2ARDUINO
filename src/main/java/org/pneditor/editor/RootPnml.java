@@ -62,11 +62,11 @@ public class RootPnml extends RootPflow implements Root, WindowListener, ListSel
         setTokens = new SetTokensAction(this);
         setPlaceStatic = new SetPlaceStaticAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
-        addSelectedTransitionsToSelectedRoles = new AddSelectedTransitionsToSelectedRolesAction(this);
-        removeSelectedTransitionsFromSelectedRoles = new RemoveSelectedTransitionsFromSelectedRolesAction(this);
-        convertTransitionToSubnet = new ConvertTransitionToSubnetAction(this);
-        openSubnet = new OpenSubnetAction(this);
-        closeSubnet = new CloseSubnetAction(this);
+//        addSelectedTransitionsToSelectedRoles = new AddSelectedTransitionsToSelectedRolesAction(this);
+//        removeSelectedTransitionsFromSelectedRoles = new RemoveSelectedTransitionsFromSelectedRolesAction(this);
+//        convertTransitionToSubnet = new ConvertTransitionToSubnetAction(this);
+//        openSubnet = new OpenSubnetAction(this);
+//        closeSubnet = new CloseSubnetAction(this);
         delete = new DeleteAction(this);
 
         cutAction = new CutAction(this);
@@ -79,8 +79,8 @@ public class RootPnml extends RootPflow implements Root, WindowListener, ListSel
         Action selectTool_ArcAction = new ArcSelectToolAction(this);
         Action selectTool_TokenAction = new TokenSelectToolAction(this);
 
-        saveSubnetAs = new SaveSubnetAsAction(this);
-        replaceSubnet = new ReplaceSubnetAction(this);
+//        saveSubnetAs = new SaveSubnetAsAction(this);
+//        replaceSubnet = new ReplaceSubnetAction(this);
 
         select = new JToggleButton(selectTool_SelectionAction);
         select.setSelected(true);

@@ -34,21 +34,21 @@ import org.pneditor.util.GraphicsTools;
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
-public class RemoveSelectedTransitionsFromSelectedRolesAction extends AbstractAction {
-
-    private Root root;
-
-    public RemoveSelectedTransitionsFromSelectedRolesAction(Root root) {
-        this.root = root;
-        String name = "Remove transition(s) from role(s)";
-        putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/removefromrole16.gif"));
-        putValue(SHORT_DESCRIPTION, name);
-        putValue(MNEMONIC_KEY, KeyEvent.VK_E);
-        setEnabled(false);
-    }
-
-    public void actionPerformed(ActionEvent e) {
+//public class RemoveSelectedTransitionsFromSelectedRolesAction extends AbstractAction {
+//
+//    private Root root;
+//
+//    public RemoveSelectedTransitionsFromSelectedRolesAction(Root root) {
+//        this.root = root;
+//        String name = "Remove transition(s) from role(s)";
+//        putValue(NAME, name);
+//        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/removefromrole16.gif"));
+//        putValue(SHORT_DESCRIPTION, name);
+//        putValue(MNEMONIC_KEY, KeyEvent.VK_E);
+//        setEnabled(false);
+//    }
+//
+//    public void actionPerformed(ActionEvent e) {
 //        List<Role> selectedRoles = root.getRoleEditor().getSelectedElements();
 //        Set<Transition> selectedTransitions = new HashSet<Transition>();
 //        selectedTransitions.addAll(root.getSelection().getTransitionsRecursively()); //TODO: cleanup - selection - included clickedElement
@@ -70,5 +70,5 @@ public class RemoveSelectedTransitionsFromSelectedRolesAction extends AbstractAc
 //        if (!selectedRoles.isEmpty() && !selectedTransitions.isEmpty() && change) {
 //            root.getUndoManager().executeCommand(new RemoveTransitionsFromRolesCommand(selectedTransitions, selectedRoles));
 //        }
-    }
-}
+//    }
+//}
