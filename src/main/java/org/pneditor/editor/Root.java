@@ -91,9 +91,9 @@ public interface Root {
 
     public JPopupMenu getCanvasPopup();
 
-    public void openSubnet();
+//    public void openSubnet();
 
-    public void closeSubnet();
+//    public void closeSubnet();
 
     public void refreshAll();
 
