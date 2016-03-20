@@ -34,7 +34,7 @@ public class TokenSelectToolAction extends AbstractAction {
         this.root = root;
         String name = "Edit tokens / Fire transitions";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/token_and_fire16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/play.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_F);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("F"));

@@ -36,7 +36,7 @@ public class SetPlaceStaticAction extends AbstractAction {
         String name = "Set/unset place static";
         putValue(NAME, name);
         putValue(SHORT_DESCRIPTION, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/staticplace.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/staticPlace.png"));
         setEnabled(false);
     }
 

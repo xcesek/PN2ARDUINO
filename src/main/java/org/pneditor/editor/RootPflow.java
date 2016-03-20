@@ -23,12 +23,14 @@ import org.pneditor.editor.actions.arduino.*;
 import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.editor.canvas.Selection;
 import org.pneditor.editor.canvas.SelectionChangedListener;
-import org.pneditor.editor.filechooser.*;
+import org.pneditor.editor.filechooser.FileType;
+import org.pneditor.editor.filechooser.FileTypeException;
+import org.pneditor.editor.filechooser.PflowFileType;
+import org.pneditor.editor.filechooser.PngFileType;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.*;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
-//import org.pneditor.util.ListEditor;
 import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
@@ -45,6 +47,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+
+//import org.pneditor.util.ListEditor;
 
 /**
  * This class is the main point of the application.
@@ -320,7 +324,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //    protected Action saveSubnetAs;
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
-    protected Action runTimer;
     protected Action setTimingPolicy;
 
     //per application
@@ -482,11 +485,11 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected void setupMainFrame() {
         List<FileType> openSaveFiletypes = new LinkedList<FileType>();
         openSaveFiletypes.add(new PflowFileType());
-        List<FileType> importFiletypes = new LinkedList<FileType>();
-        importFiletypes.add(new ViptoolPnmlFileType());
+//        List<FileType> importFiletypes = new LinkedList<FileType>();
+//        importFiletypes.add(new ViptoolPnmlFileType());
         List<FileType> exportFiletypes = new LinkedList<FileType>();
-        exportFiletypes.add(new ViptoolPnmlFileType());
-        exportFiletypes.add(new EpsFileType());
+//        exportFiletypes.add(new ViptoolPnmlFileType());
+//        exportFiletypes.add(new EpsFileType());
         exportFiletypes.add(new PngFileType());
 
         //ACTION REGISTRATION
@@ -495,7 +498,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action openFile = new OpenFileAction(this, openSaveFiletypes);
         Action saveFile = new SaveAction(this, openSaveFiletypes);
         Action saveFileAs = new SaveFileAsAction(this, openSaveFiletypes);
-        Action importFile = new ImportAction(this, importFiletypes);
+//        Action importFile = new ImportAction(this, importFiletypes);
         Action exportFile = new ExportAction(this, exportFiletypes);
         Action quit = new QuitAction(this);
         setLabel = new SetLabelAction(this);
@@ -512,7 +515,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        closeSubnet = new CloseSubnetAction(this);
         delete = new DeleteAction(this);
 
-        runTimer = new RunTimerAction(this);
         setTimingPolicy = new SetTimingPolicyAction(this);
 
         cutAction = new CutAction(this);
@@ -565,7 +567,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(newFile);
         toolBar.add(openFile);
         toolBar.add(saveFile);
-        toolBar.add(importFile);
+//        toolBar.add(importFile);
         toolBar.add(exportFile);
         toolBar.addSeparator();
 
@@ -583,7 +585,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(transition);
         toolBar.add(arc);
         toolBar.add(token);
-        toolBar.addSeparator();
+//        toolBar.addSeparator();
 //        toolBar.add(addSelectedTransitionsToSelectedRoles);
 //        toolBar.add(removeSelectedTransitionsFromSelectedRoles);
 
@@ -645,7 +647,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         fileMenu.add(openFile);
         fileMenu.add(saveFile);
         fileMenu.add(saveFileAs);
-        fileMenu.add(importFile);
+//        fileMenu.add(importFile);
         fileMenu.add(exportFile);
         fileMenu.addSeparator();
         fileMenu.add(quit);
@@ -685,7 +687,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        subnetMenu.add(convertTransitionToSubnet);
 
         timeMenu.add(setTimingPolicy);
-        timeMenu.add(runTimer);
 
         // ARDUINO RELATED
         arduinoMeno.add(setBoard);

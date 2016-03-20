@@ -38,7 +38,7 @@ public class PasteAction extends AbstractAction {
         this.root = root;
         String name = "Paste";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Paste16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/paste.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl V"));
         setEnabled(false);

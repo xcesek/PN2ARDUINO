@@ -41,7 +41,7 @@ public class UploadCodeAction extends AbstractAction {
         this.root = root;
         String name = "Upload code";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/setupBoard.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/upload.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
 

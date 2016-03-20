@@ -35,7 +35,7 @@ public class CutAction extends AbstractAction {
         this.root = root;
         String name = "Cut";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Cut16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/cut.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl X"));
         setEnabled(false);

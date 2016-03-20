@@ -35,7 +35,7 @@ public class NewFileAction extends AbstractAction {
         this.root = root;
         String name = "New";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/New16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/new.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_N);
     }

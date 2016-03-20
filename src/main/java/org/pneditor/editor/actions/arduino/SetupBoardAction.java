@@ -43,7 +43,7 @@ public class SetupBoardAction extends AbstractAction {
         this.root = root;
         String name = "Setup board";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/uploadCode.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/settings.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
         alreadySetup = false;

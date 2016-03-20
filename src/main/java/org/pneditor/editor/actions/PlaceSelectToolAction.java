@@ -36,7 +36,7 @@ public class PlaceSelectToolAction extends AbstractAction {
         String name = "Place";
         putValue(NAME, name);
         putValue(SHORT_DESCRIPTION, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/place16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/place.png"));
         putValue(SHORT_DESCRIPTION, "Place");
         putValue(MNEMONIC_KEY, KeyEvent.VK_P);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("W"));

@@ -39,7 +39,7 @@ public class SetTokensAction extends AbstractAction {
         this.root = root;
         String name = "Set tokens";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/tokens.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/setTokens.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_T);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("T"));

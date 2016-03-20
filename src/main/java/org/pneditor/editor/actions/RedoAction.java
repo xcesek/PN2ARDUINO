@@ -36,7 +36,7 @@ public class RedoAction extends AbstractAction {
         String name = "Redo";
         putValue(NAME, name);
         putValue(SHORT_DESCRIPTION, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Redo16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/redo.png"));
         putValue(MNEMONIC_KEY, KeyEvent.VK_R);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl Y"));
         setEnabled(false);

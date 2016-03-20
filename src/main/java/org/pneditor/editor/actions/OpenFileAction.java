@@ -44,7 +44,7 @@ public class OpenFileAction extends AbstractAction {
         this.fileTypes = fileTypes;
         String name = "Open...";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Open16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/open.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_O);
     }

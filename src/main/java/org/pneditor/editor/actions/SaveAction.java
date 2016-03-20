@@ -42,7 +42,7 @@ public class SaveAction extends AbstractAction {
         this.fileTypes = fileTypes;
         String name = "Save";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Save16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/save.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_S);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl S"));

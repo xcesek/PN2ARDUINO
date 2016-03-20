@@ -35,7 +35,7 @@ public class TransitionSelectToolAction extends AbstractAction {
         this.root = root;
         String name = "Transition";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/transition16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/transition.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_T);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("D"));

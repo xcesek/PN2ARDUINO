@@ -34,7 +34,7 @@ public class CopyAction extends AbstractAction {
         this.root = root;
         String name = "Copy";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Copy16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/copy.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl C"));
         setEnabled(false);

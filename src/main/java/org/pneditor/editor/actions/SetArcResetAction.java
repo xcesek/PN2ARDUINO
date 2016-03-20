@@ -27,7 +27,7 @@ public class SetArcResetAction extends AbstractAction {
         this.root = root;
         String name = "Set/unset reset arc type";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/setarcresetaction.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/arcReset.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_I);
         setEnabled(false);

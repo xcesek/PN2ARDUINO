@@ -38,7 +38,7 @@ public class SetLabelAction extends AbstractAction {
         this.root = root;
         String name = "Set label";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/label.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/label.png"));
         putValue(SHORT_DESCRIPTION, name);
 //		putValue(MNEMONIC_KEY, KeyEvent.VK_R);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("R"));

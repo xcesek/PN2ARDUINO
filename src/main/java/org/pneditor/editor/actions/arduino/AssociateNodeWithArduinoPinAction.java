@@ -28,7 +28,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
         this.root = root;
         String name = "Associate with Arduino";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/processor.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/code.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
 

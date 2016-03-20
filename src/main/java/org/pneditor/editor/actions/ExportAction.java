@@ -43,7 +43,7 @@ public class ExportAction extends AbstractAction {
         this.fileTypes = fileTypes;
         String name = "Export...";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/export.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/export.png"));
         putValue(SHORT_DESCRIPTION, name);
     }
 

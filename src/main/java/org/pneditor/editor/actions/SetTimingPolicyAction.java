@@ -36,7 +36,7 @@ public class SetTimingPolicyAction extends AbstractAction {
         this.root = root;
         String name = "Set Timing Policy";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/setTimingPolicy.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/clock.png"));
         putValue(SHORT_DESCRIPTION, name);
 //		putValue(MNEMONIC_KEY, KeyEvent.VK_R);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("R"));

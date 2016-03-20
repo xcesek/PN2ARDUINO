@@ -42,7 +42,7 @@ public class SaveFileAsAction extends AbstractAction {
         this.fileTypes = fileTypes;
         String name = "Save as...";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/SaveAs16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/save.png"));
         putValue(SHORT_DESCRIPTION, name);
     }
 

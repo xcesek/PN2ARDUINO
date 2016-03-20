@@ -22,6 +22,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import org.pneditor.editor.Root;
 import org.pneditor.petrinet.*;
+import org.pneditor.util.GraphicsTools;
 
 /**
  *
@@ -38,6 +39,7 @@ public class BoundednessAction extends AbstractAction {
         this.root = root;
         String name = "Boundedness";
         putValue(NAME, name);
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/boundedness.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
     }

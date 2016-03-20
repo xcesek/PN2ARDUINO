@@ -21,7 +21,7 @@ public class SetDelayAction extends AbstractAction {
         this.root = root;
         String name = "Set delay";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/delay.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/clock.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
     }

@@ -34,7 +34,7 @@ public class AboutAction extends AbstractAction {
         this.root = root;
         String name = "About...";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/About16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/about.png"));
         putValue(SHORT_DESCRIPTION, name);
     }
 

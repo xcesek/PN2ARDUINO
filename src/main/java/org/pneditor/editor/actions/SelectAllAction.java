@@ -7,6 +7,7 @@ import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.canvas.Selection;
 import org.pneditor.petrinet.Element;
 import org.pneditor.petrinet.PetriNet;
+import org.pneditor.util.GraphicsTools;
 
 /**
  *
@@ -18,6 +19,7 @@ public class SelectAllAction extends AbstractAction {
         String name = "Select All";
         putValue(NAME, name);
         putValue(SHORT_DESCRIPTION, name);
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/selectAll.png"));
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl A"));
         setEnabled(false);
     }

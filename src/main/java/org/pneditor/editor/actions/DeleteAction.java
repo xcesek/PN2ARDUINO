@@ -39,7 +39,7 @@ public class DeleteAction extends AbstractAction {
         this.root = root;
         String name = "Delete";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/Delete16.gif"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/trash.png"));
         putValue(SHORT_DESCRIPTION, name);
         putValue(MNEMONIC_KEY, KeyEvent.VK_D);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("DELETE"));

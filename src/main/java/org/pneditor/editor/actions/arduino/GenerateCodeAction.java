@@ -37,7 +37,7 @@ public class GenerateCodeAction extends AbstractAction {
         this.root = root;
         String name = "Generate code";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/compile.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("icons/code.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
         alreadyGenerated = false;
