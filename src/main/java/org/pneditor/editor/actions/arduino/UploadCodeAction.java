@@ -53,14 +53,18 @@ public class UploadCodeAction extends AbstractAction {
             BoardSettings boardSettings = arduinoManager.getBoardSettings();
 
             CodeUploader codeUploader = CodeUploaderFactory.getCodeUploader(boardSettings.getBoardType());
-            codeUploader.setPort(boardSettings.getPort());
+            codeUploader.setBoardSettings(boardSettings);
             codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
 
             writeCodeToConsole("Starting to upload code.");
+            long startTime = System.currentTimeMillis();
             new Thread(() -> {
                 UploadResponse response = codeUploader.upload();
+                long endTime = System.currentTimeMillis();
+
                 writeCodeToConsole(response.getCmdOutput());
                 writeCodeToConsole("Uploading finished.");
+                writeCodeToConsole("Uploading took " + (endTime - startTime) + " milliseconds.");
             }).start();
 
         }

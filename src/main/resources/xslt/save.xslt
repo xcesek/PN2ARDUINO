@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:template match="/document">
         <document>
             <xsl:call-template name="subnet"/>
-            <xsl:call-template name="roles"/>
+            <!--<xsl:call-template name="roles"/>-->
             <xsl:call-template name="arduinoManager"/>
         </document>
     </xsl:template>
@@ -104,26 +104,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="roles">
-        <roles>
-            <xsl:for-each select="roles/role">
-                <role>
-                    <id><xsl:value-of select="id"/></id>
-                    <name><xsl:value-of select="name"/></name>
-                    <xsl:for-each select="transitionId">
-                        <transitionId><xsl:value-of select="."/></transitionId>
-                    </xsl:for-each>
-                    <createCase><xsl:value-of select="createCase"/></createCase>
-                    <destroyCase><xsl:value-of select="destroyCase"/></destroyCase>
-                </role>
-            </xsl:for-each>
-        </roles>
-    </xsl:template>
+    <!--<xsl:template name="roles">-->
+        <!--<roles>-->
+            <!--<xsl:for-each select="roles/role">-->
+                <!--<role>-->
+                    <!--<id><xsl:value-of select="id"/></id>-->
+                    <!--<name><xsl:value-of select="name"/></name>-->
+                    <!--<xsl:for-each select="transitionId">-->
+                        <!--<transitionId><xsl:value-of select="."/></transitionId>-->
+                    <!--</xsl:for-each>-->
+                    <!--<createCase><xsl:value-of select="createCase"/></createCase>-->
+                    <!--<destroyCase><xsl:value-of select="destroyCase"/></destroyCase>-->
+                <!--</role>-->
+            <!--</xsl:for-each>-->
+        <!--</roles>-->
+    <!--</xsl:template>-->
 
     <xsl:template name="arduinoManager">
         <arduinoManager>
             <board><xsl:value-of select="arduinoManager/board"/></board>
             <port><xsl:value-of select="arduinoManager/port"/></port>
+            <verbosetOutput><xsl:value-of select="arduinoManager/verbosetOutput"/></verbosetOutput>
+            <preserveTempFiles><xsl:value-of select="arduinoManager/preserveTempFiles"/></preserveTempFiles>
         </arduinoManager>
     </xsl:template>
 

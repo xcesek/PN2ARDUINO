@@ -49,10 +49,13 @@ public class GenerateCodeAction extends AbstractAction {
         if (isEnabled()) {
 
             writeCodeToConsole("Generating code for Arduino from current Petri Net.");
-            CodeGenerator codeGenerator = new CodeGenerator(arduinoManager,
-                    root.getCurrentMarking());
+            long startTime = System.currentTimeMillis();
+            CodeGenerator codeGenerator = new CodeGenerator(arduinoManager, root.getCurrentMarking());
             String generatedCode = codeGenerator.generate();
+            long endTime = System.currentTimeMillis();
+
             writeCodeToConsole(generatedCode);
+            writeCodeToConsole("Generating took " + (endTime - startTime) + " milliseconds.");
 
             alreadyGenerated = true;
             root.refreshAll();

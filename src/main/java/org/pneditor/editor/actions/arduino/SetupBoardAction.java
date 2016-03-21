@@ -23,10 +23,10 @@ import org.pneditor.editor.Root;
 import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SetupBoardAction extends AbstractAction {
@@ -36,6 +36,8 @@ public class SetupBoardAction extends AbstractAction {
 
     private JComboBox boardTypeCombo;
     private JTextField portField;
+    private JCheckBox verboseOutput;
+    private JCheckBox preserveTempFiles;
 
     private boolean alreadySetup;
 
@@ -52,6 +54,8 @@ public class SetupBoardAction extends AbstractAction {
 
         boardTypeCombo = new JComboBox(BoardType.getBoardNames());
         portField = new JTextField(2);
+        verboseOutput = new JCheckBox();
+        preserveTempFiles = new JCheckBox();
 
     }
 
@@ -77,6 +81,9 @@ public class SetupBoardAction extends AbstractAction {
                     boardSettings.setBoardType(BoardType.valueOf(BoardType.ARDUINO_UNO.getBoardName()));
                 }
 
+                boardSettings.setVerboseOutput(verboseOutput.isSelected());
+                boardSettings.setPreserveTempFiles(preserveTempFiles.isSelected());
+
                 alreadySetup = true;
                 root.refreshAll();
             }
@@ -85,19 +92,32 @@ public class SetupBoardAction extends AbstractAction {
     }
 
     private Object[] popupContent(final BoardSettings boardSettings) {
-        Object[] objects = new Object[4];
 
-        objects[0] = (new JLabel("Arduino Board Type:"));
+        GridLayout gridLayout = new GridLayout(0,2);
+        gridLayout.setHgap(10);
+        gridLayout.setVgap(10);
+        JPanel popupPanel = new JPanel();
+        popupPanel.setLayout(gridLayout);
 
+        popupPanel.add(new JLabel("Arduino Board Type:"));
         boardTypeCombo.setSelectedItem(boardSettings.getBoardType() == null ? BoardType.ARDUINO_UNO.getBoardName() : boardSettings.getBoardType().getBoardName());
-        objects[1] = boardTypeCombo;
+        popupPanel.add(boardTypeCombo);
 
-        objects[2] = (new JLabel("Port:"));
-
+        popupPanel.add(new JLabel("Port:"));
         portField.setText(boardSettings.getPort());
-        objects[3] = portField;
+        popupPanel.add(portField);
 
-        return objects;
+        popupPanel.add(new JLabel("Verbose output:"));
+        popupPanel.add(verboseOutput);
+        verboseOutput.setSelected(boardSettings.isVerboseOutput());
+
+        popupPanel.add(new JLabel("Preserve temp files:"));
+        preserveTempFiles.setSelected(boardSettings.isPreserveTempFiles());
+        popupPanel.add(preserveTempFiles);
+
+        List<Object> objects = new ArrayList<>();
+        objects.add(popupPanel);
+        return objects.toArray();
     }
 
     public boolean isAlreadySetup() {

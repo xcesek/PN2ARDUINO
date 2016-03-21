@@ -31,12 +31,20 @@ public class XmlArduinoManager {
     @XmlElement(name = "port")
     public String port;
 
+    @XmlElement(name = "verbosetOutput")
+    public boolean verbosetOutput;
+
+    @XmlElement(name = "preserveTempFiles")
+    public boolean preserveTempFiles;
+
     public XmlArduinoManager() {
     }
 
     public XmlArduinoManager(ArduinoManager arduinoManager) {
         port = arduinoManager.getBoardSettings().getPort();
         board = arduinoManager.getBoardSettings().getBoardType().getBoardName();
+        verbosetOutput = arduinoManager.getBoardSettings().isVerboseOutput();
+        preserveTempFiles = arduinoManager.getBoardSettings().isPreserveTempFiles();
     }
 
 }

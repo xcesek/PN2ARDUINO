@@ -22,9 +22,11 @@ public class ArduinoManager {
     private BoardSettings boardSettings;
 
 
-    public void updateSettings(String port, String board) {
+    public void updateSettings(String port, String board, boolean verboseOutput, boolean preserveTemp) {
         boardSettings.setPort(port);
         boardSettings.setBoardType(BoardType.byName(board));
+        boardSettings.setVerboseOutput(verboseOutput);
+        boardSettings.setPreserveTempFiles(preserveTemp);
     }
 
     public ArduinoManager() {
