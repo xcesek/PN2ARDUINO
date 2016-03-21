@@ -20,7 +20,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pneditor.arduino.ArduinoComponentType;
+import org.pneditor.arduino.components.ArduinoComponentType;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;
@@ -84,7 +84,7 @@ public abstract class PlaceNode extends Node implements Cloneable {
     protected void drawPlaceBackground(Graphics g) {
         if(getArduinoComponent() != null)
         {
-            if(getArduinoComponent().getType() == ArduinoComponentType.Output) {
+            if(getArduinoComponent().getType() == ArduinoComponentType.OUTPUT) {
                 g.setColor(Color.cyan);
             }
         } else {

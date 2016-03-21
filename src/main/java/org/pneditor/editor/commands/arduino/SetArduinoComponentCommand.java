@@ -16,7 +16,7 @@
  */
 package org.pneditor.editor.commands.arduino;
 
-import org.pneditor.arduino.ArduinoComponent;
+import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.petrinet.Node;
 import org.pneditor.util.Command;
 

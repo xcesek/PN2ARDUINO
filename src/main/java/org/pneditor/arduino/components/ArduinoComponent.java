@@ -1,4 +1,6 @@
-package org.pneditor.arduino;
+package org.pneditor.arduino.components;
+
+import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
 
 /**
  * Created by Alzbeta Cesekova
@@ -12,10 +14,12 @@ package org.pneditor.arduino;
 public class ArduinoComponent {
     private int pin;
     private ArduinoComponentType type;
+    private ArduinoComponentSettings settings;
 
-    public ArduinoComponent(int pin, ArduinoComponentType type) {
+    public ArduinoComponent(int pin, ArduinoComponentType type, ArduinoComponentSettings settings) {
         this.pin = pin;
         this.type = type;
+        this.settings = settings;
     }
 
     public int getPin() {

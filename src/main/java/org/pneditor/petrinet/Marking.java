@@ -18,13 +18,15 @@ package org.pneditor.petrinet;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import org.pneditor.arduino.ArduinoListener;
+import org.pneditor.arduino.Subject;
 import org.pneditor.util.CollectionTools;
 
 /**
@@ -32,11 +34,15 @@ import org.pneditor.util.CollectionTools;
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
-public class Marking {
+public class Marking implements Subject {
 
     protected Map<Place, Integer> map = new ConcurrentHashMap<Place, Integer>();
     private PetriNet petriNet;
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true); //fair
+
+
+    //ARDUINO - list of arduinoListeners
+    private ArrayList<ArduinoListener> arduinoListeners = new ArrayList<>();
 
     /**
      * Copy constructor.
@@ -129,6 +135,11 @@ public class Marking {
         } else {
             this.map.put(place, tokens);
         }
+        //ARDUINO
+        if(place.hasArduinoComponent()){
+            notifyArduinoListeners(place);
+        }
+
     }
 
     /**
@@ -138,6 +149,7 @@ public class Marking {
      * @return true if transition is enabled in the marking, otherwise false
      */
     public boolean isEnabled(Transition transition) {
+        //TODO ci je enable aj vzhladom k arduinu
         boolean isEnabled = true;
         lock.readLock().lock();
         try {
@@ -466,4 +478,25 @@ public class Marking {
         return hash;
     }
 
+    //ARDUINO
+    @Override
+    public void registerArduinoListener(ArduinoListener arduinoListener) {
+        arduinoListeners.add(arduinoListener);
+    }
+
+    @Override
+    public void removeArduinoListener(ArduinoListener arduinoListener) {
+        int i = arduinoListeners.indexOf(arduinoListener);
+        if(i > 0){
+          arduinoListeners.remove(i);
+        }
+    }
+
+    @Override
+    public void notifyArduinoListeners(Node node) {
+        for(int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.update(node);
+        }
+    }
 }

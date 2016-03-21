@@ -20,6 +20,8 @@ import java.awt.Frame;
 import java.io.File;
 import java.util.Set;
 import javax.swing.JPopupMenu;
+
+import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
 import org.pneditor.petrinet.Marking;
@@ -117,4 +119,7 @@ public interface Root {
     public String getAppLongName();
     
     public GlobalTimer getGlobalTimer();
+
+    //ARDUINO
+    public ArduinoManager getArduinoManager();
 }
