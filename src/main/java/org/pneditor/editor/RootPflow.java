@@ -325,6 +325,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
     protected Action setTimingPolicy;
+    protected Action setPlaceCapacity;
 
     //per application
 //    protected Action openSubnet;
@@ -406,6 +407,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         undo.setEnabled(getUndoManager().isUndoable());
         redo.setEnabled(getUndoManager().isRedoable());
         setPlaceStatic.setEnabled(isPlaceNode);
+        setPlaceCapacity.setEnabled(isPlaceNode);
 
         //ARDUINO
         associateNodeWithArduinoPin.setEnabled(isPlaceNode || isTransitionNode);
@@ -505,6 +507,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setDelay = new SetDelayAction(this);
         setTokens = new SetTokensAction(this);
         setPlaceStatic = new SetPlaceStaticAction(this);
+        setPlaceCapacity = new SetPlaceCapacityAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
         setArcInhibitory = new SetArcInhibitoryAction(this);
         setArcReset = new SetArcResetAction(this);
@@ -664,6 +667,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.add(setLabel);
         elementMenu.addSeparator();
         elementMenu.add(setTokens);
+        elementMenu.add(setPlaceCapacity);
         elementMenu.add(setPlaceStatic);
         elementMenu.addSeparator();
         elementMenu.add(setArcMultiplicity);
@@ -698,6 +702,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup.add(setLabel);
         placePopup.add(setTokens);
         placePopup.add(setPlaceStatic);
+        placePopup.add(setPlaceCapacity);
         placePopup.addSeparator();
         placePopup.add(associateNodeWithArduinoPin);
         placePopup.addSeparator();

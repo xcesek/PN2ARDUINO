@@ -139,6 +139,7 @@ public class DocumentExporter {
         xmlPlace.y = place.getCenter().y;
         xmlPlace.isStatic = place.isStatic();
         xmlPlace.label = place.getLabel();
+        xmlPlace.capacity = place.getCapacity();
         xmlPlace.tokens = initialMarking.getTokens(place);
         xmlPlace.arduinoNodeExtension = new XmlArduinoNodeExtension(place.getArduinoNodeExtension());
         return xmlPlace;

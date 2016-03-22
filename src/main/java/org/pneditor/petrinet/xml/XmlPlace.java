@@ -29,6 +29,9 @@ public class XmlPlace extends XmlNode {
     @XmlElement(name = "label")
     public String label;
 
+    @XmlElement(name = "capacity")
+    public int capacity;
+
     @XmlElement(name = "tokens")
     public int tokens;
 

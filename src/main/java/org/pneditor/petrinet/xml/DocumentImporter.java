@@ -209,6 +209,7 @@ public class DocumentImporter {
         place.setId(xmlPlace.id);
         place.setLabel(xmlPlace.label);
         place.setStatic(xmlPlace.isStatic);
+        place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
         place.setArduinoNodeExtension(new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function));
         return place;
