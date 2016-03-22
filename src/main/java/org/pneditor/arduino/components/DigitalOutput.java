@@ -1,6 +1,10 @@
 package org.pneditor.arduino.components;
 
+import org.firmata4j.Pin;
+import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
+
+import java.io.IOException;
 
 /**
  * Created by Alzbeta Cesekova
@@ -13,7 +17,27 @@ import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
  */
 public class DigitalOutput extends ArduinoComponent{
 
-    public DigitalOutput(int pin, ArduinoComponentType type, ArduinoComponentSettings settings) {
-        super(pin, type, settings);
+    private Pin myPin;
+
+    public DigitalOutput(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
+        super(pin, type, settings, arduinoManager);
+        try {
+            myPin = arduinoManager.getDevice().getPin(pin);
+            myPin.setMode(Pin.Mode.OUTPUT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            //LOG
+            System.out.println("!!! Pin " + pin + " was not set!");
+        }
+        //LOG
+        System.out.println("Pin " + pin + " was set to output mode.");
+    }
+
+    public void performAction(){
+        try {
+            myPin.setValue(myPin.getValue() == 1 ? 0:1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

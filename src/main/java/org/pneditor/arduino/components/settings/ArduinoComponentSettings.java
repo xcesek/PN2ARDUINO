@@ -29,7 +29,7 @@ abstract public class ArduinoComponentSettings {
         return type;
     }
 
-    public static ArduinoComponentSettings SettingsFactory(ArduinoComponentType type) {
+    public static ArduinoComponentSettings settingsFactory(ArduinoComponentType type) {
         switch (type) {
             case INPUT:
                 return new DigitalOutputSettings();

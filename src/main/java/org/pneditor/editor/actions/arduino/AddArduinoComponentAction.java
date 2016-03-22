@@ -3,7 +3,6 @@ package org.pneditor.editor.actions.arduino;
 import org.firmata4j.Pin;
 import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.arduino.components.ArduinoComponentType;
-import org.pneditor.arduino.components.DigitalOutput;
 import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.commands.arduino.SetArduinoComponentCommand;
@@ -53,15 +52,8 @@ public class AddArduinoComponentAction extends AbstractAction {
                 && root.getClickedElement() instanceof Node) {
             Node clickedNode = (Node) root.getClickedElement();
 
-
             if (requestComponentSettings()) {
-                ArduinoComponent arduinoComponent;
-                switch (arduinoComponentType) {
-                    case OUTPUT:
-                        arduinoComponent = new DigitalOutput(pinNumber, arduinoComponentType, arduinoComponentSettings);
-                    default:
-                        arduinoComponent = new ArduinoComponent(pinNumber, arduinoComponentType, arduinoComponentSettings);
-                }
+                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(pinNumber, arduinoComponentType, arduinoComponentSettings, root.getArduinoManager());
                 root.getUndoManager().executeCommand(new SetArduinoComponentCommand(clickedNode, arduinoComponent));
             }
 
@@ -114,15 +106,15 @@ public class AddArduinoComponentAction extends AbstractAction {
 
         objectList.add(pinPanel);
 
-        //vertical spacer
-        objectList.add(Box.createVerticalStrut(5));
-        //separator
-        objectList.add(new JSeparator(JSeparator.HORIZONTAL));
-        //vertical spacer
-        objectList.add(Box.createVerticalStrut(5));
+        JPanel separatorPanel = new JPanel(new GridLayout(0,1));
+        separatorPanel.add(Box.createVerticalStrut(5));
+        separatorPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+        separatorPanel.add(Box.createVerticalStrut(5));
+
+        objectList.add(separatorPanel);
 
         //custom settings
-        arduinoComponentSettings = ArduinoComponentSettings.SettingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
+        arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
         JPanel customSettings = arduinoComponentSettings.getSettingsGui();
 
         objectList.add(customSettings);
@@ -135,19 +127,18 @@ public class AddArduinoComponentAction extends AbstractAction {
                 Arrays.sort(tmpModeArray);
                 pinComboBox.setModel(new DefaultComboBoxModel(tmpModeArray));
 
+                pinPanel.remove(pinComboBox); //remove old
                 pinPanel.add(pinComboBox);
 
+                objectList.remove(pinPanel); //remove old
                 objectList.add(pinPanel);
 
-                //vertical spacer
-                objectList.add(Box.createVerticalStrut(5));
-                //separator
-                objectList.add(new JSeparator(JSeparator.HORIZONTAL));
-                //vertical spacer
-                objectList.add(Box.createVerticalStrut(5));
+                objectList.remove(separatorPanel); //remove old
+                objectList.add(separatorPanel);
 
                 //custom settings
-                arduinoComponentSettings = ArduinoComponentSettings.SettingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
+                objectList.remove(arduinoComponentSettings.getSettingsGui()); //remove old
+                arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
                 objectList.add(arduinoComponentSettings.getSettingsGui());
             }
         });

@@ -6,6 +6,7 @@ import org.firmata4j.firmata.FirmataDevice;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.Node;
 import org.pneditor.petrinet.PlaceNode;
+import org.pneditor.petrinet.Transition;
 
 import java.io.IOException;
 
@@ -28,13 +29,8 @@ public class ArduinoController implements ArduinoListener {
         this.device = arduinoManager.getDevice();
         marking.registerArduinoListener(this);
 
-        //PORT SETTINGS
-        try {
-            this.device.getPin(13).setMode(Pin.Mode.OUTPUT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Pin 13 set to OUTPUT mode.");
+        //PORT SETTINGS - ak otvaram ulozenu
+
     }
 
     @Override
@@ -42,9 +38,7 @@ public class ArduinoController implements ArduinoListener {
 
         new Thread(() -> {
             try {
-          //      if(((Marking)marking).getTokens((PlaceNode)node) > 0) {
-                    device.getPin(13).setValue(device.getPin(13).getValue() == 1 ? 0 : 1);
-        //        }
+                node.getArduinoComponent().performAction();
             } catch (Exception e) {
                 e.printStackTrace();
             }

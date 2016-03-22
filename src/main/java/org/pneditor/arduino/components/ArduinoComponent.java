@@ -1,5 +1,6 @@
 package org.pneditor.arduino.components;
 
+import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
 
 /**
@@ -15,11 +16,13 @@ public class ArduinoComponent {
     private int pin;
     private ArduinoComponentType type;
     private ArduinoComponentSettings settings;
+    private ArduinoManager arduinoManager;
 
-    public ArduinoComponent(int pin, ArduinoComponentType type, ArduinoComponentSettings settings) {
+    public ArduinoComponent(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
         this.pin = pin;
         this.type = type;
         this.settings = settings;
+        this.arduinoManager = arduinoManager;
     }
 
     public int getPin() {
@@ -36,5 +39,16 @@ public class ArduinoComponent {
 
     public void setType(ArduinoComponentType type) {
         this.type = type;
+    }
+
+    public void performAction(){}
+
+    public static ArduinoComponent componentFactory(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager){
+        switch (type) {
+            case OUTPUT:
+                return new DigitalOutput(pin, type, settings, arduinoManager);
+            default:
+                return new ArduinoComponent(pin, type, settings, arduinoManager);
+        }
     }
 }
