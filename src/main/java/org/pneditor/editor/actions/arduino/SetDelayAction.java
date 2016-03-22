@@ -1,18 +1,21 @@
 package org.pneditor.editor.actions.arduino;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import static javax.swing.Action.NAME;
-import static javax.swing.Action.SHORT_DESCRIPTION;
-import static javax.swing.Action.SMALL_ICON;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.commands.SetDelayCommand;
-import org.pneditor.editor.time.TimingPolicyType;
+import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.petrinet.Transition;
 import org.pneditor.util.GraphicsTools;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+/**
+ * Created by Pavol Cesek on 2/26/2016.
+ *
+ * @email xcesek@stuba.sk
+ * Faculty of Electrical Engineering and Information Technology STU
+ * Under GNU GPL v3 licence
+ */
 public class SetDelayAction extends AbstractAction {
 
     private Root root;
@@ -31,24 +34,24 @@ public class SetDelayAction extends AbstractAction {
                 && root.getClickedElement() instanceof Transition) {
             Transition transition = (Transition) root.getClickedElement();
 
-            if (root.getGlobalTimer().getType() == TimingPolicyType.Stochastic) { 
+            if (root.getArduinoManager().getTimingPolicyType() == TimingPolicyType.Stochastic) {
                 Integer oldEarliestFiringTime = transition.getEarliestFiringTime();
                 Integer oldLatestFiringTime = transition.getLatestFiringTime();
                 String earliestFiringTimeValue = "";
                 String latestFiringTimeValue = "";
-                
-                if(oldEarliestFiringTime != null) {
+
+                if (oldEarliestFiringTime != null) {
                     earliestFiringTimeValue = oldEarliestFiringTime.toString();
                 }
-                if(oldLatestFiringTime != null) {
+                if (oldLatestFiringTime != null) {
                     latestFiringTimeValue = oldLatestFiringTime.toString();
                 }
-                
+
                 JTextField earliestFiringTimeField = new JTextField(earliestFiringTimeValue);
                 JTextField latestFiringTimeField = new JTextField(latestFiringTimeValue);
                 Object[] message = {
-                    "New earliest firing time:", earliestFiringTimeField,
-                    "New latest firing time:", latestFiringTimeField
+                        "New earliest firing time:", earliestFiringTimeField,
+                        "New latest firing time:", latestFiringTimeField
                 };
                 int option = JOptionPane.showConfirmDialog(root.getParentFrame(), message, "Set firing times", JOptionPane.OK_CANCEL_OPTION);
                 String newEarliestFiringTimeStr = "";
@@ -78,7 +81,7 @@ public class SetDelayAction extends AbstractAction {
                     //error
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Firing times weren't changed!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
+
 
             } else {
                 String newDelayStr = JOptionPane.showInputDialog(root.getParentFrame(), "New delay:", transition.getEarliestFiringTime());
@@ -96,7 +99,7 @@ public class SetDelayAction extends AbstractAction {
                     //error
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Delay wasn't changed!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
+
             }
 
         }

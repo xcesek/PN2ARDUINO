@@ -27,7 +27,6 @@ import org.pneditor.editor.filechooser.FileType;
 import org.pneditor.editor.filechooser.FileTypeException;
 import org.pneditor.editor.filechooser.PflowFileType;
 import org.pneditor.editor.filechooser.PngFileType;
-import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.*;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
@@ -317,7 +316,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected JToggleButton select, place, transition, arc, token;
     protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
     protected Action setPlaceStatic;
-//    protected Action addSelectedTransitionsToSelectedRoles;
+    //    protected Action addSelectedTransitionsToSelectedRoles;
 //    protected Action removeSelectedTransitionsFromSelectedRoles;
 //    protected Action convertTransitionToSubnet;
 //    protected Action replaceSubnet;
@@ -838,13 +837,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return drawingBoard;
     }
 
-
-    protected GlobalTimer globalTimer = new GlobalTimer();
-
-    @Override
-    public GlobalTimer getGlobalTimer() {
-        return globalTimer;
-    }
 
     protected ArduinoManager arduinoManager = new ArduinoManager();
 

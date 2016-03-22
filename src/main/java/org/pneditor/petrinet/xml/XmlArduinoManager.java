@@ -21,8 +21,11 @@ import org.pneditor.arduino.manager.ArduinoManager;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
+ * Created by Pavol Cesek on 2/26/2016.
  *
- * @author Martin Riesz <riesz.martin at gmail.com>
+ * @email xcesek@stuba.sk
+ * Faculty of Electrical Engineering and Information Technology STU
+ * Under GNU GPL v3 licence
  */
 public class XmlArduinoManager {
     @XmlElement(name = "board")
@@ -37,6 +40,10 @@ public class XmlArduinoManager {
     @XmlElement(name = "preserveTempFiles")
     public boolean preserveTempFiles;
 
+    @XmlElement(name = "timingPolicyType")
+    public String timingPolicyType;
+
+    // default constructor needed by automatic xml mapping
     public XmlArduinoManager() {
     }
 
@@ -45,6 +52,7 @@ public class XmlArduinoManager {
         board = arduinoManager.getBoardSettings().getBoardType().getBoardName();
         verbosetOutput = arduinoManager.getBoardSettings().isVerboseOutput();
         preserveTempFiles = arduinoManager.getBoardSettings().isPreserveTempFiles();
+        timingPolicyType = arduinoManager.getTimingPolicyType().name();
     }
 
 }

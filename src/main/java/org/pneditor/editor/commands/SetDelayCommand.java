@@ -16,7 +16,7 @@
  */
 package org.pneditor.editor.commands;
 
-import org.pneditor.editor.time.SimpleTimer;
+import org.pneditor.arduino.time.SimpleTimer;
 import org.pneditor.petrinet.Transition;
 import org.pneditor.util.Command;
 

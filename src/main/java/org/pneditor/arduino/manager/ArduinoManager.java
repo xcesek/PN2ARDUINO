@@ -2,6 +2,7 @@ package org.pneditor.arduino.manager;
 
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.arduino.settings.BoardType;
+import org.pneditor.arduino.time.TimingPolicyType;
 
 import java.io.File;
 
@@ -20,6 +21,7 @@ public class ArduinoManager {
     public final static String SKETCH_TEMPLATE_NAME = "PetriNet.template";
 
     private BoardSettings boardSettings;
+    private TimingPolicyType timingPolicyType;
 
 
     public void updateSettings(String port, String board, boolean verboseOutput, boolean preserveTemp) {
@@ -31,6 +33,7 @@ public class ArduinoManager {
 
     public ArduinoManager() {
         boardSettings = new BoardSettings();    // todo
+        timingPolicyType = TimingPolicyType.Deterministic;
     }
 
     public BoardSettings getBoardSettings() {
@@ -39,5 +42,13 @@ public class ArduinoManager {
 
     public String getProjectDirName() {
         return SOURCE_DIR_NAME + File.separator + PROJECT_DIR_NAME;
+    }
+
+    public TimingPolicyType getTimingPolicyType() {
+        return timingPolicyType;
+    }
+
+    public void setTimingPolicyType(TimingPolicyType timingPolicyType) {
+        this.timingPolicyType = timingPolicyType;
     }
 }

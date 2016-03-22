@@ -16,22 +16,20 @@
  */
 package org.pneditor.editor.actions;
 
-import java.awt.event.ActionEvent;
-import java.io.File;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.PetriNet;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.filechooser.FileChooserDialog;
 import org.pneditor.editor.filechooser.FileTypeException;
 import org.pneditor.editor.filechooser.PflowxFileType;
+import org.pneditor.petrinet.Document;
+import org.pneditor.petrinet.PetriNet;
 import org.pneditor.petrinet.Subnet;
 import org.pneditor.util.GraphicsTools;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class SaveSubnetAsAction extends AbstractAction {
@@ -82,6 +80,6 @@ public class SaveSubnetAsAction extends AbstractAction {
         Document document = new Document();
         PetriNet petriNet = document.petriNet;
         petriNet.setRootSubnet(subnet);
-        new PflowxFileType().save(document, file, root.getGlobalTimer(), root.getArduinoManager());
+        new PflowxFileType().save(document, file, root.getArduinoManager());
     }
 }

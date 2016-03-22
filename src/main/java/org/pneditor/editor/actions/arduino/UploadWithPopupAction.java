@@ -30,7 +30,6 @@ import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.concurrent.Callable;
 
 
 public class UploadWithPopupAction extends AbstractAction {

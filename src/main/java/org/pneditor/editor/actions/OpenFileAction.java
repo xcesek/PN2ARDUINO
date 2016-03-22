@@ -81,6 +81,7 @@ public class OpenFileAction extends AbstractAction {
                             document.getArduinoManager().getBoardSettings().getBoardType().getBoardName(),
                             document.getArduinoManager().getBoardSettings().isVerboseOutput(),
                             document.getArduinoManager().getBoardSettings().isPreserveTempFiles());
+                    root.getArduinoManager().setTimingPolicyType(document.getArduinoManager().getTimingPolicyType());
                     root.setModified(false);
                 } catch (FileTypeException ex) {
                     JOptionPane.showMessageDialog(root.getParentFrame(), ex.getMessage());

@@ -16,22 +16,20 @@
  */
 package org.pneditor.editor.filechooser;
 
+import org.pneditor.arduino.manager.ArduinoManager;
+import org.pneditor.petrinet.Document;
+import org.pneditor.petrinet.PetriNet;
+import org.pneditor.util.StringTools;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.Icon;
-import javax.swing.filechooser.FileFilter;
-
-import org.pneditor.arduino.manager.ArduinoManager;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.PetriNet;
-import org.pneditor.util.StringTools;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public abstract class FileType extends FileFilter {
@@ -50,7 +48,7 @@ public abstract class FileType extends FileFilter {
 
     public abstract String getName();
 
-    public abstract void save(Document document, File file, GlobalTimer timer, ArduinoManager arduinoManager) throws FileTypeException;
+    public abstract void save(Document document, File file, ArduinoManager arduinoManager) throws FileTypeException;
 
     public abstract Document load(File file) throws FileTypeException;
 

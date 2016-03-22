@@ -28,9 +28,6 @@ public class XmlSubnet extends XmlNode {
 
     @XmlElement(name = "label")
     public String label;
-    
-    @XmlElement(name = "type")
-    public String type;
 
     @XmlElement(name = "place")
     public List<XmlPlace> places = new LinkedList<XmlPlace>();

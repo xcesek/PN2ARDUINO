@@ -32,7 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <x><xsl:value-of select="x"/></x>
         <y><xsl:value-of select="y"/></y>
         <label><xsl:value-of select="label"/></label>
-        <timingPolicyType><xsl:value-of select="type"/></timingPolicyType>
         <xsl:for-each select="place">
             <place>
                 <id><xsl:value-of select="id"/></id>
@@ -127,6 +126,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <port><xsl:value-of select="arduinoManager/port"/></port>
             <verbosetOutput><xsl:value-of select="arduinoManager/verbosetOutput"/></verbosetOutput>
             <preserveTempFiles><xsl:value-of select="arduinoManager/preserveTempFiles"/></preserveTempFiles>
+            <timingPolicyType><xsl:value-of select="arduinoManager/timingPolicyType"/></timingPolicyType>
         </arduinoManager>
     </xsl:template>
 
