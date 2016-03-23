@@ -18,8 +18,9 @@ package org.pneditor.editor;
 
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.actions.*;
-import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.*;
+import org.pneditor.editor.actions.conflicts.ResolveFiringConflictsPolicyAction;
+import org.pneditor.editor.actions.time.SetTimingPolicyAction;
 import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.editor.canvas.Selection;
 import org.pneditor.editor.canvas.SelectionChangedListener;
@@ -324,6 +325,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
     protected Action setTimingPolicy;
+    protected Action firingConflictsResolvingPolicy;
     protected Action setPlaceCapacity;
 
     //per application
@@ -518,6 +520,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         delete = new DeleteAction(this);
 
         setTimingPolicy = new SetTimingPolicyAction(this);
+        firingConflictsResolvingPolicy = new ResolveFiringConflictsPolicyAction(this);
 
         cutAction = new CutAction(this);
         copyAction = new CopyAction(this);
@@ -625,21 +628,20 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        menuBar.add(subnetMenu);
 
         //asus 2012 algorithms menu
-        JMenu algorithmsMenu = new JMenu("Algorithms");
-        algorithmsMenu.setMnemonic('A');
-        menuBar.add(algorithmsMenu);
+//        JMenu algorithmsMenu = new JMenu("Algorithms");
+//        algorithmsMenu.setMnemonic('A');
+//        menuBar.add(algorithmsMenu);
 
         //asus 2012 algorithms submenu items
-        algorithmsMenu.add(new BoundednessAction(this));
+//        algorithmsMenu.add(new BoundednessAction(this));
 
-        JMenu timeMenu = new JMenu("Time");
-        timeMenu.setMnemonic('T');
-        menuBar.add(timeMenu);
+        JMenu arduinoMenu = new JMenu("Arduino");
+        arduinoMenu.setMnemonic('R');
+        menuBar.add(arduinoMenu);
 
-        JMenu arduinoMeno = new JMenu("Arduino");
-        arduinoMeno.setMnemonic('W');
-        menuBar.add(arduinoMeno);
-
+        JMenu additionalSettingsMenu = new JMenu("Additional Settings");
+        additionalSettingsMenu.setMnemonic('A');
+        menuBar.add(additionalSettingsMenu);
 
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(new AboutAction(this));
@@ -689,12 +691,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        subnetMenu.add(saveSubnetAs);
 //        subnetMenu.add(convertTransitionToSubnet);
 
-        timeMenu.add(setTimingPolicy);
+        additionalSettingsMenu.add(setTimingPolicy);
+        additionalSettingsMenu.add(firingConflictsResolvingPolicy);
 
         // ARDUINO RELATED
-        arduinoMeno.add(setBoard);
-        arduinoMeno.add(generateCode);
-        arduinoMeno.add(uploadCode);
+        arduinoMenu.add(setBoard);
+        arduinoMenu.add(generateCode);
+        arduinoMenu.add(uploadCode);
 
 
         placePopup = new JPopupMenu();

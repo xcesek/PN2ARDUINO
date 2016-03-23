@@ -1,4 +1,4 @@
-package org.pneditor.arduino.component;
+package org.pneditor.arduino.component.pin;
 
 
 /**
@@ -17,7 +17,6 @@ public enum ArduinoPin {
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 3),
     D4(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
@@ -27,14 +26,11 @@ public enum ArduinoPin {
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 5),
     D6(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 6),
     D7(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
@@ -48,19 +44,16 @@ public enum ArduinoPin {
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 9),
     D10(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 10),
     D11(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
-            ArduinoSupportedFunction.SERVO
     }, ArduinoPinType.DIGITAL, 11),
     D12(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,

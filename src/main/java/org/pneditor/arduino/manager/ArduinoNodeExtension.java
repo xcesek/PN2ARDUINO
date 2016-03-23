@@ -1,7 +1,7 @@
 package org.pneditor.arduino.manager;
 
-import org.pneditor.arduino.component.ArduinoPin;
-import org.pneditor.arduino.component.ArduinoSupportedFunction;
+import org.pneditor.arduino.component.pin.ArduinoPin;
+import org.pneditor.arduino.component.pin.ArduinoSupportedFunction;
 
 /**
  * Created by Pavol Cesek on 3/9/2016.
@@ -13,6 +13,12 @@ import org.pneditor.arduino.component.ArduinoSupportedFunction;
 public class ArduinoNodeExtension {
     private ArduinoPin pin;
     private ArduinoSupportedFunction function;
+
+    private boolean withDelay;
+    private boolean inverserLogic;
+    private float thresholdRangeLow;
+    private float thresholdRangeHigh;
+
     private boolean enabled;
 
 
@@ -40,9 +46,24 @@ public class ArduinoNodeExtension {
         return pin;
     }
 
-
     public ArduinoSupportedFunction getFunction() {
         return function;
+    }
+
+    public boolean isWithDelay() {
+        return withDelay;
+    }
+
+    public boolean isInverserLogic() {
+        return inverserLogic;
+    }
+
+    public float getThresholdRangeLow() {
+        return thresholdRangeLow;
+    }
+
+    public float getThresholdRangeHigh() {
+        return thresholdRangeHigh;
     }
 
     public boolean isEnabled() {

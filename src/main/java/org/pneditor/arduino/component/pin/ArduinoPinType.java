@@ -1,4 +1,4 @@
-package org.pneditor.arduino.component;
+package org.pneditor.arduino.component.pin;
 
 
 public enum ArduinoPinType {

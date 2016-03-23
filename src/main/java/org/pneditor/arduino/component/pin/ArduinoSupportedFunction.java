@@ -1,4 +1,4 @@
-package org.pneditor.arduino.component;
+package org.pneditor.arduino.component.pin;
 
 /**
  * Created by Pavol Cesek on 3/10/2016.
@@ -30,12 +30,6 @@ public enum ArduinoSupportedFunction {
         @Override
         public String toString() {
             return "Analog OUT (PWM)";
-        }
-    },
-    SERVO {
-        @Override
-        public String toString() {
-            return "Servo";
         }
     }
 }
