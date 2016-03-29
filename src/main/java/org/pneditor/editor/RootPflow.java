@@ -751,7 +751,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         splitPane.setOneTouchExpandable(true);
 //        splitPane.setLeftComponent(getRoleEditor());
         splitPane.setRightComponent(drawingBoard);
-        splitPane.setDividerLocation(120);
+        splitPane.setDividerLocation(1);
 
         mainFrame.add(splitPane, BorderLayout.CENTER);
         mainFrame.add(toolBar, BorderLayout.NORTH);
@@ -761,14 +761,19 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         splitPaneForLog.setOneTouchExpandable(true);
         splitPaneForLog.setLeftComponent(splitPane);
         splitPaneForLog.setRightComponent(logEditor);
-        splitPaneForLog.setDividerLocation(220);
+        splitPaneForLog.setDividerLocation(620);
 
         mainFrame.add(splitPaneForLog, BorderLayout.CENTER);
 
         mainFrame.addWindowListener(this);
-        mainFrame.setLocation(50, 50);
-        mainFrame.setSize(700, 450);
+        mainFrame.setLocation(0, 0);
+//        mainFrame.setLocation(50, 50);
+//        mainFrame.setSize(700, 450);
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        mainFrame.setSize(screenSize.width, screenSize.height);
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.setVisible(true);
+
     }
 
     public Marking getCurrentMarking() {
