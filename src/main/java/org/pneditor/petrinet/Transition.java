@@ -20,7 +20,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
-import org.pneditor.editor.time.SimpleTimer;
+import org.pneditor.arduino.time.SimpleTimer;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;

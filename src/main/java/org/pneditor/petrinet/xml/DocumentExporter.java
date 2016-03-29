@@ -31,7 +31,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
 
 import org.pneditor.arduino.manager.ArduinoManager;
-import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Arc;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
@@ -52,11 +51,11 @@ public class DocumentExporter {
 
     private XmlDocument xmlDocument = new XmlDocument();
 
-    public DocumentExporter(Document document, Marking marking, GlobalTimer timer, ArduinoManager arduinoManager) {
+    public DocumentExporter(Document document, Marking marking, ArduinoManager arduinoManager) {
 
         marking.getLock().readLock().lock();
         try {
-            xmlDocument.rootSubnet = getXmlSubnet(marking.getPetriNet().getRootSubnet(), marking, timer);
+            xmlDocument.rootSubnet = getXmlSubnet(marking.getPetriNet().getRootSubnet(), marking);
         } finally {
             marking.getLock().readLock().unlock();
         }
@@ -106,17 +105,16 @@ public class DocumentExporter {
         return xmlRole;
     }
 
-    private XmlSubnet getXmlSubnet(Subnet subnet, Marking initialMarking, GlobalTimer timer) {
+    private XmlSubnet getXmlSubnet(Subnet subnet, Marking initialMarking) {
 
         XmlSubnet xmlSubnet = new XmlSubnet();
         xmlSubnet.id = subnet.getId();
         xmlSubnet.label = subnet.getLabel();
         xmlSubnet.x = subnet.getCenter().x;
         xmlSubnet.y = subnet.getCenter().y;
-        xmlSubnet.type = timer.getType().toString();
         for (Element element : subnet.getElements()) {
             if (element instanceof Subnet) {
-                xmlSubnet.subnets.add(getXmlSubnet((Subnet) element, initialMarking, timer));
+                xmlSubnet.subnets.add(getXmlSubnet((Subnet) element, initialMarking));
             } else if (element instanceof Transition) {
                 xmlSubnet.transitions.add(getXmlTransition((Transition) element));
             } else if (element instanceof ReferencePlace) {
@@ -139,6 +137,7 @@ public class DocumentExporter {
         xmlPlace.y = place.getCenter().y;
         xmlPlace.isStatic = place.isStatic();
         xmlPlace.label = place.getLabel();
+        xmlPlace.capacity = place.getCapacity();
         xmlPlace.tokens = initialMarking.getTokens(place);
         xmlPlace.arduinoNodeExtension = new XmlArduinoNodeExtension(place.getArduinoNodeExtension());
         return xmlPlace;

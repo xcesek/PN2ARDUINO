@@ -16,16 +16,7 @@
  */
 package org.pneditor.editor.filechooser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.swing.Icon;
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
 import org.pneditor.arduino.manager.ArduinoManager;
-import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.PetriNet;
@@ -33,8 +24,15 @@ import org.pneditor.petrinet.xml.DocumentExporter;
 import org.pneditor.petrinet.xml.DocumentImporter;
 import org.pneditor.util.GraphicsTools;
 
+import javax.swing.*;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class PflowFileType extends FileType {
@@ -56,12 +54,12 @@ public class PflowFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file, GlobalTimer timer, ArduinoManager arduinoManager) throws FileTypeException {
+    public void save(Document document, File file, ArduinoManager arduinoManager) throws FileTypeException {
         try {
             final InputStream xslt = getClass().getResourceAsStream("/xslt/save.xslt");
             PetriNet petriNet = document.petriNet;
             Marking initialMarking = petriNet.getInitialMarking();
-            new DocumentExporter(document, initialMarking, timer, arduinoManager).writeToFileWithXslt(file, xslt);
+            new DocumentExporter(document, initialMarking, arduinoManager).writeToFileWithXslt(file, xslt);
         } catch (FileNotFoundException ex) {
             throw new FileTypeException(ex.getMessage());
         } catch (JAXBException ex) {
@@ -82,7 +80,8 @@ public class PflowFileType extends FileType {
     @Override
     public Document load(File file) throws FileTypeException {
         try {
-            final InputStream xslt = getClass().getResourceAsStream("/xslt/load.xslt");;
+            final InputStream xslt = getClass().getResourceAsStream("/xslt/load.xslt");
+            ;
             Document document = new DocumentImporter().readFromFileWithXslt(file, xslt);
             document.petriNet.getRootSubnet().setViewTranslationToCenterRecursively();
             return document;

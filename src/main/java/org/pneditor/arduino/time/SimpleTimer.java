@@ -1,4 +1,4 @@
-package org.pneditor.editor.time;
+package org.pneditor.arduino.time;
 
 import java.util.Random;
 import java.util.Timer;

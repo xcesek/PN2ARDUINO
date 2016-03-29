@@ -18,8 +18,9 @@ package org.pneditor.editor;
 
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.actions.*;
-import org.pneditor.editor.actions.algorithms.BoundednessAction;
 import org.pneditor.editor.actions.arduino.*;
+import org.pneditor.editor.actions.conflicts.ResolveFiringConflictsPolicyAction;
+import org.pneditor.editor.actions.time.SetTimingPolicyAction;
 import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.editor.canvas.Selection;
 import org.pneditor.editor.canvas.SelectionChangedListener;
@@ -27,7 +28,6 @@ import org.pneditor.editor.filechooser.FileType;
 import org.pneditor.editor.filechooser.FileTypeException;
 import org.pneditor.editor.filechooser.PflowFileType;
 import org.pneditor.editor.filechooser.PngFileType;
-import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.*;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
@@ -317,7 +317,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected JToggleButton select, place, transition, arc, token;
     protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
     protected Action setPlaceStatic;
-//    protected Action addSelectedTransitionsToSelectedRoles;
+    //    protected Action addSelectedTransitionsToSelectedRoles;
 //    protected Action removeSelectedTransitionsFromSelectedRoles;
 //    protected Action convertTransitionToSubnet;
 //    protected Action replaceSubnet;
@@ -325,6 +325,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
     protected Action setTimingPolicy;
+    protected Action firingConflictsResolvingPolicy;
+    protected Action setPlaceCapacity;
 
     //per application
 //    protected Action openSubnet;
@@ -406,6 +408,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         undo.setEnabled(getUndoManager().isUndoable());
         redo.setEnabled(getUndoManager().isRedoable());
         setPlaceStatic.setEnabled(isPlaceNode);
+        setPlaceCapacity.setEnabled(isPlaceNode);
 
         //ARDUINO
         associateNodeWithArduinoPin.setEnabled(isPlaceNode || isTransitionNode);
@@ -505,6 +508,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setDelay = new SetDelayAction(this);
         setTokens = new SetTokensAction(this);
         setPlaceStatic = new SetPlaceStaticAction(this);
+        setPlaceCapacity = new SetPlaceCapacityAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
         setArcInhibitory = new SetArcInhibitoryAction(this);
         setArcReset = new SetArcResetAction(this);
@@ -516,6 +520,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         delete = new DeleteAction(this);
 
         setTimingPolicy = new SetTimingPolicyAction(this);
+        firingConflictsResolvingPolicy = new ResolveFiringConflictsPolicyAction(this);
 
         cutAction = new CutAction(this);
         copyAction = new CopyAction(this);
@@ -623,21 +628,20 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        menuBar.add(subnetMenu);
 
         //asus 2012 algorithms menu
-        JMenu algorithmsMenu = new JMenu("Algorithms");
-        algorithmsMenu.setMnemonic('A');
-        menuBar.add(algorithmsMenu);
+//        JMenu algorithmsMenu = new JMenu("Algorithms");
+//        algorithmsMenu.setMnemonic('A');
+//        menuBar.add(algorithmsMenu);
 
         //asus 2012 algorithms submenu items
-        algorithmsMenu.add(new BoundednessAction(this));
+//        algorithmsMenu.add(new BoundednessAction(this));
 
-        JMenu timeMenu = new JMenu("Time");
-        timeMenu.setMnemonic('T');
-        menuBar.add(timeMenu);
+        JMenu arduinoMenu = new JMenu("Arduino");
+        arduinoMenu.setMnemonic('R');
+        menuBar.add(arduinoMenu);
 
-        JMenu arduinoMeno = new JMenu("Arduino");
-        arduinoMeno.setMnemonic('W');
-        menuBar.add(arduinoMeno);
-
+        JMenu additionalSettingsMenu = new JMenu("Additional Settings");
+        additionalSettingsMenu.setMnemonic('A');
+        menuBar.add(additionalSettingsMenu);
 
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(new AboutAction(this));
@@ -664,6 +668,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.add(setLabel);
         elementMenu.addSeparator();
         elementMenu.add(setTokens);
+        elementMenu.add(setPlaceCapacity);
         elementMenu.add(setPlaceStatic);
         elementMenu.addSeparator();
         elementMenu.add(setArcMultiplicity);
@@ -686,18 +691,20 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        subnetMenu.add(saveSubnetAs);
 //        subnetMenu.add(convertTransitionToSubnet);
 
-        timeMenu.add(setTimingPolicy);
+        additionalSettingsMenu.add(setTimingPolicy);
+        additionalSettingsMenu.add(firingConflictsResolvingPolicy);
 
         // ARDUINO RELATED
-        arduinoMeno.add(setBoard);
-        arduinoMeno.add(generateCode);
-        arduinoMeno.add(uploadCode);
+        arduinoMenu.add(setBoard);
+        arduinoMenu.add(generateCode);
+        arduinoMenu.add(uploadCode);
 
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
         placePopup.add(setTokens);
         placePopup.add(setPlaceStatic);
+        placePopup.add(setPlaceCapacity);
         placePopup.addSeparator();
         placePopup.add(associateNodeWithArduinoPin);
         placePopup.addSeparator();
@@ -838,13 +845,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return drawingBoard;
     }
 
-
-    protected GlobalTimer globalTimer = new GlobalTimer();
-
-    @Override
-    public GlobalTimer getGlobalTimer() {
-        return globalTimer;
-    }
 
     protected ArduinoManager arduinoManager = new ArduinoManager();
 

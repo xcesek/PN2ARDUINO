@@ -16,41 +16,25 @@
  */
 package org.pneditor.petrinet.xml;
 
-import java.awt.Point;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.pneditor.arduino.manager.ArduinoNodeExtension;
+import org.pneditor.arduino.time.SimpleTimer;
+import org.pneditor.arduino.time.TimingPolicyType;
+import org.pneditor.petrinet.*;
+import org.pneditor.util.Xslt;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.pneditor.arduino.manager.ArduinoNodeExtension;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.editor.time.SimpleTimer;
-import org.pneditor.editor.time.TimingPolicyType;
-import org.pneditor.petrinet.Arc;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.Marking;
-import org.pneditor.petrinet.Node;
-import org.pneditor.petrinet.Place;
-import org.pneditor.petrinet.PlaceNode;
-import org.pneditor.petrinet.ReferenceArc;
-import org.pneditor.petrinet.ReferencePlace;
-import org.pneditor.petrinet.Subnet;
-import org.pneditor.petrinet.Transition;
-import org.pneditor.petrinet.Role;
-import org.pneditor.util.Xslt;
+import java.awt.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class DocumentImporter {
@@ -103,8 +87,12 @@ public class DocumentImporter {
             document.roles.add(role);
         }
 
-        document.getArduinoManager().updateSettings(xmlDocument.arduinoManager.port, xmlDocument.arduinoManager.board);
-
+        document.getArduinoManager().updateSettings(xmlDocument.arduinoManager.port,
+                xmlDocument.arduinoManager.board,
+                xmlDocument.arduinoManager.verbosetOutput,
+                xmlDocument.arduinoManager.preserveTempFiles);
+        document.getArduinoManager().setTimingPolicyType(
+                TimingPolicyType.valueOf(xmlDocument.arduinoManager.timingPolicyType));
         return document;
     }
 
@@ -149,7 +137,7 @@ public class DocumentImporter {
         subnet.setId(xmlSubnet.id);
         subnet.setLabel(xmlSubnet.label);
         subnet.setCenter(xmlSubnet.x, xmlSubnet.y);
-        
+
         for (XmlArc xmlArc : xmlSubnet.arcs) {
             subnet.addElement((Arc) getObject(xmlArc));
         }
@@ -170,13 +158,7 @@ public class DocumentImporter {
         }
         return subnet;
     }
-    
-    private GlobalTimer getNewTimer(XmlSubnet xmlSubnet){
-        GlobalTimer timer = new GlobalTimer();
-        timer.setType(TimingPolicyType.valueOf( xmlSubnet.type));
-        
-        return timer;
-    }
+
 
     private void constructInitialMarkingRecursively(Marking marking, XmlSubnet xmlSubnet) {
         for (XmlPlace xmlPlace : xmlSubnet.places) {
@@ -206,6 +188,7 @@ public class DocumentImporter {
         place.setId(xmlPlace.id);
         place.setLabel(xmlPlace.label);
         place.setStatic(xmlPlace.isStatic);
+        place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
         place.setArduinoNodeExtension(new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function));
         return place;
@@ -218,11 +201,11 @@ public class DocumentImporter {
         transition.setCenter(xmlTransition.x, xmlTransition.y);
         transition.setEarliestFiringTime(xmlTransition.earliestFiringTime);
         transition.setLatestFiringTime(xmlTransition.latestFiringTime);
-        
+
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
         if (xmlTransition.arduinoNodeExtension != null) {
-            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function )) {
+            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
                 transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));
             }
         } else {

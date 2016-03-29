@@ -18,6 +18,18 @@ public class XmlArduinoNodeExtension {
     @XmlElement(name = "function")
     public String function;
 
+    @XmlElement(name = "withDelay")
+    public boolean withDelay;
+
+    @XmlElement(name = "inverserLogic")
+    public boolean inverserLogic;
+
+    @XmlElement(name = "thresholdRangeLow")
+    public float thresholdRangeLow;
+
+    @XmlElement(name = "thresholdRangeHigh")
+    public float thresholdRangeHigh;
+
     public XmlArduinoNodeExtension() {
     }
 
@@ -25,6 +37,10 @@ public class XmlArduinoNodeExtension {
         if (arduinoNodeExtension.isEnabled()) {
             pin = arduinoNodeExtension.getPin().name();
             function = arduinoNodeExtension.getFunction().name();
+            withDelay = arduinoNodeExtension.isWithDelay();
+            inverserLogic = arduinoNodeExtension.isInverserLogic();
+            thresholdRangeLow = arduinoNodeExtension.getThresholdRangeLow();
+            thresholdRangeHigh = arduinoNodeExtension.getThresholdRangeHigh();
         }
     }
 

@@ -40,34 +40,30 @@ public class CodeGenerator {
     }
 
     public String generate() {
-        String generatedCodeStr = "";
+        String generatedCodeStr;
 
         // prepare
 
-        if (projectDir.exists()) {
-            try {
+        try {
+            if (projectDir.exists()) {
                 FileUtils.deleteDirectory(projectDir);
-                FileUtils.forceMkdir(projectDir);
+            }
+            FileUtils.forceMkdir(projectDir);
 
-                // copy .h and .cpp files
-                List<File> headerAndClassFiles = (List<File>) FileUtils.listFiles(new File(arduinoManager.ARDUINO_RES_DIR_NAME),
-                        extensions, false);
-                for (File f : headerAndClassFiles) {
-                    FileUtils.copyFileToDirectory(f, projectDir);
-                }
-
-                // generate main sketch file with all logic inside
-                generatedCodeStr = getGeneratedCodeStr();
-                FileUtils.write(mainSketchFile, generatedCodeStr);
-
-            } catch (IOException e) {
-                generatedCodeStr = "";  // todo
+            // copy .h and .cpp files
+            List<File> headerAndClassFiles = (List<File>) FileUtils.listFiles(new File(arduinoManager.ARDUINO_RES_DIR_NAME),
+                    extensions, false);
+            for (File f : headerAndClassFiles) {
+                FileUtils.copyFileToDirectory(f, projectDir);
             }
 
-        } else {
-            generatedCodeStr = "";  // todo
-        }
+            // generate main sketch file with all logic inside
+            generatedCodeStr = getGeneratedCodeStr();
+            FileUtils.write(mainSketchFile, generatedCodeStr);
 
+        } catch (IOException e) {
+            generatedCodeStr = "Error manipulating with source files.";  // todo
+        }
 
         return generatedCodeStr;
     }

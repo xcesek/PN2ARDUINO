@@ -12,6 +12,8 @@ public class BoardSettings {
     private static final String DEFAULT_PORT_LIN = "/dev/ttyACM0";
     private String port;
     private BoardType boardType;
+    private boolean verboseOutput;
+    private boolean preserveTempFiles;
 
     public BoardSettings() {
         String osName = System.getProperty("os.name");
@@ -22,6 +24,8 @@ public class BoardSettings {
         }
 
         boardType = BoardType.ARDUINO_UNO;
+        verboseOutput = false;
+        preserveTempFiles = false;
     }
 
     public BoardSettings(String port, BoardType boardType) {
@@ -43,5 +47,21 @@ public class BoardSettings {
 
     public void setBoardType(BoardType boardType) {
         this.boardType = boardType;
+    }
+
+    public boolean isVerboseOutput() {
+        return verboseOutput;
+    }
+
+    public void setVerboseOutput(boolean verboseOutput) {
+        this.verboseOutput = verboseOutput;
+    }
+
+    public boolean isPreserveTempFiles() {
+        return preserveTempFiles;
+    }
+
+    public void setPreserveTempFiles(boolean preserveTempFiles) {
+        this.preserveTempFiles = preserveTempFiles;
     }
 }

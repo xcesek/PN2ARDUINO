@@ -1,6 +1,9 @@
 package org.pneditor.arduino.generator.util;
 
-import org.apache.commons.exec.*;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.pneditor.arduino.generator.upload.response.UploadResponse;
 
@@ -18,10 +21,10 @@ import java.util.List;
 public class CmdHelper {
     private static final int DEFAULT_WATCHDOG_TIME = 30000;
 
-    public static UploadResponse runCommand(String board, String port,  List<File> sourceFiles) {
+    public static UploadResponse runCommand(String board, String port, String additionalSwitches, List<File> sourceFiles) {
         UploadResponse uploadResponse = new UploadResponse();
 
-        String line = "arduino --board " + board + " --port " + port + " --upload " + getSourceFilesString(sourceFiles);
+        String line = "arduino --board " + board + " --port " + port + " --upload " + getSourceFilesString(sourceFiles) + " " + additionalSwitches;
         CommandLine cmdLine = CommandLine.parse(line);
 
         DefaultExecutor executor = new DefaultExecutor();
@@ -42,7 +45,7 @@ public class CmdHelper {
             uploadResponse.setResponseCode(exitValue);
             uploadResponse.setCmdOutput(output);
 
-        } catch (IOException e ) {
+        } catch (IOException e) {
             uploadResponse.setCustomMessage("Upload failed!");
             uploadResponse.setResponseCode(-1);
             uploadResponse.setCmdOutput(e.getLocalizedMessage());
@@ -51,7 +54,7 @@ public class CmdHelper {
         return uploadResponse;
     }
 
-    private static String getSourceFilesString(List<File> sourceFiles){
+    private static String getSourceFilesString(List<File> sourceFiles) {
         final StringBuffer buffer = new StringBuffer();
         sourceFiles.forEach(f -> buffer
                 .append("\"")

@@ -3,6 +3,7 @@ package org.pneditor.arduino.generator.upload.board;
 import org.apache.commons.io.FileUtils;
 import org.pneditor.arduino.generator.upload.response.UploadResponse;
 import org.pneditor.arduino.generator.util.CmdHelper;
+import org.pneditor.arduino.settings.BoardSettings;
 
 import java.io.File;
 import java.util.List;
@@ -19,10 +20,10 @@ public class ArduinoUnoUploader implements CodeUploader {
     private final static String ARCH = "avr";
     private final static String BOARD = "uno";
 
-    private final static String[] extensions = { "ino" };
+    private final static String[] extensions = {"ino"};
 
-    private String portName;
     private String projectDirName;
+    private BoardSettings boardSettings;
 
     public ArduinoUnoUploader() {
     }
@@ -31,22 +32,28 @@ public class ArduinoUnoUploader implements CodeUploader {
         File projectDir = new File(projectDirName);
         List<File> sketchFiles = (List<File>) FileUtils.listFiles(projectDir, extensions, false);
 
-        return CmdHelper.runCommand(getBoard(), portName, sketchFiles);
+        StringBuilder additionalSwitches = new StringBuilder();
+        if (boardSettings.isVerboseOutput()) {
+            additionalSwitches.append(" --verbose ");
+        }
+        if(boardSettings.isPreserveTempFiles()) {
+            additionalSwitches.append(" --preserve-temp-files ");
+        }
+
+        return CmdHelper.runCommand(getBoard(), boardSettings.getPort(), additionalSwitches.toString(), sketchFiles);
+    }
+
+    @Override
+    public void setBoardSettings(BoardSettings boardSettings) {
+        this.boardSettings = boardSettings;
+    }
+
+    @Override
+    public void setProjectDirName(String projectDirName) {
+        this.projectDirName = projectDirName;
     }
 
     public String getBoard() {
         return PACKAGE + ":" + ARCH + ":" + BOARD;
-    }
-
-    public void setPort(String portName) {
-        this.portName = portName;
-    }
-
-    public String getProjectDirName() {
-        return projectDirName;
-    }
-
-    public void setProjectDirName(String projectDirName) {
-        this.projectDirName = projectDirName;
     }
 }

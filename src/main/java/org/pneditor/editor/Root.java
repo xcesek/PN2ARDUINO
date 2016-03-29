@@ -16,23 +16,18 @@
  */
 package org.pneditor.editor;
 
-import java.awt.Frame;
-import java.io.File;
-import java.util.Set;
-import javax.swing.JPopupMenu;
-
 import org.pneditor.arduino.manager.ArduinoManager;
-import org.pneditor.arduino.settings.BoardSettings;
+import org.pneditor.editor.canvas.Selection;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
 import org.pneditor.petrinet.Marking;
-import org.pneditor.petrinet.Role;
-import org.pneditor.editor.canvas.Selection;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.util.ListEditor;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.Set;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public interface Root {
@@ -118,8 +113,6 @@ public interface Root {
     public String getAppShortName();
 
     public String getAppLongName();
-    
-    public GlobalTimer getGlobalTimer();
 
     public ArduinoManager getArduinoManager();
 }

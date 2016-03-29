@@ -14,19 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.pneditor.editor.actions;
+package org.pneditor.editor.actions.time;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import org.pneditor.editor.Root;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.editor.time.TimingPolicyType;
+import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.util.GraphicsTools;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
 /**
+ * Created by Pavol Cesek on 2/26/2016.
  *
- * @author Martin Riesz <riesz.martin at gmail.com>
+ * @email xcesek@stuba.sk
+ * Faculty of Electrical Engineering and Information Technology STU
+ * Under GNU GPL v3 licence
  */
 public class SetTimingPolicyAction extends AbstractAction {
 
@@ -44,22 +46,22 @@ public class SetTimingPolicyAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        GlobalTimer globalTimer = root.getGlobalTimer();
+
         Object[] timingPolicyNames = TimingPolicyType.values();
         TimingPolicyType answer = (TimingPolicyType) JOptionPane.showInputDialog(
-                            root.getParentFrame(),
-                            "Select Timing Policy:",
-                            "Select Timing Policy:",
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            timingPolicyNames,
-                            globalTimer.getType());
+                root.getParentFrame(),
+                "Select Timing Policy:",
+                "Select Timing Policy:",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                timingPolicyNames,
+                root.getArduinoManager().getTimingPolicyType());
         if ((answer != null)) {
-            globalTimer.setType(answer);
-        } 
-        
-         return;
+            root.getArduinoManager().setTimingPolicyType(answer);
+        }
+
+        return;
     }
 
-           
+
 }

@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:template match="/document">
         <document>
             <xsl:call-template name="subnet"/>
-            <xsl:call-template name="roles"/>
+            <!--<xsl:call-template name="roles"/>-->
             <xsl:call-template name="arduinoManager"/>
         </document>
     </xsl:template>
@@ -32,18 +32,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <x><xsl:value-of select="x"/></x>
         <y><xsl:value-of select="y"/></y>
         <label><xsl:value-of select="label"/></label>
-        <timingPolicyType><xsl:value-of select="type"/></timingPolicyType>
         <xsl:for-each select="place">
             <place>
                 <id><xsl:value-of select="id"/></id>
                 <x><xsl:value-of select="x"/></x>
                 <y><xsl:value-of select="y"/></y>
                 <label><xsl:value-of select="label"/></label>
+                <capacity><xsl:value-of select="capacity"/></capacity>
                 <tokens><xsl:value-of select="tokens"/></tokens>
                 <isStatic><xsl:value-of select="isStatic"/></isStatic>
                 <arduinoNodeExtension>
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
+                    <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
+                    <inverserLogic><xsl:value-of select="arduinoNodeExtension/inverserLogic"/></inverserLogic>
+                    <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
+                    <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>
                 </arduinoNodeExtension>
             </place>
         </xsl:for-each>
@@ -60,6 +64,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <arduinoNodeExtension>
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
+                    <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
+                    <inverserLogic><xsl:value-of select="arduinoNodeExtension/inverserLogic"/></inverserLogic>
+                    <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
+                    <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>
                 </arduinoNodeExtension>
             </transition>
         </xsl:for-each>
@@ -104,26 +112,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="roles">
-        <roles>
-            <xsl:for-each select="roles/role">
-                <role>
-                    <id><xsl:value-of select="id"/></id>
-                    <name><xsl:value-of select="name"/></name>
-                    <xsl:for-each select="transitionId">
-                        <transitionId><xsl:value-of select="."/></transitionId>
-                    </xsl:for-each>
-                    <createCase><xsl:value-of select="createCase"/></createCase>
-                    <destroyCase><xsl:value-of select="destroyCase"/></destroyCase>
-                </role>
-            </xsl:for-each>
-        </roles>
-    </xsl:template>
+    <!--<xsl:template name="roles">-->
+        <!--<roles>-->
+            <!--<xsl:for-each select="roles/role">-->
+                <!--<role>-->
+                    <!--<id><xsl:value-of select="id"/></id>-->
+                    <!--<name><xsl:value-of select="name"/></name>-->
+                    <!--<xsl:for-each select="transitionId">-->
+                        <!--<transitionId><xsl:value-of select="."/></transitionId>-->
+                    <!--</xsl:for-each>-->
+                    <!--<createCase><xsl:value-of select="createCase"/></createCase>-->
+                    <!--<destroyCase><xsl:value-of select="destroyCase"/></destroyCase>-->
+                <!--</role>-->
+            <!--</xsl:for-each>-->
+        <!--</roles>-->
+    <!--</xsl:template>-->
 
     <xsl:template name="arduinoManager">
         <arduinoManager>
             <board><xsl:value-of select="arduinoManager/board"/></board>
             <port><xsl:value-of select="arduinoManager/port"/></port>
+            <verbosetOutput><xsl:value-of select="arduinoManager/verbosetOutput"/></verbosetOutput>
+            <preserveTempFiles><xsl:value-of select="arduinoManager/preserveTempFiles"/></preserveTempFiles>
+            <timingPolicyType><xsl:value-of select="arduinoManager/timingPolicyType"/></timingPolicyType>
         </arduinoManager>
     </xsl:template>
 
