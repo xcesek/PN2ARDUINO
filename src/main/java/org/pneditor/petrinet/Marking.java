@@ -135,10 +135,6 @@ public class Marking implements Subject {
         } else {
             this.map.put(place, tokens);
         }
-        //ARDUINO
-        if(place.hasArduinoComponent()){
-            notifyArduinoListeners(place);
-        }
 
     }
 
@@ -189,6 +185,7 @@ public class Marking implements Subject {
         lock.writeLock().lock();
         try {
             if (isEnabled(transition)) {
+                notifyFiredTransition(transition);
                 for (Arc arc : transition.getConnectedArcs()) {
                     if (arc.isPlaceToTransition()) {
                         int tokens = getTokens(arc.getPlaceNode());
@@ -199,9 +196,11 @@ public class Marking implements Subject {
                                 setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
                             }
                         }
+                        notifyDeactivatingPlace(arc.getPlaceNode());
                     } else {
                         int tokens = getTokens(arc.getPlaceNode());
                         setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
+                        notifyActivatingPlace(arc.getPlaceNode());
                     }
                 }
                 success = true;
@@ -232,7 +231,7 @@ public class Marking implements Subject {
         return canBeUnfired;
     }
 
-    public void undoFire(Transition transition) {
+    public void undoFire(Transition transition) { //TODO arduino
         lock.writeLock().lock();
         try {
             if (canBeUnfired(transition)) {
@@ -493,10 +492,27 @@ public class Marking implements Subject {
     }
 
     @Override
-    public void notifyArduinoListeners(Node node) {
+    public void notifyFiredTransition(Node transition) {
         for(int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
-            arduinoListener.update(node);
+            arduinoListener.updateFiredTransition(transition);
         }
     }
+
+    @Override
+    public void notifyActivatingPlace(Node place) {
+        for(int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.updateActivatingPlace(place);
+        }
+    }
+
+    @Override
+    public void notifyDeactivatingPlace(Node place) {
+        for(int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.updateDeactivatingPlace(place);
+        }
+    }
+
 }

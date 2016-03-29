@@ -1,11 +1,11 @@
-package org.pneditor.arduino.components.settings;
+package org.pneditor.arduino.components;
 
-import org.pneditor.arduino.components.ArduinoComponentType;
-import org.pneditor.arduino.components.DigitalOutput;
+import org.pneditor.arduino.components.place.PlaceDigitalOutputSettings;
+import org.pneditor.arduino.components.transition.TransitionDigitalOutputSettings;
+import org.pneditor.petrinet.Node;
+import org.pneditor.petrinet.Place;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.List;
 
 /**
  * Created by Alzbeta Cesekova
@@ -29,12 +29,16 @@ abstract public class ArduinoComponentSettings {
         return type;
     }
 
-    public static ArduinoComponentSettings settingsFactory(ArduinoComponentType type) {
+    public static ArduinoComponentSettings settingsFactory(ArduinoComponentType type, Node node) {
         switch (type) {
-            case INPUT:
-                return new DigitalOutputSettings();
+            case OUTPUT:
+                if(node instanceof Place) {
+                    return new PlaceDigitalOutputSettings();
+                } else {
+                    return new TransitionDigitalOutputSettings();
+                }
             default:
-                return new DigitalOutputSettings();
+                return new PlaceDigitalOutputSettings();
         }
     }
 

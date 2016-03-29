@@ -1,8 +1,10 @@
-package org.pneditor.arduino.components;
+package org.pneditor.arduino.components.transition;
 
 import org.firmata4j.Pin;
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
+import org.pneditor.arduino.components.ArduinoComponent;
+import org.pneditor.arduino.components.ArduinoComponentType;
+import org.pneditor.arduino.components.ArduinoComponentSettings;
 
 import java.io.IOException;
 
@@ -15,11 +17,11 @@ import java.io.IOException;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public class DigitalOutput extends ArduinoComponent{
+public class TransitionDigitalOutput extends ArduinoComponent {
 
     private Pin myPin;
 
-    public DigitalOutput(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
+    public TransitionDigitalOutput(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
         super(pin, type, settings, arduinoManager);
         try {
             myPin = arduinoManager.getDevice().getPin(pin);

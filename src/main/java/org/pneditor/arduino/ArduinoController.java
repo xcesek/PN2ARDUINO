@@ -33,18 +33,47 @@ public class ArduinoController implements ArduinoListener {
 
     }
 
-    @Override
-    public void update(Node node) {
 
+    @Override
+    public void updateFiredTransition(Node transition) {
         new Thread(() -> {
             try {
-                node.getArduinoComponent().performAction();
+                if(transition.hasArduinoComponent()) {
+                    transition.getArduinoComponent().fire();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+
+    @Override
+    public void updateActivatingPlace(Node place) {
+        new Thread(() -> {
+            try {
+                if(place.hasArduinoComponent()) {
+                    place.getArduinoComponent().activate();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }).start();
 
+    }
 
+    @Override
+    public void updateDeactivatingPlace(Node place) {
+        new Thread(() -> { //TODO ak deaktivujem a jemu este ostali tokeny
+            try {
+                if(place.hasArduinoComponent()) {
+                    place.getArduinoComponent().deactivate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
     }
 }

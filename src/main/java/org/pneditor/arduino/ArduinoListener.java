@@ -12,5 +12,7 @@ import org.pneditor.petrinet.Node;
  * (at your option) any later version.
  */
 public interface ArduinoListener {
-    public void update(Node node);
+    public void updateFiredTransition(Node transition);
+    public void updateActivatingPlace(Node place);
+    public void updateDeactivatingPlace(Node place);
 }

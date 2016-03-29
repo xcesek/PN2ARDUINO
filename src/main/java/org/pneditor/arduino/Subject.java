@@ -14,5 +14,7 @@ import org.pneditor.petrinet.Node;
 public interface Subject {
     public void registerArduinoListener(ArduinoListener arduinoListener);
     public void removeArduinoListener(ArduinoListener arduinoListener);
-    public void notifyArduinoListeners(Node nore);
+    public void notifyFiredTransition(Node transition);
+    public void notifyActivatingPlace(Node place);
+    public void notifyDeactivatingPlace(Node place);
 }

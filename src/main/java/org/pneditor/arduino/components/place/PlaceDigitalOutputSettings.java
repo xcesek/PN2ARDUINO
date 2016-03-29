@@ -1,11 +1,10 @@
-package org.pneditor.arduino.components.settings;
+package org.pneditor.arduino.components.place;
 
+import org.pneditor.arduino.components.ArduinoComponentSettings;
 import org.pneditor.arduino.components.ArduinoComponentType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alzbeta Cesekova
@@ -16,11 +15,11 @@ import java.util.List;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public class DigitalOutputSettings extends ArduinoComponentSettings {
+public class PlaceDigitalOutputSettings extends ArduinoComponentSettings {
 
     private double period;
 
-    public DigitalOutputSettings() {
+    public PlaceDigitalOutputSettings() {
         super.setType(ArduinoComponentType.OUTPUT);
 
         GridLayout customSettingsLayout = new GridLayout(0, 2);

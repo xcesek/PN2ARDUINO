@@ -3,7 +3,7 @@ package org.pneditor.editor.actions.arduino;
 import org.firmata4j.Pin;
 import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.arduino.components.ArduinoComponentType;
-import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
+import org.pneditor.arduino.components.ArduinoComponentSettings;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.commands.arduino.SetArduinoComponentCommand;
 import org.pneditor.petrinet.Node;
@@ -33,6 +33,8 @@ public class AddArduinoComponentAction extends AbstractAction {
     private ArduinoComponentType arduinoComponentType;
     private ArduinoComponentSettings arduinoComponentSettings;
 
+    private Node clickedNode;
+
     private boolean alreadySet;
 
     public AddArduinoComponentAction(Root root) {
@@ -50,10 +52,11 @@ public class AddArduinoComponentAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         if (root.getClickedElement() != null
                 && root.getClickedElement() instanceof Node) {
-            Node clickedNode = (Node) root.getClickedElement();
+            clickedNode = (Node) root.getClickedElement();
 
             if (requestComponentSettings()) {
-                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(pinNumber, arduinoComponentType, arduinoComponentSettings, root.getArduinoManager());
+                //TODO prerobit cez comand
+                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(pinNumber, arduinoComponentType, arduinoComponentSettings, root.getArduinoManager(), clickedNode);
                 root.getUndoManager().executeCommand(new SetArduinoComponentCommand(clickedNode, arduinoComponent));
             }
 
@@ -114,7 +117,7 @@ public class AddArduinoComponentAction extends AbstractAction {
         objectList.add(separatorPanel);
 
         //custom settings
-        arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
+        arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
         JPanel customSettings = arduinoComponentSettings.getSettingsGui();
 
         objectList.add(customSettings);
@@ -138,7 +141,7 @@ public class AddArduinoComponentAction extends AbstractAction {
 
                 //custom settings
                 objectList.remove(arduinoComponentSettings.getSettingsGui()); //remove old
-                arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem());
+                arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
                 objectList.add(arduinoComponentSettings.getSettingsGui());
             }
         });

@@ -1,7 +1,11 @@
 package org.pneditor.arduino.components;
 
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.settings.ArduinoComponentSettings;
+
+import org.pneditor.arduino.components.place.PlaceDigitalOutput;
+import org.pneditor.arduino.components.transition.TransitionDigitalOutput;
+import org.pneditor.petrinet.Node;
+import org.pneditor.petrinet.Place;
 
 /**
  * Created by Alzbeta Cesekova
@@ -43,12 +47,21 @@ public class ArduinoComponent {
 
     public void performAction(){}
 
-    public static ArduinoComponent componentFactory(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager){
+    public void activate(){}
+
+    public void deactivate(){}
+
+    public void fire(){}
+
+    public static ArduinoComponent componentFactory(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node){
         switch (type) {
             case OUTPUT:
-                return new DigitalOutput(pin, type, settings, arduinoManager);
+                if(node instanceof Place) {
+                    return new PlaceDigitalOutput(pin, type, settings, arduinoManager);
+                } else
+                    return new TransitionDigitalOutput(pin, type, settings, arduinoManager);
             default:
-                return new ArduinoComponent(pin, type, settings, arduinoManager);
+                return new PlaceDigitalOutput(pin, type, settings, arduinoManager);
         }
     }
 }
