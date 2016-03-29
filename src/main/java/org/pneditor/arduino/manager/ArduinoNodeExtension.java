@@ -15,7 +15,7 @@ public class ArduinoNodeExtension {
     private ArduinoSupportedFunction function;
 
     private boolean withDelay;
-    private boolean inverserLogic;
+    private boolean inverseLogic;
     private float thresholdRangeLow;
     private float thresholdRangeHigh;
 
@@ -54,8 +54,24 @@ public class ArduinoNodeExtension {
         return withDelay;
     }
 
-    public boolean isInverserLogic() {
-        return inverserLogic;
+    public void setWithDelay(boolean withDelay) {
+        this.withDelay = withDelay;
+    }
+
+    public void setInverseLogic(boolean inverseLogic) {
+        this.inverseLogic = inverseLogic;
+    }
+
+    public void setThresholdRangeLow(float thresholdRangeLow) {
+        this.thresholdRangeLow = thresholdRangeLow;
+    }
+
+    public void setThresholdRangeHigh(float thresholdRangeHigh) {
+        this.thresholdRangeHigh = thresholdRangeHigh;
+    }
+
+    public boolean getInverseLogic() {
+        return inverseLogic;
     }
 
     public float getThresholdRangeLow() {

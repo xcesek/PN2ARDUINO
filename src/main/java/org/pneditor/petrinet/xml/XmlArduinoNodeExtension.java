@@ -21,8 +21,8 @@ public class XmlArduinoNodeExtension {
     @XmlElement(name = "withDelay")
     public boolean withDelay;
 
-    @XmlElement(name = "inverserLogic")
-    public boolean inverserLogic;
+    @XmlElement(name = "inverseLogic")
+    public boolean inverseLogic;
 
     @XmlElement(name = "thresholdRangeLow")
     public float thresholdRangeLow;
@@ -38,7 +38,7 @@ public class XmlArduinoNodeExtension {
             pin = arduinoNodeExtension.getPin().name();
             function = arduinoNodeExtension.getFunction().name();
             withDelay = arduinoNodeExtension.isWithDelay();
-            inverserLogic = arduinoNodeExtension.isInverserLogic();
+            inverseLogic = arduinoNodeExtension.getInverseLogic();
             thresholdRangeLow = arduinoNodeExtension.getThresholdRangeLow();
             thresholdRangeHigh = arduinoNodeExtension.getThresholdRangeHigh();
         }

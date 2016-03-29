@@ -190,7 +190,19 @@ public class DocumentImporter {
         place.setStatic(xmlPlace.isStatic);
         place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
-        place.setArduinoNodeExtension(new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function));
+
+        if(xmlPlace != null) {
+            if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.function)) {
+                ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function);
+                nodeExt.setInverseLogic(xmlPlace.arduinoNodeExtension.inverseLogic);
+                nodeExt.setWithDelay(xmlPlace.arduinoNodeExtension.withDelay);
+                nodeExt.setThresholdRangeHigh(xmlPlace.arduinoNodeExtension.thresholdRangeHigh);
+                nodeExt.setThresholdRangeLow(xmlPlace.arduinoNodeExtension.thresholdRangeLow);
+                place.setArduinoNodeExtension(nodeExt);
+            }
+        } else {
+            place.setArduinoNodeExtension(new ArduinoNodeExtension());
+        }
         return place;
     }
 

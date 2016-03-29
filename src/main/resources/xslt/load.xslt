@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
                     <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
-                    <inverserLogic><xsl:value-of select="arduinoNodeExtension/inverserLogic"/></inverserLogic>
+                    <inverseLogic><xsl:value-of select="arduinoNodeExtension/inverseLogic"/></inverseLogic>
                     <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
                     <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>
                 </arduinoNodeExtension>
@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
                     <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
-                    <inverserLogic><xsl:value-of select="arduinoNodeExtension/inverserLogic"/></inverserLogic>
+                    <inverseLogic><xsl:value-of select="arduinoNodeExtension/inverseLogic"/></inverseLogic>
                     <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
                     <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>
                 </arduinoNodeExtension>
