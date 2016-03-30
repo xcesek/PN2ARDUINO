@@ -23,6 +23,9 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileFilter;
+
+import org.pneditor.arduino.ArduinoManager;
+import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.PetriNet;
@@ -38,9 +41,9 @@ public abstract class FileType extends FileFilter {
         Set<FileType> allFileTypes = new HashSet<FileType>();
         allFileTypes.add(new EpsFileType());
         allFileTypes.add(new PflowFileType());
-        allFileTypes.add(new PflowxFileType());
+//        allFileTypes.add(new PflowxFileType());
         allFileTypes.add(new PngFileType());
-        allFileTypes.add(new ViptoolPnmlFileType());
+//        allFileTypes.add(new ViptoolPnmlFileType());
         return allFileTypes;
     }
 

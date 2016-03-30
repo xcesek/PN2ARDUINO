@@ -41,6 +41,10 @@ public class ArduinoComponent {
         return type;
     }
 
+    public ArduinoComponentSettings getSettings() {
+        return settings;
+    }
+
     public void setType(ArduinoComponentType type) {
         this.type = type;
     }

@@ -32,4 +32,7 @@ public class XmlNode {
 
     @XmlElement(name = "y")
     public int y;
+
+    @XmlElement(name = "arduinoComponent")
+    public XmlArduinoComponent arduinoComponent;
 }

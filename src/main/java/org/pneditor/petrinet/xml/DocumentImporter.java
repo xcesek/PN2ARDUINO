@@ -30,6 +30,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
+
+import org.pneditor.arduino.ArduinoManager;
+import org.pneditor.arduino.components.ArduinoComponent;
+import org.pneditor.arduino.components.ArduinoComponentSettings;
+import org.pneditor.arduino.components.ArduinoComponentType;
+import org.pneditor.arduino.components.place.PlaceDigitalOutputSettings;
+import org.pneditor.arduino.components.transition.TransitionDigitalOutputSettings;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.editor.time.SimpleTimer;
 import org.pneditor.editor.time.TimingPolicyType;
@@ -54,6 +61,11 @@ public class DocumentImporter {
 
     private XmlDocument xmlDocument;
     private IdToXmlObject idToXmlObject;
+    private ArduinoManager arduinoManager;
+
+    public DocumentImporter() {
+        arduinoManager = new ArduinoManager();
+    }
 
     public Document readFromFile(File file) throws JAXBException, FileNotFoundException, IOException {
         JAXBContext ctx = JAXBContext.newInstance(XmlDocument.class);
@@ -201,6 +213,14 @@ public class DocumentImporter {
         place.setLabel(xmlPlace.label);
         place.setStatic(xmlPlace.isStatic);
         place.setCenter(xmlPlace.x, xmlPlace.y);
+        //ARDUINO
+        place.setArduinoComponent(new ArduinoComponent(xmlPlace.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
+        switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
+            case OUTPUT:
+                ((PlaceDigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
+            default:
+                ((PlaceDigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(0.0);
+        }
         return place;
     }
 
@@ -214,6 +234,15 @@ public class DocumentImporter {
         
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
+        //ARDUINO
+        transition.setArduinoComponent(new ArduinoComponent(xmlTransition.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
+        switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
+            case OUTPUT:
+                ((PlaceDigitalOutputSettings)transition.getArduinoComponent().getSettings()).setPeriod(xmlTransition.arduinoComponent.settings.period);
+            default:
+                ((PlaceDigitalOutputSettings)transition.getArduinoComponent().getSettings()).setPeriod(0.0);
+        }
+
         return transition;
     }
 

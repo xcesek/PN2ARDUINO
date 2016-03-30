@@ -43,4 +43,11 @@ public class TransitionDigitalOutputSettings extends ArduinoComponentSettings {
 
     }
 
+    public double getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(double period) {
+        this.period = period;
+    }
 }

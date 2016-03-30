@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
+
+import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;

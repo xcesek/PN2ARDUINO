@@ -16,29 +16,26 @@
  */
 package org.pneditor.editor.actions;
 
-import java.awt.BorderLayout;
+import org.pneditor.editor.Root;
+import org.pneditor.editor.commands.ReplaceSubnetsCommand;
+import org.pneditor.editor.commands.ReplaceSubnetsLooseMethodCommand;
+import org.pneditor.editor.filechooser.FileChooserDialog;
+import org.pneditor.editor.filechooser.FileTypeException;
+//import org.pneditor.editor.filechooser.PflowxFileType;
+import org.pneditor.petrinet.Document;
+import org.pneditor.petrinet.Element;
+import org.pneditor.petrinet.PetriNet;
+import org.pneditor.petrinet.Subnet;
+import org.pneditor.util.GraphicsTools;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.Element;
-import org.pneditor.petrinet.PetriNet;
-import org.pneditor.editor.Root;
-import org.pneditor.editor.filechooser.FileChooserDialog;
-import org.pneditor.editor.filechooser.FileTypeException;
-import org.pneditor.editor.filechooser.PflowxFileType;
-import org.pneditor.petrinet.Subnet;
-import org.pneditor.editor.commands.ReplaceSubnetsCommand;
-import org.pneditor.editor.commands.ReplaceSubnetsLooseMethodCommand;
-import org.pneditor.util.GraphicsTools;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class ReplaceSubnetAction extends AbstractAction {
@@ -59,7 +56,7 @@ public class ReplaceSubnetAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         if (root.getClickedElement() instanceof Subnet || !root.getSelection().getSubnets().isEmpty()) {
             FileChooserDialog chooser = new FileChooserDialog();
-            chooser.addChoosableFileFilter(new PflowxFileType());
+//            chooser.addChoosableFileFilter(new PflowxFileType());
             chooser.setAcceptAllFileFilterUsed(false);
             chooser.setCurrentDirectory(root.getCurrentDirectory());
             chooser.setDialogTitle("Choose subnet");
@@ -106,9 +103,10 @@ public class ReplaceSubnetAction extends AbstractAction {
     }
 
     private Subnet importSubnet(File file) throws FileTypeException {
-        Subnet subnet = null;
-        Document document = new PflowxFileType().load(file);
-        subnet = document.petriNet.getRootSubnet();
-        return subnet;
+//        Subnet subnet = null;
+//        Document document = new PflowxFileType().load(file);
+//        subnet = document.petriNet.getRootSubnet();
+//        return subnet;
+        return null;
     }
 }

@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:template match="/document">
         <document>
             <xsl:call-template name="subnet"/>
-            <xsl:call-template name="roles"/>
+            <!--<xsl:call-template name="roles"/>-->
         </document>
     </xsl:template>
 
@@ -40,6 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label><xsl:value-of select="label"/></label>
                 <tokens><xsl:value-of select="tokens"/></tokens>
                 <isStatic><xsl:value-of select="isStatic"/></isStatic>
+                <arduinoComponent>
+                    <pin><xsl:value-of select="arduinoComponent/pin"/></pin>
+                    <type><xsl:value-of select="arduinoComponent/type"/></type>
+                    <settings>
+                        <period><xsl:value-of select="arduinoComponent/settings/period"/></period>
+                    </settings>
+                </arduinoComponent>
             </place>
         </xsl:for-each>
         <xsl:for-each select="transition">
@@ -50,6 +57,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label><xsl:value-of select="label"/></label>
                 <earliestFiringTime><xsl:value-of select="earliestFiringTime"/></earliestFiringTime>
                 <latestFiringTime><xsl:value-of select="latestFiringTime"/></latestFiringTime>
+                <arduinoComponent>
+                    <pin><xsl:value-of select="arduinoComponent/pin"/></pin>
+                    <type><xsl:value-of select="arduinoComponent/type"/></type>
+                    <settings>
+                        <period><xsl:value-of select="arduinoComponent/settings/period"/></period>
+                    </settings>
+                </arduinoComponent>
             </transition>
         </xsl:for-each>
         <xsl:for-each select="arc">
@@ -98,20 +112,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="roles">
-        <roles>
-            <xsl:for-each select="roles/role">
-                <role>
-                    <id><xsl:value-of select="id"/></id>
-                    <name><xsl:value-of select="name"/></name>
-                    <xsl:for-each select="transitionId">
-                        <transitionId><xsl:value-of select="."/></transitionId>
-                    </xsl:for-each>
-                    <createCase><xsl:value-of select="createCase"/></createCase>
-                    <destroyCase><xsl:value-of select="destroyCase"/></destroyCase>
-                </role>
-            </xsl:for-each>
-        </roles>
-    </xsl:template>
+    <!--<xsl:template name="roles">-->
+        <!--<roles>-->
+            <!--<xsl:for-each select="roles/role">-->
+                <!--<role>-->
+                    <!--<id><xsl:value-of select="id"/></id>-->
+                    <!--<name><xsl:value-of select="name"/></name>-->
+                    <!--<xsl:for-each select="transitionId">-->
+                        <!--<transitionId><xsl:value-of select="."/></transitionId>-->
+                    <!--</xsl:for-each>-->
+                    <!--<createCase><xsl:value-of select="createCase"/></createCase>-->
+                    <!--<destroyCase><xsl:value-of select="destroyCase"/></destroyCase>-->
+                <!--</role>-->
+            <!--</xsl:for-each>-->
+        <!--</roles>-->
+    <!--</xsl:template>-->
 
 </xsl:transform>

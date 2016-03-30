@@ -13,7 +13,8 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *//*
+
 package org.pneditor.editor.filechooser;
 
 import java.io.File;
@@ -31,10 +32,12 @@ import org.pneditor.petrinet.xml.DocumentExporter;
 import org.pneditor.petrinet.xml.DocumentImporter;
 import org.pneditor.util.GraphicsTools;
 
+*/
 /**
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
- */
+ *//*
+
 public class ViptoolPnmlFileType extends FileType {
 
     @Override
@@ -99,3 +102,4 @@ public class ViptoolPnmlFileType extends FileType {
         }
     }
 }
+*/

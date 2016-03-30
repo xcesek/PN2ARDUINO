@@ -26,7 +26,7 @@ import org.pneditor.petrinet.PetriNet;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.filechooser.FileChooserDialog;
 import org.pneditor.editor.filechooser.FileTypeException;
-import org.pneditor.editor.filechooser.PflowxFileType;
+//import org.pneditor.editor.filechooser.PflowxFileType;
 import org.pneditor.petrinet.Subnet;
 import org.pneditor.util.GraphicsTools;
 
@@ -58,7 +58,7 @@ public class SaveSubnetAsAction extends AbstractAction {
                 chooser.setSelectedFile(new File(chooser.getCurrentDirectory().getAbsolutePath() + "/" + subnetLabel));
             }
 
-            chooser.addChoosableFileFilter(new PflowxFileType());
+//            chooser.addChoosableFileFilter(new PflowxFileType());
             chooser.setAcceptAllFileFilterUsed(false);
             chooser.setCurrentDirectory(root.getCurrentDirectory());
             chooser.setDialogTitle("Save subnet as...");
@@ -82,6 +82,6 @@ public class SaveSubnetAsAction extends AbstractAction {
         Document document = new Document();
         PetriNet petriNet = document.petriNet;
         petriNet.setRootSubnet(subnet);
-        new PflowxFileType().save(document, file, root.getGlobalTimer());
+//        new PflowxFileType().save(document, file, root.getGlobalTimer());
     }
 }

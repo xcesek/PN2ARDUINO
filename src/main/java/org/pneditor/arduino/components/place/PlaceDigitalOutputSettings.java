@@ -19,6 +19,15 @@ public class PlaceDigitalOutputSettings extends ArduinoComponentSettings {
 
     private double period;
 
+    public void setPeriod(double period) {
+        this.period = period;
+    }
+
+    public double getPeriod() {
+
+        return period;
+    }
+
     public PlaceDigitalOutputSettings() {
         super.setType(ArduinoComponentType.OUTPUT);
 
