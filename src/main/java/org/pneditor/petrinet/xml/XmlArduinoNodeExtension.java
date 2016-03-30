@@ -25,10 +25,10 @@ public class XmlArduinoNodeExtension {
     public boolean inverseLogic;
 
     @XmlElement(name = "thresholdRangeLow")
-    public float thresholdRangeLow;
+    public int thresholdRangeLow;
 
     @XmlElement(name = "thresholdRangeHigh")
-    public float thresholdRangeHigh;
+    public int thresholdRangeHigh;
 
     public XmlArduinoNodeExtension() {
     }

@@ -211,6 +211,7 @@ public class DocumentImporter {
         transition.setId(xmlTransition.id);
         transition.setLabel(xmlTransition.label);
         transition.setCenter(xmlTransition.x, xmlTransition.y);
+
         transition.setEarliestFiringTime(xmlTransition.earliestFiringTime);
         transition.setLatestFiringTime(xmlTransition.latestFiringTime);
 
@@ -219,6 +220,19 @@ public class DocumentImporter {
         if (xmlTransition.arduinoNodeExtension != null) {
             if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
                 transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));
+            }
+        } else {
+            transition.setArduinoNodeExtension(new ArduinoNodeExtension());
+        }
+
+        if(xmlTransition != null) {
+            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
+                ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function);
+                nodeExt.setInverseLogic(xmlTransition.arduinoNodeExtension.inverseLogic);
+                nodeExt.setWithDelay(xmlTransition.arduinoNodeExtension.withDelay);
+                nodeExt.setThresholdRangeHigh(xmlTransition.arduinoNodeExtension.thresholdRangeHigh);
+                nodeExt.setThresholdRangeLow(xmlTransition.arduinoNodeExtension.thresholdRangeLow);
+                transition.setArduinoNodeExtension(nodeExt);
             }
         } else {
             transition.setArduinoNodeExtension(new ArduinoNodeExtension());

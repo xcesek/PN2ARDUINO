@@ -5,15 +5,11 @@
 
 
 enum FunctionType {
-  DIGITAL_IN, DIGITAL_OUT, ANALOG_IN, ANALOG_OUT, 
-  SERVO, PWM_MOTOR,
-  DIODE, 
-  POTENTIOMETER, THERMOMETER, MICROPHONE, ULTRASONIC_SENSOR,
-  BUTTON
+  DIGITAL_IN, DIGITAL_OUT, ANALOG_IN, ANALOG_OUT, SERVO, PWM_MOTOR,
 };
 
 enum ArcType {
-  standard, inhibitor, test
+  regular, inhibitor, test
 };
 
 enum NodeType {

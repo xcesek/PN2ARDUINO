@@ -316,8 +316,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //per application
     protected JToggleButton select, place, transition, arc, token;
     protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
-    protected Action setPlaceStatic;
-    //    protected Action addSelectedTransitionsToSelectedRoles;
+//    protected Action setPlaceStatic;
+//    protected Action addSelectedTransitionsToSelectedRoles;
 //    protected Action removeSelectedTransitionsFromSelectedRoles;
 //    protected Action convertTransitionToSubnet;
 //    protected Action replaceSubnet;
@@ -407,7 +407,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        closeSubnet.setEnabled(isParent);
         undo.setEnabled(getUndoManager().isUndoable());
         redo.setEnabled(getUndoManager().isRedoable());
-        setPlaceStatic.setEnabled(isPlaceNode);
+//        setPlaceStatic.setEnabled(isPlaceNode);
         setPlaceCapacity.setEnabled(isPlaceNode);
 
         //ARDUINO
@@ -507,7 +507,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setLabel = new SetLabelAction(this);
         setDelay = new SetDelayAction(this);
         setTokens = new SetTokensAction(this);
-        setPlaceStatic = new SetPlaceStaticAction(this);
+//        setPlaceStatic = new SetPlaceStaticAction(this);
         setPlaceCapacity = new SetPlaceCapacityAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
         setArcInhibitory = new SetArcInhibitoryAction(this);
@@ -669,7 +669,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.addSeparator();
         elementMenu.add(setTokens);
         elementMenu.add(setPlaceCapacity);
-        elementMenu.add(setPlaceStatic);
+//        elementMenu.add(setPlaceStatic);
         elementMenu.addSeparator();
         elementMenu.add(setArcMultiplicity);
         elementMenu.add(setArcInhibitory);
@@ -703,7 +703,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
         placePopup.add(setTokens);
-        placePopup.add(setPlaceStatic);
+//        placePopup.add(setPlaceStatic);
         placePopup.add(setPlaceCapacity);
         placePopup.addSeparator();
         placePopup.add(associateNodeWithArduinoPin);

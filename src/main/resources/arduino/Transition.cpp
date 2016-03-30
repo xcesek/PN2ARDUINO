@@ -7,19 +7,18 @@
 Transition::Transition(char* _id)
 : Node(_id, transitionType)
 {  
-  analogThreshold = -1;
-  analogThresholdRangeLow = -1;
-  analogThresholdRangeHigh = -1;
+  earliestFiringTime = -1;
+  latestFiringTime = -1;
+  applyDelay = 0;
 }
 
 
 Transition::Transition(char* _id, int _pin, FunctionType _functionType)
 : Node(_id, transitionType, _pin, _functionType)
 { 
-  analogThreshold = -1;
-  analogThresholdRangeLow = -1;
-  analogThresholdRangeHigh = -1;
-  
+  earliestFiringTime = 0;
+  latestFiringTime = 0;
+  applyDelay = 0;
   Serial.print("(transition) initializing -> "); Serial.print(id);  Serial.print(" -> ");
   
   switch (functionType) {
@@ -57,7 +56,13 @@ void Transition::fire()
       place->removeTokens(connectedArcs[i]->getMultiplicity());
     }
   }
-  // delay ?
+
+  // delay
+  if (earliestFiringTime != latestFiringTime) {
+    delay(random(earliestFiringTime, latestFiringTime));
+  } else {
+    delay(earliestFiringTime);
+  }
   
   for (int i = 0; i < connectedArcsCount; i++) {
     Node *destination = connectedArcs[i]->getDestination();
@@ -103,8 +108,7 @@ int Transition::isEnabled()
     case ANALOG_IN:
       readValue = analogRead(pin);
       Serial.print("   (transition) analog read value: "); Serial.println(readValue);
-      if((analogThreshold != -1) && (readValue > analogThreshold)) externalTriggerActive = 1;
-      if((analogThresholdRangeLow != -1) && (analogThresholdRangeLow < readValue) && (readValue < analogThresholdRangeHigh)) externalTriggerActive = 1;
+      if((thresholdRangeLow != -1) && (thresholdRangeLow <= readValue) && (readValue <= thresholdRangeHigh)) externalTriggerActive = 1;
       break;
       
     case ANALOG_OUT: 
@@ -131,15 +135,11 @@ int Transition::getConnectedArcsCount() {
   return connectedArcsCount;
 }
 
-void Transition::setAnalogThreshold(int _analogThreshold) {
-  analogThreshold = _analogThreshold;
-  Serial.print("(transition) setting analogThreshold: "); Serial.println(analogThreshold);
+void Transition::setDelay(int _earliestFiringTime, int _latestFiringTime) {
+  earliestFiringTime =  _earliestFiringTime;
+  latestFiringTime = _latestFiringTime;
 }
 
-void Transition::setAnalogThresholdRange(int _analogThresholdRangeLow, int _analogThresholdRangeHigh) {
-  analogThresholdRangeLow = _analogThresholdRangeLow;
-  analogThresholdRangeHigh = _analogThresholdRangeHigh;
-  Serial.print("(transition) setting analogThresholdRange: "); Serial.print(analogThresholdRangeLow);Serial.print(" - ");Serial.println(analogThresholdRangeHigh);
+void Transition::setApplyDelay(int _applyDelay) {
+  applyDelay = _applyDelay;
 }
-
-

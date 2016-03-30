@@ -154,13 +154,13 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                     arduinoNodeExtension.setInverseLogic(inverseLogicCheckBox.isSelected());
 
                     try {
-                        float high = Float.parseFloat(thresholdHighTf.getText());
-                        float low = Float.parseFloat(thresholdLowTf.getText());
+                        int high = Integer.parseInt(thresholdHighTf.getText());
+                        int low = Integer.parseInt(thresholdLowTf.getText());
                         arduinoNodeExtension.setThresholdRangeHigh(high);
                         arduinoNodeExtension.setThresholdRangeLow(low);
                     } catch (NumberFormatException ignore) {
-                        arduinoNodeExtension.setThresholdRangeHigh(0.0f);
-                        arduinoNodeExtension.setThresholdRangeLow(0.0f);
+                        arduinoNodeExtension.setThresholdRangeHigh(-1);
+                        arduinoNodeExtension.setThresholdRangeLow(-1);
                         JOptionPane.showMessageDialog(root.getParentFrame(), "Wrong threshold value", "Error", JOptionPane.ERROR_MESSAGE);
                     }
 

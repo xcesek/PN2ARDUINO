@@ -61,9 +61,13 @@ void Place::apply()
       break;
       
     case DIGITAL_OUT: 
-      Serial.print("   (place) digital out: "); Serial.println(tokens > 0);
-      if (tokens > 0)  digitalWrite(pin, HIGH);  
-      else digitalWrite(pin, LOW);
+      if((thresholdRangeLow != -1) && (thresholdRangeLow <= tokens) && (tokens <= thresholdRangeHigh)) {
+        digitalWrite(pin, HIGH);  
+        Serial.print("   (place) digital out: "); Serial.println(1);
+      } else {
+        digitalWrite(pin, LOW);
+        Serial.print("   (place) digital out: "); Serial.println(0);
+      }
       break;
       
     case ANALOG_IN:

@@ -6,7 +6,7 @@
 Arc::Arc(Node *_source, Node *_destination) {
   source = _source; 
   destination = _destination;
-  type = standard;
+  type = regular;
   multiplicity = 1;
 }
 

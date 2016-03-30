@@ -13,7 +13,8 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *//*
+
 package org.pneditor.editor;
 
 import java.awt.BorderLayout;
@@ -30,11 +31,13 @@ import org.pneditor.editor.filechooser.FileType;
 import org.pneditor.editor.filechooser.PngFileType;
 import org.pneditor.editor.filechooser.ViptoolPnmlFileType;
 
+*/
 /**
  * This class is the main point of the application.
  *
  * @author Martin Riesz <riesz.martin at gmail.com>
- */
+ *//*
+
 public class RootPnml extends RootPflow implements Root, WindowListener, ListSelectionListener, SelectionChangedListener {
 
     public RootPnml(String[] args) {
@@ -60,7 +63,7 @@ public class RootPnml extends RootPflow implements Root, WindowListener, ListSel
         setLabel = new SetLabelAction(this);
         setDelay = new SetDelayAction(this);
         setTokens = new SetTokensAction(this);
-        setPlaceStatic = new SetPlaceStaticAction(this);
+//        setPlaceStatic = new SetPlaceStaticAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
 //        addSelectedTransitionsToSelectedRoles = new AddSelectedTransitionsToSelectedRolesAction(this);
 //        removeSelectedTransitionsFromSelectedRoles = new RemoveSelectedTransitionsFromSelectedRolesAction(this);
@@ -249,3 +252,4 @@ public class RootPnml extends RootPflow implements Root, WindowListener, ListSel
     }
 
 }
+*/

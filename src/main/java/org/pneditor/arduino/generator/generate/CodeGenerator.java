@@ -169,6 +169,12 @@ public class CodeGenerator {
             buffer.append("p_" + p.getId()
                     + "->setTokens(" + marking.getTokens(p) + ");\n");
             buffer.append("allPlaces[" + placeOrd.getNumber() + "] = p_" + p.getId() + ";\n");
+            buffer.append("p_" + p.getId()
+                    + "->setThresholdRange("
+                    + p.getArduinoNodeExtension().getThresholdRangeLow() + ", "
+                    + p.getArduinoNodeExtension().getThresholdRangeHigh() + ");\n");
+            buffer.append("p_" + p.getId()
+                    + "->setInverseLogic(" + p.getArduinoNodeExtension().getInverseLogic() +  ");\n");
 
         });
 
@@ -181,7 +187,15 @@ public class CodeGenerator {
                         + t.getArduinoNodeExtension().getPin().getNumber() + ", "
                         + t.getArduinoNodeExtension().getFunction().name() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setAnalogThreshold(80);\n"); // todo
+                        + "->setThresholdRange("
+                        + t.getArduinoNodeExtension().getThresholdRangeLow() + ", "
+                        + t.getArduinoNodeExtension().getThresholdRangeHigh() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setDelay(" + t.getEarliestFiringTime() + ", " + t.getLatestFiringTime() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() +  ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() +  ");\n");
             } else {
                 buffer.append("t_" + t.getId()
                         + " = new Transition(\"t_" + t.getId() + "\");\n");
@@ -193,11 +207,15 @@ public class CodeGenerator {
         buffer.append("\n// ====== arcs ======\n");
         CustomCounter arcsOrd = new CustomCounter();
         arcs.forEach(a -> {
+//            buffer.append("a_" + a.hashCode()
+//                    + " = new Arc("
+//                    + (a.getSource() instanceof Place ? "p_" : "t_") + a.getSource().getId() + ", "     // just a simple hack :)
+//                    + (a.getDestination() instanceof Place ? "p_" : "t_") + a.getDestination().getId() + ");\n");
             buffer.append("a_" + a.hashCode()
                     + " = new Arc("
                     + (a.getSource() instanceof Place ? "p_" : "t_") + a.getSource().getId() + ", "     // just a simple hack :)
-                    + (a.getDestination() instanceof Place ? "p_" : "t_") + a.getDestination().getId() + ");\n");
-
+                    + (a.getDestination() instanceof Place ? "p_" : "t_") + a.getDestination().getId() + ", "
+                    + a.getType() + ", + " + a.getMultiplicity() + ");\n");
             buffer.append("allArcs[" + arcsOrd.getNumber() + "] = a_" + a.hashCode() + ";\n");
         });
 
@@ -230,7 +248,7 @@ public class CodeGenerator {
                 "  }\n" +
                 "    \n" +
                 "  Serial.println(\"=================================================\");\n" +
-                "  delay(70);");
+                "  delay(7000);");
 
         return buffer.toString();
     }
