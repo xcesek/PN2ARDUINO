@@ -59,7 +59,7 @@ public class PopupMenuFeature implements Feature {
                         PNEditor.getRoot().getSelection().clear();
                     }
                 } else if (PNEditor.getRoot().getClickedElement() instanceof Subnet) {
-                    showPopup(PNEditor.getRoot().getSubnetPopup(), realX, realY);
+//                    showPopup(PNEditor.getRoot().getSubnetPopup(), realX, realY);
                     if (!PNEditor.getRoot().getSelection().contains(PNEditor.getRoot().getClickedElement())) {
                         PNEditor.getRoot().getSelection().clear();
                     }

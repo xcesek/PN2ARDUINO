@@ -17,4 +17,5 @@ public interface Subject {
     public void notifyFiredTransition(Node transition);
     public void notifyActivatingPlace(Node place);
     public void notifyDeactivatingPlace(Node place);
+    public void notifyArduinoListeners(Node sourcePlace, Node transition, Node destinationPlace);
 }

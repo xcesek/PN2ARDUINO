@@ -182,10 +182,11 @@ public class Marking implements Subject {
      */
     public boolean fire(Transition transition) {
         boolean success;
+        PlaceNode sourcePlace = null;
+        PlaceNode destinationPlace = null;
         lock.writeLock().lock();
         try {
             if (isEnabled(transition)) {
-                notifyFiredTransition(transition);
                 for (Arc arc : transition.getConnectedArcs()) {
                     if (arc.isPlaceToTransition()) {
                         int tokens = getTokens(arc.getPlaceNode());
@@ -196,14 +197,15 @@ public class Marking implements Subject {
                                 setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
                             }
                         }
-                        notifyDeactivatingPlace(arc.getPlaceNode());
+                        sourcePlace = arc.getPlaceNode();
                     } else {
                         int tokens = getTokens(arc.getPlaceNode());
                         setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
-                        notifyActivatingPlace(arc.getPlaceNode());
+                        destinationPlace = arc.getPlaceNode();
                     }
                 }
                 success = true;
+                notifyArduinoListeners(sourcePlace, transition, destinationPlace);
             } else {
                 success = false;
             }
@@ -512,6 +514,14 @@ public class Marking implements Subject {
         for(int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
             arduinoListener.updateDeactivatingPlace(place);
+        }
+    }
+
+    @Override
+    public void notifyArduinoListeners(Node sourcePlace, Node transition, Node destinationPlace) {
+        for(int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.update(sourcePlace, transition, destinationPlace);
         }
     }
 

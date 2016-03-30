@@ -15,4 +15,5 @@ public interface ArduinoListener {
     public void updateFiredTransition(Node transition);
     public void updateActivatingPlace(Node place);
     public void updateDeactivatingPlace(Node place);
+    public void update(Node sourcePlace, Node transition, Node destinationPlace);
 }

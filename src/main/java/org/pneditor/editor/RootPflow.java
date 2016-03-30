@@ -32,6 +32,7 @@ import org.pneditor.petrinet.*;
 import org.pneditor.util.CollectionTools;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.ListEditor;
+import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -66,13 +67,15 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         loadPreferences();
         selection.setSelectionChangedListener(this);
 
-        roleEditor = new ListEditor<Role>("Roles", document.roles, getParentFrame());
-        roleEditor.addButton.setIcon(GraphicsTools.getIcon("pneditor/addrole.gif"));
-        roleEditor.deleteButton.setIcon(GraphicsTools.getIcon("pneditor/deleterole.gif"));
-        roleEditor.addButton.setToolTipText("Add role");
-        roleEditor.editButton.setToolTipText("Edit role properties");
-        roleEditor.deleteButton.setToolTipText("Delete role");
-        roleEditor.addListSelectionListener(this);
+//        roleEditor = new ListEditor<Role>("Roles", document.roles, getParentFrame());
+//        roleEditor.addButton.setIcon(GraphicsTools.getIcon("pneditor/addrole.gif"));
+//        roleEditor.deleteButton.setIcon(GraphicsTools.getIcon("pneditor/deleterole.gif"));
+//        roleEditor.addButton.setToolTipText("Add role");
+//        roleEditor.editButton.setToolTipText("Edit role properties");
+//        roleEditor.deleteButton.setToolTipText("Delete role");
+//        roleEditor.addListSelectionListener(this);
+
+        logEditor = new LogEditor("Run:", getParentFrame());
 
 
         setupMainFrame();
@@ -151,7 +154,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     public void setDocument(Document document) {
         this.document = document;
         getDocument().petriNet.resetView();
-        getRoleEditor().setModel(getDocument().roles);
+//        getRoleEditor().setModel(getDocument().roles);
         getUndoManager().eraseAll();
         refreshAll();
     }
@@ -193,7 +196,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     }
 
     // List editor - per tab
-    protected ListEditor<Role> roleEditor; //TODO
+    //protected ListEditor<Role> roleEditor; //TODO
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -267,10 +270,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return token.isSelected();
     }
 
-    @Override
-    public ListEditor<Role> getRoleEditor() {
-        return roleEditor;
-    }
+//    @Override
+//    public ListEditor<Role> getRoleEditor() {
+//        return roleEditor;
+//    }
 
     @Override
     public JPopupMenu getPlacePopup() {
@@ -287,10 +290,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return arcEdgePopup;
     }
 
-    @Override
-    public JPopupMenu getSubnetPopup() {
-        return subnetPopup;
-    }
+//    @Override
+//    public JPopupMenu getSubnetPopup() {
+//        return subnetPopup;
+//    }
 
     @Override
     public JPopupMenu getCanvasPopup() {
@@ -304,47 +307,47 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected JPopupMenu placePopup;
     protected JPopupMenu transitionPopup;
     protected JPopupMenu arcEdgePopup;
-    protected JPopupMenu subnetPopup;
+    //protected JPopupMenu subnetPopup;
     protected JPopupMenu canvasPopup;
 
     //per application
     protected JToggleButton select, place, transition, arc, token;
     protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
     protected Action setPlaceStatic;
-    protected Action addSelectedTransitionsToSelectedRoles;
-    protected Action removeSelectedTransitionsFromSelectedRoles;
-    protected Action convertTransitionToSubnet;
-    protected Action replaceSubnet;
-    protected Action saveSubnetAs;
+//    protected Action addSelectedTransitionsToSelectedRoles;
+//    protected Action removeSelectedTransitionsFromSelectedRoles;
+//    protected Action convertTransitionToSubnet;
+//    protected Action replaceSubnet;
+//    protected Action saveSubnetAs;
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
     protected Action runTimer;
     protected Action setTimingPolicy;
 
     //per application
-    protected Action openSubnet;
-    protected Action closeSubnet;
+//    protected Action openSubnet;
+//    protected Action closeSubnet;
 
     //ARDUINO
     protected Action addArduinoComponent;
     protected Action setBoard;
     protected Action activateArduino;
 
-    @Override
-    public void openSubnet() {
-        openSubnet.actionPerformed(null);
-    }
-
-    @Override
-    public void closeSubnet() {
-        closeSubnet.actionPerformed(null);
-    }
+//    @Override
+//    public void openSubnet() {
+//        openSubnet.actionPerformed(null);
+//    }
+//
+//    @Override
+//    public void closeSubnet() {
+//        closeSubnet.actionPerformed(null);
+//    }
 
     @Override
     public void refreshAll() {
         canvas.repaint();
         enableOnlyPossibleActions();
-        getRoleEditor().refreshSelected();
+//        getRoleEditor().refreshSelected();
     }
 
     @Override
@@ -368,7 +371,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         boolean areSubnets = !selection.getSubnets().isEmpty();
         boolean areTransitionNodes = !selection.getTransitionNodes().isEmpty();
         boolean areTransitions = !selection.getTransitions().isEmpty();
-        boolean roleSelected = !roleEditor.getSelectedElements().isEmpty();
+//        boolean roleSelected = !roleEditor.getSelectedElements().isEmpty();
         boolean isParent = !document.petriNet.isCurrentSubnetRoot();
         boolean isPtoT = false;
 
@@ -389,13 +392,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setTokens.setEnabled(isPlaceNode);
         setLabel.setEnabled(isPlaceNode || isTransitionNode);
         setDelay.setEnabled(isTransitionNode);
-        addSelectedTransitionsToSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
-        removeSelectedTransitionsFromSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
-        convertTransitionToSubnet.setEnabled(isTransition || areTransitions || isSubnet || areSubnets);
-        replaceSubnet.setEnabled(isSubnet || areSubnets);
-        saveSubnetAs.setEnabled(isSubnet);
-        openSubnet.setEnabled(isSubnet);
-        closeSubnet.setEnabled(isParent);
+//        addSelectedTransitionsToSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
+//        removeSelectedTransitionsFromSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
+//        convertTransitionToSubnet.setEnabled(isTransition || areTransitions || isSubnet || areSubnets);
+//        replaceSubnet.setEnabled(isSubnet || areSubnets);
+//        saveSubnetAs.setEnabled(isSubnet);
+//        openSubnet.setEnabled(isSubnet);
+//        closeSubnet.setEnabled(isParent);
         undo.setEnabled(getUndoManager().isUndoable());
         redo.setEnabled(getUndoManager().isRedoable());
         setPlaceStatic.setEnabled(isPlaceNode);
@@ -476,11 +479,11 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected void setupMainFrame() {
         List<FileType> openSaveFiletypes = new LinkedList<FileType>();
         openSaveFiletypes.add(new PflowFileType());
-        List<FileType> importFiletypes = new LinkedList<FileType>();
-        importFiletypes.add(new ViptoolPnmlFileType());
+//        List<FileType> importFiletypes = new LinkedList<FileType>();
+//        importFiletypes.add(new ViptoolPnmlFileType());
         List<FileType> exportFiletypes = new LinkedList<FileType>();
-        exportFiletypes.add(new ViptoolPnmlFileType());
-        exportFiletypes.add(new EpsFileType());
+//        exportFiletypes.add(new ViptoolPnmlFileType());
+//        exportFiletypes.add(new EpsFileType());
         exportFiletypes.add(new PngFileType());
 
         //ACTION REGISTRATION
@@ -489,7 +492,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action openFile = new OpenFileAction(this, openSaveFiletypes);
         Action saveFile = new SaveAction(this, openSaveFiletypes);
         Action saveFileAs = new SaveFileAsAction(this, openSaveFiletypes);
-        Action importFile = new ImportAction(this, importFiletypes);
+//        Action importFile = new ImportAction(this, importFiletypes);
         Action exportFile = new ExportAction(this, exportFiletypes);
         Action quit = new QuitAction(this);
         setLabel = new SetLabelAction(this);
@@ -499,11 +502,11 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setArcMultiplicity = new SetArcMultiplicityAction(this);
         setArcInhibitory = new SetArcInhibitoryAction(this);
         setArcReset = new SetArcResetAction(this);
-        addSelectedTransitionsToSelectedRoles = new AddSelectedTransitionsToSelectedRolesAction(this);
-        removeSelectedTransitionsFromSelectedRoles = new RemoveSelectedTransitionsFromSelectedRolesAction(this);
-        convertTransitionToSubnet = new ConvertTransitionToSubnetAction(this);
-        openSubnet = new OpenSubnetAction(this);
-        closeSubnet = new CloseSubnetAction(this);
+//        addSelectedTransitionsToSelectedRoles = new AddSelectedTransitionsToSelectedRolesAction(this);
+//        removeSelectedTransitionsFromSelectedRoles = new RemoveSelectedTransitionsFromSelectedRolesAction(this);
+//        convertTransitionToSubnet = new ConvertTransitionToSubnetAction(this);
+//        openSubnet = new OpenSubnetAction(this);
+//        closeSubnet = new CloseSubnetAction(this);
         delete = new DeleteAction(this);
 
         runTimer = new RunTimerAction(this);
@@ -520,8 +523,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action selectTool_ArcAction = new ArcSelectToolAction(this);
         Action selectTool_TokenAction = new TokenSelectToolAction(this);
 
-        saveSubnetAs = new SaveSubnetAsAction(this);
-        replaceSubnet = new ReplaceSubnetAction(this);
+//        saveSubnetAs = new SaveSubnetAsAction(this);
+//        replaceSubnet = new ReplaceSubnetAction(this);
 
 
         //ARDUINO
@@ -558,7 +561,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(newFile);
         toolBar.add(openFile);
         toolBar.add(saveFile);
-        toolBar.add(importFile);
+//        toolBar.add(importFile);
         toolBar.add(exportFile);
         toolBar.addSeparator();
 
@@ -576,9 +579,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(transition);
         toolBar.add(arc);
         toolBar.add(token);
-        toolBar.addSeparator();
-        toolBar.add(addSelectedTransitionsToSelectedRoles);
-        toolBar.add(removeSelectedTransitionsFromSelectedRoles);
+//        toolBar.addSeparator();
+//        toolBar.add(addSelectedTransitionsToSelectedRoles);
+//        toolBar.add(removeSelectedTransitionsFromSelectedRoles);
 
         toolBar.addSeparator();
         toolBar.add(token);
@@ -606,21 +609,21 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.setMnemonic('l');
         menuBar.add(elementMenu);
 
-        JMenu rolesMenu = new JMenu("Roles");
-        rolesMenu.setMnemonic('R');
-        menuBar.add(rolesMenu);
+//        JMenu rolesMenu = new JMenu("Roles");
+//        rolesMenu.setMnemonic('R');
+//        menuBar.add(rolesMenu);
 
-        JMenu subnetMenu = new JMenu("Subnet");
-        subnetMenu.setMnemonic('S');
-        menuBar.add(subnetMenu);
+//        JMenu subnetMenu = new JMenu("Subnet");
+//        subnetMenu.setMnemonic('S');
+//        menuBar.add(subnetMenu);
 
-        //asus 2012 algorithms menu
-        JMenu algorithmsMenu = new JMenu("Algorithms");
-        algorithmsMenu.setMnemonic('A');
-        menuBar.add(algorithmsMenu);
-
-        //asus 2012 algorithms submenu items
-        algorithmsMenu.add(new BoundednessAction(this));
+//        //asus 2012 algorithms menu
+//        JMenu algorithmsMenu = new JMenu("Algorithms");
+//        algorithmsMenu.setMnemonic('A');
+//        menuBar.add(algorithmsMenu);
+//
+//        //asus 2012 algorithms submenu items
+//        algorithmsMenu.add(new BoundednessAction(this));
 
         JMenu timeMenu = new JMenu("Time");
         timeMenu.setMnemonic('T');
@@ -639,7 +642,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         fileMenu.add(openFile);
         fileMenu.add(saveFile);
         fileMenu.add(saveFileAs);
-        fileMenu.add(importFile);
+//        fileMenu.add(importFile);
         fileMenu.add(exportFile);
         fileMenu.addSeparator();
         fileMenu.add(quit);
@@ -662,8 +665,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.add(setArcInhibitory);
         elementMenu.add(setArcReset);
 
-        rolesMenu.add(addSelectedTransitionsToSelectedRoles);
-        rolesMenu.add(removeSelectedTransitionsFromSelectedRoles);
+//        rolesMenu.add(addSelectedTransitionsToSelectedRoles);
+//        rolesMenu.add(removeSelectedTransitionsFromSelectedRoles);
 
         drawMenu.add(selectTool_SelectionAction);
         drawMenu.addSeparator();
@@ -672,11 +675,11 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         drawMenu.add(selectTool_ArcAction);
         drawMenu.add(selectTool_TokenAction);
 
-        subnetMenu.add(openSubnet);
-        subnetMenu.add(closeSubnet);
-        subnetMenu.add(replaceSubnet);
-        subnetMenu.add(saveSubnetAs);
-        subnetMenu.add(convertTransitionToSubnet);
+//        subnetMenu.add(openSubnet);
+//        subnetMenu.add(closeSubnet);
+//        subnetMenu.add(replaceSubnet);
+//        subnetMenu.add(saveSubnetAs);
+//        subnetMenu.add(convertTransitionToSubnet);
 
         timeMenu.add(setTimingPolicy);
         timeMenu.add(runTimer);
@@ -699,9 +702,9 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         transitionPopup = new JPopupMenu();
         transitionPopup.add(setLabel);
         transitionPopup.add(setDelay);
-        transitionPopup.add(convertTransitionToSubnet);
-        transitionPopup.add(addSelectedTransitionsToSelectedRoles);
-        transitionPopup.add(removeSelectedTransitionsFromSelectedRoles);
+//        transitionPopup.add(convertTransitionToSubnet);
+//        transitionPopup.add(addSelectedTransitionsToSelectedRoles);
+//        transitionPopup.add(removeSelectedTransitionsFromSelectedRoles);
         transitionPopup.addSeparator();
         transitionPopup.add(cutAction);
         transitionPopup.add(copyAction);
@@ -713,21 +716,21 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Font boldFont = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 
         canvasPopup = new JPopupMenu();
-        canvasPopup.add(closeSubnet).setFont(boldFont);
+//        canvasPopup.add(closeSubnet).setFont(boldFont);
         canvasPopup.add(pasteAction);
 
-        subnetPopup = new JPopupMenu();
-        subnetPopup.add(openSubnet).setFont(boldFont);
-        subnetPopup.add(setLabel);
-        subnetPopup.add(replaceSubnet);
-        subnetPopup.add(saveSubnetAs);
-        subnetPopup.add(convertTransitionToSubnet);
-        subnetPopup.add(addSelectedTransitionsToSelectedRoles);
-        subnetPopup.add(removeSelectedTransitionsFromSelectedRoles);
-        subnetPopup.addSeparator();
-        subnetPopup.add(cutAction);
-        subnetPopup.add(copyAction);
-        subnetPopup.add(delete);
+//        subnetPopup = new JPopupMenu();
+//        subnetPopup.add(openSubnet).setFont(boldFont);
+//        subnetPopup.add(setLabel);
+//        subnetPopup.add(replaceSubnet);
+//        subnetPopup.add(saveSubnetAs);
+//        subnetPopup.add(convertTransitionToSubnet);
+//        subnetPopup.add(addSelectedTransitionsToSelectedRoles);
+//        subnetPopup.add(removeSelectedTransitionsFromSelectedRoles);
+//        subnetPopup.addSeparator();
+//        subnetPopup.add(cutAction);
+//        subnetPopup.add(copyAction);
+//        subnetPopup.add(delete);
 
         arcEdgePopup = new JPopupMenu();
         arcEdgePopup.add(setArcMultiplicity);
@@ -738,14 +741,25 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arcEdgePopup.add(delete);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
-        splitPane.setDividerSize(6);
+        splitPane.setDividerSize(1);
         splitPane.setOneTouchExpandable(true);
-        splitPane.setLeftComponent(getRoleEditor());
+//        splitPane.setLeftComponent(getRoleEditor());
         splitPane.setRightComponent(drawingBoard);
-        splitPane.setDividerLocation(120);
+        splitPane.setDividerLocation(1);
 
         mainFrame.add(splitPane, BorderLayout.CENTER);
         mainFrame.add(toolBar, BorderLayout.NORTH);
+
+        //LOGGER
+        JSplitPane splitPaneForLog = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPaneForLog.setDividerSize(12);
+        splitPaneForLog.setOneTouchExpandable(true);
+        splitPaneForLog.setLeftComponent(splitPane);
+        splitPaneForLog.setRightComponent(logEditor);
+        splitPaneForLog.setDividerLocation(620);
+
+        mainFrame.add(splitPaneForLog, BorderLayout.CENTER);
+
 
         mainFrame.addWindowListener(this);
         mainFrame.setLocation(50, 50);
@@ -829,6 +843,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     @Override
     public ArduinoManager getArduinoManager() {
         return arduinoManager;
+    }
+
+    //LOGGER
+    protected LogEditor logEditor;
+
+    public LogEditor getLogEditor() {
+        return logEditor;
     }
 
 }

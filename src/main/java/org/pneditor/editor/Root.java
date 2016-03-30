@@ -78,7 +78,7 @@ public interface Root {
 
     public boolean isSelectedTool_Token();
 
-    public ListEditor<Role> getRoleEditor();
+//    public ListEditor<Role> getRoleEditor();
 
     public JPopupMenu getPlacePopup();
 
@@ -86,14 +86,14 @@ public interface Root {
 
     public JPopupMenu getArcEdgePopup();
 
-    public JPopupMenu getSubnetPopup();
+//    public JPopupMenu getSubnetPopup();
 
     public JPopupMenu getCanvasPopup();
 
-    public void openSubnet();
-
-    public void closeSubnet();
-
+//    public void openSubnet();
+//
+//    public void closeSubnet();
+//
     public void refreshAll();
 
     public void repaintCanvas();
@@ -122,4 +122,5 @@ public interface Root {
 
     //ARDUINO
     public ArduinoManager getArduinoManager();
+
 }

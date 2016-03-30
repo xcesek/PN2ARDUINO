@@ -76,4 +76,24 @@ public class ArduinoController implements ArduinoListener {
 
         }).start();
     }
+
+    @Override
+    public void update(Node sourcePlace, Node transition, Node destinationPlace) {
+        new Thread(() -> {
+            try {
+                if(sourcePlace.hasArduinoComponent()) {
+                    sourcePlace.getArduinoComponent().deactivate();
+                }
+                if(transition.hasArduinoComponent()) {
+                    transition.getArduinoComponent().fire();
+                }
+                if(destinationPlace.hasArduinoComponent()) {
+                    destinationPlace.getArduinoComponent().activate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
 }
