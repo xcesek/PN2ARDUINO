@@ -26,6 +26,7 @@ public class XmlArduinoComponentSettings {
                 if(node instanceof Place) {
                     period = ((PlaceDigitalOutputSettings) settings).getPeriod();
                 }
+                break;
             default:
                 period = 0.0;
         }

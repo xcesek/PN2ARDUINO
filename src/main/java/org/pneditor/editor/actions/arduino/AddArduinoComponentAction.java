@@ -35,7 +35,6 @@ public class AddArduinoComponentAction extends AbstractAction {
 
     private Node clickedNode;
 
-    private boolean alreadySet;
 
     public AddArduinoComponentAction(Root root) {
         this.root = root;
@@ -46,7 +45,6 @@ public class AddArduinoComponentAction extends AbstractAction {
 //		putValue(MNEMONIC_KEY, KeyEvent.VK_R);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("R"));
         setEnabled(false);
-        alreadySet = false;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -70,14 +68,15 @@ public class AddArduinoComponentAction extends AbstractAction {
 
         GridLayout gridLayout = new GridLayout(0, 2);
 
-        //TODO ak uz ma arduino component, nacitaj jeho nastavenia
-
         //select arduino component
         JPanel arduinoComponentComboBoxPanel = new JPanel(gridLayout);
-
         final JComboBox arduinoComponentComboBox = new JComboBox(ArduinoComponentType.values());
-        arduinoComponentComboBox.setSelectedItem(ArduinoComponentType.OUTPUT);
-
+        // * if node already has arduino component - load from clickedNode
+        if(clickedNode.hasArduinoComponent()) {
+            arduinoComponentComboBox.setSelectedItem(clickedNode.getArduinoComponent().getType());
+        } else {
+            arduinoComponentComboBox.setSelectedItem(ArduinoComponentType.OUTPUT);
+        }
 
         arduinoComponentComboBoxPanel.add(new JLabel("Arduino Component: ", SwingConstants.LEFT));
         arduinoComponentComboBoxPanel.add(arduinoComponentComboBox);
@@ -101,8 +100,12 @@ public class AddArduinoComponentAction extends AbstractAction {
         Object[] modeArray = modelMap.get(arduinoComponentComboBox.getSelectedItem()).toArray();
         Arrays.sort(modeArray);
         pinComboBox.setModel(new DefaultComboBoxModel(modeArray));
-
-        pinComboBox.setSelectedIndex(0);
+        // * if node already has arduino component - load from clickedNode
+        if(clickedNode.hasArduinoComponent()) {
+            pinComboBox.setSelectedItem(((Integer)clickedNode.getArduinoComponent().getPin()).byteValue());
+        } else{
+            pinComboBox.setSelectedIndex(0);
+        }
 
         pinPanel.add(new JLabel("Pin: ", SwingConstants.LEFT));
         pinPanel.add(pinComboBox);
@@ -117,7 +120,12 @@ public class AddArduinoComponentAction extends AbstractAction {
         objectList.add(separatorPanel);
 
         //custom settings
-        arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
+        // * if node already has arduino component - load from clickedNode
+        if(clickedNode.hasArduinoComponent()) {
+            arduinoComponentSettings = clickedNode.getArduinoComponent().getSettings();
+        } else {
+            arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
+        }
         JPanel customSettings = arduinoComponentSettings.getSettingsGui();
 
         objectList.add(customSettings);
@@ -125,24 +133,47 @@ public class AddArduinoComponentAction extends AbstractAction {
         arduinoComponentComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // pin
-                Object[] tmpModeArray = modelMap.get(arduinoComponentComboBox.getSelectedItem()).toArray();
-                Arrays.sort(tmpModeArray);
-                pinComboBox.setModel(new DefaultComboBoxModel(tmpModeArray));
+                if(clickedNode.hasArduinoComponent() && arduinoComponentComboBox.getSelectedItem() == clickedNode.getArduinoComponent().getType()) {
+                    // pin
+                    Object[] tmpModeArray = modelMap.get(arduinoComponentComboBox.getSelectedItem()).toArray();
+                    Arrays.sort(tmpModeArray);
+                    pinComboBox.setModel(new DefaultComboBoxModel(tmpModeArray));
 
-                pinPanel.remove(pinComboBox); //remove old
-                pinPanel.add(pinComboBox);
+                    pinPanel.remove(pinComboBox); //remove old
+                    pinComboBox.setSelectedItem(((Integer)clickedNode.getArduinoComponent().getPin()).byteValue());
+                    pinPanel.add(pinComboBox);
 
-                objectList.remove(pinPanel); //remove old
-                objectList.add(pinPanel);
+                    objectList.remove(pinPanel); //remove old
+                    objectList.add(pinPanel);
 
-                objectList.remove(separatorPanel); //remove old
-                objectList.add(separatorPanel);
+                    objectList.remove(separatorPanel); //remove old
+                    objectList.add(separatorPanel);
 
-                //custom settings
-                objectList.remove(arduinoComponentSettings.getSettingsGui()); //remove old
-                arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
-                objectList.add(arduinoComponentSettings.getSettingsGui());
+                    //custom settings
+                    objectList.remove(arduinoComponentSettings.getSettingsGui()); //remove old
+                    arduinoComponentSettings = clickedNode.getArduinoComponent().getSettings();
+                    objectList.add(arduinoComponentSettings.getSettingsGui());
+                } else {
+                    // pin
+                    Object[] tmpModeArray = modelMap.get(arduinoComponentComboBox.getSelectedItem()).toArray();
+                    Arrays.sort(tmpModeArray);
+                    pinComboBox.setModel(new DefaultComboBoxModel(tmpModeArray));
+
+                    pinPanel.remove(pinComboBox); //remove old
+                    pinComboBox.setSelectedIndex(0);
+                    pinPanel.add(pinComboBox);
+
+                    objectList.remove(pinPanel); //remove old
+                    objectList.add(pinPanel);
+
+                    objectList.remove(separatorPanel); //remove old
+                    objectList.add(separatorPanel);
+
+                    //custom settings
+                    objectList.remove(arduinoComponentSettings.getSettingsGui()); //remove old
+                    arduinoComponentSettings = ArduinoComponentSettings.settingsFactory((ArduinoComponentType) arduinoComponentComboBox.getSelectedItem(), clickedNode);
+                    objectList.add(arduinoComponentSettings.getSettingsGui());
+                }
             }
         });
 

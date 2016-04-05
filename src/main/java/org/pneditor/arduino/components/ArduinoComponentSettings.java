@@ -21,10 +21,6 @@ abstract public class ArduinoComponentSettings {
     private JPanel panel;
     private ArduinoComponentType type;
 
-    public JPanel getSettingsGui() {
-        return panel;
-    }
-
     public ArduinoComponentType getType(){
         return type;
     }
@@ -40,6 +36,11 @@ abstract public class ArduinoComponentSettings {
             default:
                 return new PlaceDigitalOutputSettings();
         }
+    }
+
+    public JPanel getSettingsGui() {
+
+        return panel;
     }
 
     public void parseSettingsGUI(JPanel panel) {

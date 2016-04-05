@@ -21,23 +21,16 @@ public class PlaceDigitalOutputSettings extends ArduinoComponentSettings {
 
     public void setPeriod(double period) {
         this.period = period;
+        super.setPanel(getMyPanel());
     }
 
     public double getPeriod() {
-
         return period;
     }
 
     public PlaceDigitalOutputSettings() {
         super.setType(ArduinoComponentType.OUTPUT);
-
-        GridLayout customSettingsLayout = new GridLayout(0, 2);
-        JPanel myPanel = new JPanel(customSettingsLayout);
-
-        myPanel.add(new JLabel("Perioda: ", SwingConstants.LEFT));
-        myPanel.add(new JTextField());
-
-        super.setPanel(myPanel);
+        super.setPanel(getMyPanel());
     }
 
     public void parseSettingsGUI(JPanel panel) {
@@ -50,6 +43,16 @@ public class PlaceDigitalOutputSettings extends ArduinoComponentSettings {
             System.out.println("Nepodporovany format periody");
         }
 
+    }
+
+    private JPanel getMyPanel(){
+        GridLayout customSettingsLayout = new GridLayout(0, 2);
+        JPanel myPanel = new JPanel(customSettingsLayout);
+
+        myPanel.add(new JLabel("Perioda: ", SwingConstants.LEFT));
+        myPanel.add(new JTextField(((Double)period).toString()));
+
+        return myPanel;
     }
 
 }

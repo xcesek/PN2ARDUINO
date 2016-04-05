@@ -218,6 +218,7 @@ public class DocumentImporter {
         switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
             case OUTPUT:
                 ((PlaceDigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
+                break;
             default:
                 ((PlaceDigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(0.0);
         }
