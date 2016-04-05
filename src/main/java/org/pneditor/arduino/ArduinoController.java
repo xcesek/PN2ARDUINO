@@ -33,6 +33,25 @@ public class ArduinoController implements ArduinoListener {
 
     }
 
+    @Override
+    public void update(Node sourcePlace, Node transition, Node destinationPlace) {
+        new Thread(() -> {
+            try {
+                if(sourcePlace != null && sourcePlace.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) sourcePlace) == 0) {
+                    sourcePlace.getArduinoComponent().deactivate();
+                }
+                if(transition.hasArduinoComponent()) {
+                    transition.getArduinoComponent().fire();
+                }
+                if(destinationPlace != null && destinationPlace.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) destinationPlace) > 0) {
+                    destinationPlace.getArduinoComponent().activate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
 
     @Override
     public void updateFiredTransition(Node transition) {
@@ -77,23 +96,5 @@ public class ArduinoController implements ArduinoListener {
         }).start();
     }
 
-    @Override
-    public void update(Node sourcePlace, Node transition, Node destinationPlace) {
-        new Thread(() -> {
-            try {
-                if(sourcePlace.hasArduinoComponent()) {
-                    sourcePlace.getArduinoComponent().deactivate();
-                }
-                if(transition.hasArduinoComponent()) {
-                    transition.getArduinoComponent().fire();
-                }
-                if(destinationPlace.hasArduinoComponent()) {
-                    destinationPlace.getArduinoComponent().activate();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-        }).start();
-    }
 }
