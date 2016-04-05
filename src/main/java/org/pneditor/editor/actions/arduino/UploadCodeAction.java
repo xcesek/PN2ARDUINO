@@ -64,7 +64,12 @@ public class UploadCodeAction extends AbstractAction {
 
                 writeCodeToConsole(response.getCmdOutput());
                 writeCodeToConsole("Uploading finished.");
-                writeCodeToConsole("Uploading took " + (endTime - startTime) + " milliseconds.");
+                if((endTime - startTime) < 1000 ) {
+                    writeCodeToConsole("Uploading took " + (endTime - startTime) + " milliseconds.");
+                }else{
+                    writeCodeToConsole("Uploading took " + ((endTime - startTime) / 1000) + " seconds.");
+                }
+
             }).start();
 
         }

@@ -237,7 +237,7 @@ public class CodeGenerator {
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("for (int i = 0; i < allTransitionsCount; i++) {\n" +
+        buffer.append("  for (int i = 0; i < allTransitionsCount; i++) {\n" +
                 "    if (allTransitions[i]->isEnabled()) {     // todo: more facny logic\n" +
                 "      allTransitions[i]->fire();\n" +
                 "    }\n" +

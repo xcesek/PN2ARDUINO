@@ -108,7 +108,17 @@ int Transition::isEnabled()
     case ANALOG_IN:
       readValue = analogRead(pin);
       Serial.print("   (transition) analog read value: "); Serial.println(readValue);
-      if((thresholdRangeLow != -1) && (thresholdRangeLow <= readValue) && (readValue <= thresholdRangeHigh)) externalTriggerActive = 1;
+      switch(inverseLogic){
+        case 0:
+          if((thresholdRangeLow != -1) && (thresholdRangeLow <= readValue) && (readValue <= thresholdRangeHigh))
+            externalTriggerActive = 1;
+          break;
+
+        case 1:
+          if((thresholdRangeLow != -1) && ((thresholdRangeLow > readValue) || (readValue > thresholdRangeHigh))) 
+            externalTriggerActive = 1;
+          break;
+      }     
       break;
       
     case ANALOG_OUT: 

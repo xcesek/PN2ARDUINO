@@ -5,11 +5,11 @@
 
 
 enum FunctionType {
-  DIGITAL_IN, DIGITAL_OUT, ANALOG_IN, ANALOG_OUT, SERVO, PWM_MOTOR,
+  DIGITAL_IN, DIGITAL_OUT, ANALOG_IN, ANALOG_OUT, SERVO, PWM_MOTOR, LED_DISPLAY
 };
 
 enum ArcType {
-  regular, inhibitor, test
+  regular, inhibitor, reset
 };
 
 enum NodeType {

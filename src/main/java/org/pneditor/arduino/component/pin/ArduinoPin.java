@@ -44,16 +44,19 @@ public enum ArduinoPin {
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
+            ArduinoSupportedFunction.SERVO,
     }, ArduinoPinType.DIGITAL, 9),
     D10(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
+            ArduinoSupportedFunction.SERVO,
     }, ArduinoPinType.DIGITAL, 10),
     D11(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,
             ArduinoSupportedFunction.DIGITAL_OUT,
             ArduinoSupportedFunction.ANALOG_OUT,
+            ArduinoSupportedFunction.LED_DISPLAY,
     }, ArduinoPinType.DIGITAL, 11),
     D12(new ArduinoSupportedFunction[]{
             ArduinoSupportedFunction.DIGITAL_IN,

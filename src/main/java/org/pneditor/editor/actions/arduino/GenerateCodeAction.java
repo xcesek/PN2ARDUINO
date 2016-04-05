@@ -55,8 +55,12 @@ public class GenerateCodeAction extends AbstractAction {
             long endTime = System.currentTimeMillis();
 
             writeCodeToConsole(generatedCode);
-            writeCodeToConsole("Generating took " + (endTime - startTime) + " milliseconds.");
 
+            if((endTime - startTime) < 1000 ) {
+                writeCodeToConsole("Generating took " + (endTime - startTime) + " milliseconds.");
+            }else{
+                writeCodeToConsole("Generating took " + ((endTime - startTime) / 1000) + " seconds.");
+            }
             alreadyGenerated = true;
             root.refreshAll();
         }

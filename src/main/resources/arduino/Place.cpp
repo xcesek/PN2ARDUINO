@@ -43,6 +43,16 @@ Place::Place(char* _id, int _pin, FunctionType _functionType)
      myservo.attach(pin);
      Serial.println("servo");
      break;
+    case LED_DISPLAY: 
+      //8 SEGMENT LED display need to use 8 artudino pins, so reserverd pin 2 - 9
+      int i=2;
+      for(i=2;i<10;i++)
+      {
+         pinMode(i,OUTPUT);
+         digitalWrite(i,HIGH);
+      }
+      Serial.println("ledDisplay");
+      break;
   }
 }
 
@@ -61,13 +71,29 @@ void Place::apply()
       break;
       
     case DIGITAL_OUT: 
-      if((thresholdRangeLow != -1) && (thresholdRangeLow <= tokens) && (tokens <= thresholdRangeHigh)) {
-        digitalWrite(pin, HIGH);  
-        Serial.print("   (place) digital out: "); Serial.println(1);
-      } else {
-        digitalWrite(pin, LOW);
-        Serial.print("   (place) digital out: "); Serial.println(0);
+      Serial.print("   (place) thresholdRangeLow: "); Serial.println(thresholdRangeLow);
+      Serial.print("   (place) thresholdRangeHigh: "); Serial.println(thresholdRangeHigh);
+      switch (inverseLogic) {
+        case 0:
+          if((thresholdRangeLow != -1) && (thresholdRangeLow <= tokens) && (tokens <= thresholdRangeHigh)) {
+            digitalWrite(pin, HIGH);  
+            Serial.print("   (place) digital out: "); Serial.println(1);
+          } else {
+            digitalWrite(pin, LOW);
+            Serial.print("   (place) digital out: "); Serial.println(0);
+          }
+          break;
+        case 1:
+          if((thresholdRangeLow != -1) && ((tokens < thresholdRangeLow) || (tokens > thresholdRangeHigh))) {
+            digitalWrite(pin, HIGH);  
+            Serial.print("   (place) digital out: "); Serial.println(1);
+          } else {
+            digitalWrite(pin, LOW);
+            Serial.print("   (place) digital out: "); Serial.println(0);
+          }
+          break;          
       }
+      
       break;
       
     case ANALOG_IN:
@@ -83,6 +109,24 @@ void Place::apply()
       Serial.print("   (place) servo: "); Serial.println((int)(tokens/(capacity*1.0)*180));  
       myservo.write((int)(tokens/(capacity*1.0)*180)); 
       break;
+
+    case LED_DISPLAY: 
+      Serial.print("   (place) LED Display number: "); Serial.println((int)(tokens));  
+      /*
+        1 Digital 8-Segment LED Display
+        Display the number from 1-9
+      */
+      byte Digital[10]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6};//the character code for number 1-9
+      int i=0;
+      int j; 
+      for(j=0;j<8;j++)
+      {  
+        if(Digital[tokens]&1<<j)//COOL MAGIC with binary AND and binary LEFT SHIFT operands, but shortest way how to show right number :)(!!working!!)
+          digitalWrite(9-j,LOW);
+        else
+          digitalWrite(9-j,HIGH);
+      }
+      break;      
   }
 }
 

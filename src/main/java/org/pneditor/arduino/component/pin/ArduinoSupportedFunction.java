@@ -31,5 +31,17 @@ public enum ArduinoSupportedFunction {
         public String toString() {
             return "Analog OUT (PWM)";
         }
+    },
+    SERVO {
+        @Override
+        public String toString() {
+            return "Servo";
+        }
+    },
+    LED_DISPLAY {
+        @Override
+        public String toString() {
+            return "Led display";
+        }
     }
 }
