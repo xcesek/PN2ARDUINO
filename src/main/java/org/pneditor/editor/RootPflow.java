@@ -404,7 +404,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setPlaceStatic.setEnabled(isPlaceNode);
 
         //ARDUINO
-        addArduinoComponent.setEnabled(isPlaceNode || isTransitionNode || ((SetupBoardAction) setBoard).isAlreadySetup());
+        addArduinoComponent.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         activateArduino.setEnabled(((SetupBoardAction) setBoard).isAlreadySetup());
     }
 
@@ -686,6 +686,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         // ARDUINO RELATED
         arduinoMenu.add(setBoard);
+        arduinoMenu.add(activateArduino);
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);

@@ -55,7 +55,7 @@ public enum ArduinoComponentType{
     SERVO{
         @Override
         public String toString() {
-            return "Digital Servo output";
+            return "Digital Servo Output";
         }
     },
 //    /**

@@ -40,7 +40,7 @@ public class AddArduinoComponentAction extends AbstractAction {
         this.root = root;
         String name = "Add Arduino Component";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/digitalOutput.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/addArduinoComponent16.png"));
         putValue(SHORT_DESCRIPTION, name);
 //		putValue(MNEMONIC_KEY, KeyEvent.VK_R);
 //		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("R"));
@@ -48,17 +48,22 @@ public class AddArduinoComponentAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (root.getClickedElement() != null
-                && root.getClickedElement() instanceof Node) {
-            clickedNode = (Node) root.getClickedElement();
+        if(isEnabled()) {
+            if (root.getClickedElement() != null
+                    && root.getClickedElement() instanceof Node) {
+                clickedNode = (Node) root.getClickedElement();
 
-            if (requestComponentSettings()) {
-                //TODO prerobit cez comand
-                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(pinNumber, arduinoComponentType, arduinoComponentSettings, root.getArduinoManager(), clickedNode);
-                root.getUndoManager().executeCommand(new SetArduinoComponentCommand(clickedNode, arduinoComponent));
+                if (requestComponentSettings()) {
+                    //TODO prerobit cez comand
+                    ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(pinNumber, arduinoComponentType, arduinoComponentSettings, root.getArduinoManager(), clickedNode);
+                    root.getUndoManager().executeCommand(new SetArduinoComponentCommand(clickedNode, arduinoComponent));
+                }
+
             }
+        } else {
 
         }
+
 
     }
 

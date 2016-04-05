@@ -21,7 +21,9 @@ import org.firmata4j.firmata.FirmataDevice;
 import org.pneditor.arduino.ArduinoController;
 import org.pneditor.arduino.BoardSettings;
 import org.pneditor.editor.Root;
+import org.pneditor.editor.RootPflow;
 import org.pneditor.util.GraphicsTools;
+import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -34,34 +36,52 @@ public class ActivateArduinoAction extends AbstractAction {
     private IODevice device;
     private BoardSettings boardSettings;
 
+    private boolean alreadyActivated;
+
     public ActivateArduinoAction(Root root) {
         this.root = root;
-        String name = "Setup board";
+        String name = "Activate arduino";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/digitalOutput.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/activateArduino16.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(false);
+        alreadyActivated = false;
 
         boardSettings = root.getArduinoManager().getBoardSettings();
     }
 
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
+            //TODO thread
             //doska
             root.getArduinoManager().setDevice(new FirmataDevice(boardSettings.getPort()));
             try {
                 root.getArduinoManager().getDevice().start();
                 root.getArduinoManager().getDevice().ensureInitializationIsDone();
+                ((RootPflow)root).getLogEditor().log("Arduino device is ready", LogEditor.logType.ARDUINO);
                 System.out.println("device is now ready!");
                 //ARDUINO CONTROLLER INITIALIZATION
                 ArduinoController arduinoController = new ArduinoController(root.getArduinoManager(), root.getDocument().getPetriNet().getInitialMarking());
+                alreadyActivated = true;
             } catch (IOException exception) {
-                System.out.println("!! ERROR: device start failed.");
-                exception.printStackTrace();
-            }catch (InterruptedException exception) {
+                if (exception.getCause().toString().contains("Port busy")) {
+                    ((RootPflow)root).getLogEditor().log("Port busy / Device is already started", LogEditor.logType.ARDUINO);
+                    System.out.println("Port busy / Device is already started");
+                } else if (exception.getCause().toString().contains("Port not found")) {
+                    ((RootPflow)root).getLogEditor().log("Port not found (check if arduino board is connected)", LogEditor.logType.ARDUINO);
+                    System.out.println("Port not found (check if arduino board is connected)");
+                } else {
+                    System.out.println("!! ERROR: device start failed.");
+                    exception.printStackTrace();
+                }
+            } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
         }
+    }
+
+    public boolean isAlreadyActivated() {
+        return alreadyActivated;
     }
 }
 

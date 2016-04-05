@@ -41,7 +41,7 @@ public class SetupBoardAction extends AbstractAction {
         this.root = root;
         String name = "Setup board";
         putValue(NAME, name);
-        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/digitalOutput.png"));
+        putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/setupBoard16.png"));
         putValue(SHORT_DESCRIPTION, name);
         setEnabled(true);
         alreadySetup = false;
@@ -58,16 +58,9 @@ public class SetupBoardAction extends AbstractAction {
 
             final JOptionPane optionPane = new JOptionPane();
             optionPane.setMessage(popupContent(boardSettings));
-//
-//            JDialog dialog = optionPane.createDialog(root.getParentFrame(), "Arduino Board Setup");
-//            dialog.setVisible(true);
-//
-//            int value = (optionPane.getValue() != null) ? ((Integer) optionPane.getValue()).intValue() : JOptionPane.CANCEL_OPTION;
-//            if (value == JOptionPane.YES_OPTION) {
-                // set user values
-                boardSettings.setPort(requestPort());
-                root.refreshAll();
-//            }
+
+            boardSettings.setPort(requestPort());
+            root.refreshAll();
         }
     }
 
@@ -82,27 +75,30 @@ public class SetupBoardAction extends AbstractAction {
     }
 
     private String requestPort() {
+        // combobox with available serial ports
         JComboBox<String> portNameSelector = new JComboBox<>();
         portNameSelector.setModel(new DefaultComboBoxModel<String>());
         String[] portNames = SerialPortList.getPortNames();
         for (String portName : portNames) {
             portNameSelector.addItem(portName);
         }
+        // if there is no serial port
         if (portNameSelector.getItemCount() == 0) {
             JOptionPane.showMessageDialog(root.getParentFrame(), "Cannot find any serial port", "Error", JOptionPane.ERROR_MESSAGE);
-            //System.exit(1);
-        }
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.add(new JLabel("Port "));
-        panel.add(portNameSelector);
-        if (JOptionPane.showConfirmDialog(root.getParentFrame(), panel, "Select the port", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-            alreadySetup = true;
-            return portNameSelector.getSelectedItem().toString();
+            return "";
         } else {
-            //System.exit(0);
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridBagLayout());
+            panel.add(new JLabel("Port "));
+            panel.add(portNameSelector);
+            if (JOptionPane.showConfirmDialog(root.getParentFrame(), panel, "Select the port", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                alreadySetup = true;
+                return portNameSelector.getSelectedItem().toString();
+            } else {
+                return "";
+            }
         }
-        return "";
+
     }
 
 
