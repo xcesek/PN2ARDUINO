@@ -149,3 +149,7 @@ void Place::removeTokens(int howMany) {
 void Place::setCapacity(int _capacity) {
   capacity = _capacity;
 }
+
+int Place::getCapacity() {
+  return capacity;
+}

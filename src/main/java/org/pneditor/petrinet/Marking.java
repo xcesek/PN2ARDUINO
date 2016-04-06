@@ -158,6 +158,12 @@ public class Marking {
                             }
                         }
                     }
+                }else{
+                    //need to check destination place capacity
+                    if ( arc.getMultiplicity() > ( arc.getPlaceNode().getPlace().getCapacity() - getTokens(arc.getPlaceNode()) ) ){
+                        isEnabled = false;
+                        break;
+                    }
                 }
             }
         } finally {

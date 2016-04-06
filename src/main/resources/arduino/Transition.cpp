@@ -85,6 +85,13 @@ int Transition::isEnabled()
       Place *place = static_cast<Place*>(source);
       if (place->getTokens() < connectedArcs[i]->getMultiplicity()) internalTriggerActive = 0;
     }
+    Node *destination = connectedArcs[i]->getDestination();
+    if (destination->getNodeType() == placeType) {
+      Place *place = static_cast<Place*>(destination);
+      if ( connectedArcs[i]->getMultiplicity() > ( place->getCapacity() - place->getTokens() ) ) {
+        internalTriggerActive = 0;
+      }
+    }
   }
   Serial.print("(transition) internal : "); Serial.println(internalTriggerActive);
   if (!extended) {

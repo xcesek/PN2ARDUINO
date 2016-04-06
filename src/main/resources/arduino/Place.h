@@ -26,6 +26,7 @@ class Place : public Node
     void addTokens(int howMany);
     void removeTokens(int howMany);
     void setCapacity(int _capacity);
+    int getCapacity();
 };
 
 #endif
