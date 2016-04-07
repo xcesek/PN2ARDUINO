@@ -13,12 +13,14 @@ import org.pneditor.util.GraphicsTools;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 
 public class AssociateNodeWithArduinoPinAction extends AbstractAction {
 
     private Root root;
+    EnumSet<ArduinoPin> enablesPins = EnumSet.allOf(ArduinoPin.class);
 
     public AssociateNodeWithArduinoPinAction(Root root) {
         this.root = root;
@@ -35,8 +37,10 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                 && (root.getClickedElement() instanceof Place || root.getClickedElement() instanceof Transition)) {
             Node clickedNode = (Node) root.getClickedElement();
 
+//            ArduinoPin[] enablesPins = ArduinoPin.values();
+
             JCheckBox extEnabledCheckBox = new JCheckBox("Enable association");
-            JComboBox pinCombo = new JComboBox(ArduinoPin.values());
+            JComboBox pinCombo = new JComboBox(enablesPins.toArray());
             JComboBox supportedFunctionsCombo = new JComboBox(ArduinoSupportedFunction.values());
             JCheckBox withDelayCheckBox = new JCheckBox("Apply delay");
             JTextField thresholdHighTf = new JTextField();
@@ -46,6 +50,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
 
 //            ====================================================================================
             List<Object> objects = new ArrayList<>();
+
 
             // select values to combo according to stored data
             ArduinoNodeExtension extension = null;
@@ -148,7 +153,20 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                 ArduinoNodeExtension arduinoNodeExtension;
                 if (extEnabledCheckBox.isSelected()) {
                     ArduinoPin pin = (ArduinoPin) pinCombo.getSelectedItem();
+
+                    // remove only selected pin
+                    enablesPins.remove(pin);
+
                     ArduinoSupportedFunction selectedFunction = (ArduinoSupportedFunction) supportedFunctionsCombo.getSelectedItem();
+
+                    if(selectedFunction.equals(ArduinoSupportedFunction.LED_DISPLAY)){
+
+                        //delete pins reserved for 8 segment led display (D2-D8 needed)
+                        ArduinoPin[] pinsForLed = new ArduinoPin[]{ ArduinoPin.D2, ArduinoPin.D3, ArduinoPin.D4, ArduinoPin.D5, ArduinoPin.D6, ArduinoPin.D7, ArduinoPin.D8 };
+                        for(ArduinoPin i : pinsForLed){
+                            enablesPins.remove(i);
+                        }
+                    }
                     arduinoNodeExtension = new ArduinoNodeExtension(pin, selectedFunction);
                     arduinoNodeExtension.setWithDelay(withDelayCheckBox.isSelected());
                     arduinoNodeExtension.setInverseLogic(inverseLogicCheckBox.isSelected());

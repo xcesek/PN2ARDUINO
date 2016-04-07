@@ -768,19 +768,18 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         splitPaneForLog.setOneTouchExpandable(true);
         splitPaneForLog.setLeftComponent(splitPane);
         splitPaneForLog.setRightComponent(logEditor);
-        splitPaneForLog.setDividerLocation(620);
+        splitPaneForLog.setResizeWeight(.80);
 
         mainFrame.add(splitPaneForLog, BorderLayout.CENTER);
 
         mainFrame.addWindowListener(this);
         mainFrame.setLocation(0, 0);
-//        mainFrame.setLocation(50, 50);
-//        mainFrame.setSize(700, 450);
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        mainFrame.setSize(screenSize.width, screenSize.height);
+        mainFrame.setLocation(50, 50);
+        //mainFrame.setSize(700, 450);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        mainFrame.setSize(screenSize.width-800, screenSize.height-280);
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.setVisible(true);
-
     }
 
     public Marking getCurrentMarking() {
