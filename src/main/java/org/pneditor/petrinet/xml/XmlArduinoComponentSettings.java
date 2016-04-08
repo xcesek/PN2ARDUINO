@@ -1,9 +1,7 @@
 package org.pneditor.petrinet.xml;
 
-import org.pneditor.arduino.components.ArduinoComponentSettings;
-import org.pneditor.arduino.components.place.PlaceDigitalOutput;
-import org.pneditor.arduino.components.place.PlaceDigitalOutputSettings;
-import org.pneditor.arduino.components.transition.TransitionDigitalOutputSettings;
+import org.pneditor.arduino.components.common.ArduinoComponentSettings;
+import org.pneditor.arduino.components.DigitalOutputSettings;
 import org.pneditor.petrinet.Node;
 import org.pneditor.petrinet.Place;
 
@@ -24,7 +22,7 @@ public class XmlArduinoComponentSettings {
         switch (settings.getType()) {
             case OUTPUT:
                 if(node instanceof Place) {
-                    period = ((PlaceDigitalOutputSettings) settings).getPeriod();
+                    period = ((DigitalOutputSettings) settings).getPeriod();
                 }
                 break;
             default:

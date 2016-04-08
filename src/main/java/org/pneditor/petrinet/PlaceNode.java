@@ -16,17 +16,15 @@
  */
 package org.pneditor.petrinet;
 
-import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.pneditor.arduino.components.ArduinoComponentType;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;
 
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public abstract class PlaceNode extends Node implements Cloneable {
@@ -82,11 +80,8 @@ public abstract class PlaceNode extends Node implements Cloneable {
     }
 
     protected void drawPlaceBackground(Graphics g) {
-        if(getArduinoComponent() != null)
-        {
-            if(getArduinoComponent().getType() == ArduinoComponentType.OUTPUT) {
-                g.setColor(Color.cyan);
-            }
+        if (getArduinoComponent() != null) {
+            g.setColor(getArduinoComponent().color);
         } else {
             g.setColor(Color.white);
         }
@@ -169,7 +164,7 @@ public abstract class PlaceNode extends Node implements Cloneable {
 
     @Override
     public boolean containsPoint(int x, int y) {
-		// Check whether (x,y) is inside this oval, using the
+        // Check whether (x,y) is inside this oval, using the
         // mathematical equation of an ellipse.
         double rx = getWidth() / 2.0;   // horizontal radius of ellipse
         double ry = getHeight() / 2.0;  // vertical radius of ellipse 

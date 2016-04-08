@@ -1,11 +1,12 @@
-package org.pneditor.arduino.components.place;
+package org.pneditor.arduino.components;
 
 import org.firmata4j.Pin;
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.ArduinoComponent;
-import org.pneditor.arduino.components.ArduinoComponentType;
-import org.pneditor.arduino.components.ArduinoComponentSettings;
+import org.pneditor.arduino.components.common.ArduinoComponent;
+import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -17,22 +18,23 @@ import java.io.IOException;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public class PlaceDigitalOutput extends ArduinoComponent {
+public class DigitalOutput extends ArduinoComponent {
 
     private Pin myPin;
 
-    public PlaceDigitalOutput(int pin, ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
-        super(pin, type, settings, arduinoManager);
+    public DigitalOutput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
+        super(type, settings, arduinoManager);
+        color = Color.CYAN;
         try {
-            myPin = arduinoManager.getDevice().getPin(pin);
+            myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.OUTPUT);
         } catch (IOException e) {
             e.printStackTrace();
             //LOG
-            System.out.println("!!! Pin " + pin + " was not set!");
+            System.out.println("!!! Pin " + settings.getPin() + " was not set!");
         }
         //LOG
-        System.out.println("Pin " + pin + " was set to output mode.");
+        System.out.println("Pin " + settings.getPin() + " was set to output mode.");
     }
 
     public void performAction(){

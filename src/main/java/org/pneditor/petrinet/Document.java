@@ -23,10 +23,10 @@ package org.pneditor.petrinet;
  */
 public class Document {
 
-    @Deprecated
+   // @Deprecated
     public Roles roles = new Roles();
 
-    @Deprecated
+  //  @Deprecated
     public PetriNet petriNet = new PetriNet();
 
     public PetriNet getPetriNet() {

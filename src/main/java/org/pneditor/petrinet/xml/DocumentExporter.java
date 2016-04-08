@@ -30,8 +30,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
 
-import org.pneditor.arduino.components.ArduinoComponent;
-import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Arc;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;

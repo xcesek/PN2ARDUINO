@@ -1,22 +1,20 @@
-package org.pneditor.arduino.components;
-
-import org.firmata4j.Pin;
+package org.pneditor.arduino.components.common;
 
 /**
  * Created by Alzbeta Cesekova
  * xbuckuliakova@stuba.sk
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public enum ArduinoComponentType{
+public enum ArduinoComponentType {
 
     /**
      * Digital pin in input mode
      */
-    INPUT{
+    INPUT {
         @Override
         public String toString() {
             return "Digital Input";
@@ -25,7 +23,7 @@ public enum ArduinoComponentType{
     /**
      * Digital pin in output mode
      */
-    OUTPUT{
+    OUTPUT {
         @Override
         public String toString() {
             return "Digital Output";
@@ -34,7 +32,7 @@ public enum ArduinoComponentType{
     /**
      * Analog pin in analog input mode
      */
-    ANALOG{
+    ANALOG {
         @Override
         public String toString() {
             return "Analog Input";
@@ -43,7 +41,7 @@ public enum ArduinoComponentType{
     /**
      * Digital pin in PWM output mode
      */
-    PWM{
+    PWM {
         @Override
         public String toString() {
             return "Digital PWM Output";
@@ -52,7 +50,7 @@ public enum ArduinoComponentType{
     /**
      * Digital pin in Servo output mode
      */
-    SERVO{
+    SERVO {
         @Override
         public String toString() {
             return "Digital Servo Output";
@@ -70,13 +68,13 @@ public enum ArduinoComponentType{
     /**
      * Pin included in I2C setup
      */
-    I2C{
+    I2C {
         @Override
         public String toString() {
             return "I2C";
         }
     },
-//    /**
+    //    /**
 //     * Pin configured for 1-wire
 //     */
 //    ONEWIRE{
@@ -142,4 +140,10 @@ public enum ArduinoComponentType{
 //            return "IGNORED";
 //        }
 //    }
+    MESSAGE {
+        @Override
+        public String toString() {
+            return "Send Message";
+        }
+    },
 }

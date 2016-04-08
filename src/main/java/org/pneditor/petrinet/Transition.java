@@ -19,7 +19,7 @@ package org.pneditor.petrinet;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import org.pneditor.arduino.components.ArduinoComponentType;
+import org.pneditor.arduino.components.common.ArduinoComponentType;
 import org.pneditor.editor.time.SimpleTimer;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
@@ -40,9 +40,7 @@ public class Transition extends TransitionNode implements Cloneable {
     public void draw(Graphics g, DrawingOptions drawingOptions) {
         if(getArduinoComponent() != null)
         {
-            if(getArduinoComponent().getType() == ArduinoComponentType.OUTPUT) {
-                g.setColor(Color.cyan);
-            }
+            g.setColor(getArduinoComponent().color);
         } else {
             g.setColor(Color.white);
         }

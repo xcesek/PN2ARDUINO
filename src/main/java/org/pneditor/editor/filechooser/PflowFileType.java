@@ -24,8 +24,6 @@ import javax.swing.Icon;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 
-import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;

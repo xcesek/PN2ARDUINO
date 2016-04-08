@@ -24,8 +24,6 @@ import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileFilter;
 
-import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.ArduinoComponent;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.PetriNet;

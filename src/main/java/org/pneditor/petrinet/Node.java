@@ -20,7 +20,7 @@ import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pneditor.arduino.components.ArduinoComponent;
+import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.editor.PNEditor;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;

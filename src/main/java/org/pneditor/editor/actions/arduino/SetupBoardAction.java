@@ -84,7 +84,7 @@ public class SetupBoardAction extends AbstractAction {
         }
         // if there is no serial port
         if (portNameSelector.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(root.getParentFrame(), "Cannot find any serial port", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(root.getParentFrame(), "Cannot find any Arduino on serial port", "Error", JOptionPane.ERROR_MESSAGE);
             return "";
         } else {
             JPanel panel = new JPanel();

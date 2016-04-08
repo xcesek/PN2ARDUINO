@@ -3,12 +3,17 @@ package org.pneditor.arduino;
 import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
 import org.firmata4j.firmata.FirmataDevice;
+import org.pneditor.arduino.components.common.ArduinoComponentType;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.Node;
 import org.pneditor.petrinet.PlaceNode;
 import org.pneditor.petrinet.Transition;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Alzbeta Cesekova
@@ -24,10 +29,13 @@ public class ArduinoController implements ArduinoListener {
     private IODevice device;
     private ArduinoManager arduinoManager;
 
+
+
     public ArduinoController(ArduinoManager arduinoManager, Subject marking) {
         this.marking = marking;
         this.device = arduinoManager.getDevice();
         marking.registerArduinoListener(this);
+
 
         //PORT SETTINGS - ak otvaram ulozenu
 
@@ -53,6 +61,8 @@ public class ArduinoController implements ArduinoListener {
         }).start();
     }
 
+
+    //OBSOLET
     @Override
     public void updateFiredTransition(Node transition) {
         new Thread(() -> {
@@ -95,6 +105,8 @@ public class ArduinoController implements ArduinoListener {
 
         }).start();
     }
+
+
 
 
 }
