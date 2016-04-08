@@ -30,6 +30,9 @@ public class XmlPlace extends XmlNode {
     @XmlElement(name = "tokens")
     public int tokens;
 
+    @XmlElement(name = "capacity")
+    public int capacity;
+
     @XmlElement(name = "isStatic")
     public boolean isStatic;
 

@@ -314,7 +314,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //per application
     protected JToggleButton select, place, transition, arc, token;
     protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
-    protected Action setPlaceStatic;
+    //protected Action setPlaceStatic;
     //    protected Action addSelectedTransitionsToSelectedRoles;
 //    protected Action removeSelectedTransitionsFromSelectedRoles;
 //    protected Action convertTransitionToSubnet;
@@ -324,6 +324,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
     protected Action runTimer;
     protected Action setTimingPolicy;
+    protected Action setPlaceCapacity;
 
     //per application
 //    protected Action openSubnet;
@@ -332,8 +333,13 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //ARDUINO
     protected Action setBoard;
     protected Action activateArduino;
+
+    //ADD ARDUINO COMPONENT
     protected Action addDigitalOutput;
+    protected Action addDigitalInput;
+    protected Action addAnalogInput;
     protected Action addSendMessage;
+
 
 //    @Override
 //    public void openSubnet() {
@@ -403,12 +409,19 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        closeSubnet.setEnabled(isParent);
         undo.setEnabled(getUndoManager().isUndoable());
         redo.setEnabled(getUndoManager().isRedoable());
-        setPlaceStatic.setEnabled(isPlaceNode);
+        //setPlaceStatic.setEnabled(isPlaceNode);
+
+        setPlaceCapacity.setEnabled(isPlaceNode);
 
         //ARDUINO
-        addDigitalOutput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
-        addSendMessage.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         activateArduino.setEnabled(((SetupBoardAction) setBoard).isAlreadySetup());
+        //ADD ARDUINO COMPONENT
+        addDigitalOutput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+        addDigitalInput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+        addAnalogInput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+        addSendMessage.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+
+
     }
 
     @Override
@@ -501,7 +514,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setLabel = new SetLabelAction(this);
         setDelay = new SetDelayAction(this);
         setTokens = new SetTokensAction(this);
-        setPlaceStatic = new SetPlaceStaticAction(this);
+        //setPlaceStatic = new SetPlaceStaticAction(this);
         setArcMultiplicity = new SetArcMultiplicityAction(this);
         setArcInhibitory = new SetArcInhibitoryAction(this);
         setArcReset = new SetArcResetAction(this);
@@ -514,6 +527,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         runTimer = new RunTimerAction(this);
         setTimingPolicy = new SetTimingPolicyAction(this);
+        setPlaceCapacity = new SetPlaceCapacityAction(this);
 
         cutAction = new CutAction(this);
         copyAction = new CopyAction(this);
@@ -533,7 +547,10 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         //ARDUINO
         setBoard = new SetupBoardAction(this);
         activateArduino = new ActivateArduinoAction(this);
+        //ADD ARDUINO COMPONENT
         addDigitalOutput = new AddArduinoComponentAction(this, ArduinoComponentType.OUTPUT);
+        addDigitalInput = new AddArduinoComponentAction(this, ArduinoComponentType.INPUT);
+        addAnalogInput = new AddArduinoComponentAction(this, ArduinoComponentType.ANALOG);
         addSendMessage = new AddArduinoComponentAction(this, ArduinoComponentType.MESSAGE);
 
 
@@ -663,7 +680,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         elementMenu.add(setLabel);
         elementMenu.addSeparator();
         elementMenu.add(setTokens);
-        elementMenu.add(setPlaceStatic);
+        elementMenu.add(setPlaceCapacity);
+        //elementMenu.add(setPlaceStatic);
         elementMenu.addSeparator();
         elementMenu.add(setArcMultiplicity);
         elementMenu.add(setArcInhibitory);
@@ -692,15 +710,18 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoMenu.add(setBoard);
         arduinoMenu.add(activateArduino);
 
-        //ADD ARDUINO COMPONENT
+        //ADD ARDUINO COMPONENT SUBMENU
         JMenu arduinoComponentPlaceSubmenu = new JMenu("Add Arduino Component");
         arduinoComponentPlaceSubmenu.add(addDigitalOutput);
+        arduinoComponentPlaceSubmenu.add(addDigitalInput);
+        arduinoComponentPlaceSubmenu.add(addAnalogInput);
         arduinoComponentPlaceSubmenu.add(addSendMessage);
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
         placePopup.add(setTokens);
-        placePopup.add(setPlaceStatic);
+        //placePopup.add(setPlaceStatic);
+        placePopup.add(setPlaceCapacity);
         placePopup.addSeparator();
         placePopup.add(cutAction);
         placePopup.add(copyAction);
@@ -709,9 +730,11 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         placePopup.addSeparator();
         placePopup.add(arduinoComponentPlaceSubmenu);
 
-        //ADD ARDUINO COMPONENT
+        //ADD ARDUINO COMPONENT SUBMENU
         JMenu arduinoComponentTransitionSubmenu = new JMenu("Add Arduino Component");
         arduinoComponentTransitionSubmenu.add(addDigitalOutput);
+        arduinoComponentTransitionSubmenu.add(addDigitalInput);
+        arduinoComponentTransitionSubmenu.add(addAnalogInput);
         arduinoComponentTransitionSubmenu.add(addSendMessage);
 
         transitionPopup = new JPopupMenu();

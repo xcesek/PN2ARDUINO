@@ -166,6 +166,12 @@ public class Marking implements Subject {
                             }
                         }
                     }
+                } else {
+                    //need to check destination place capacity
+                    if ( arc.getMultiplicity() > ( arc.getPlaceNode().getPlace().getCapacity() - getTokens(arc.getPlaceNode()) ) ){
+                        isEnabled = false;
+                        break;
+                    }
                 }
             }
         } finally {
@@ -182,8 +188,8 @@ public class Marking implements Subject {
      */
     public boolean fire(Transition transition) {
         boolean success;
-        PlaceNode sourcePlace = null;
-        PlaceNode destinationPlace = null;
+        List<Node> sourcePlaces = new ArrayList<>();
+        List<Node> destinationPlaces = new ArrayList<>();
         lock.writeLock().lock();
         try {
             if (isEnabled(transition)) {
@@ -197,15 +203,15 @@ public class Marking implements Subject {
                                 setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
                             }
                         }
-                        sourcePlace = arc.getPlaceNode();
+                        sourcePlaces.add(arc.getPlaceNode());
                     } else {
                         int tokens = getTokens(arc.getPlaceNode());
                         setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
-                        destinationPlace = arc.getPlaceNode();
+                        destinationPlaces.add(arc.getPlaceNode());
                     }
                 }
                 success = true;
-                notifyArduinoListeners(sourcePlace, transition, destinationPlace);
+                notifyArduinoListeners(sourcePlaces, transition, destinationPlaces);
             } else {
                 success = false;
             }
@@ -494,34 +500,10 @@ public class Marking implements Subject {
     }
 
     @Override
-    public void notifyFiredTransition(Node transition) {
+    public void notifyArduinoListeners(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces) {
         for(int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
-            arduinoListener.updateFiredTransition(transition);
-        }
-    }
-
-    @Override
-    public void notifyActivatingPlace(Node place) {
-        for(int i = 0; i < arduinoListeners.size(); i++) {
-            ArduinoListener arduinoListener = arduinoListeners.get(i);
-            arduinoListener.updateActivatingPlace(place);
-        }
-    }
-
-    @Override
-    public void notifyDeactivatingPlace(Node place) {
-        for(int i = 0; i < arduinoListeners.size(); i++) {
-            ArduinoListener arduinoListener = arduinoListeners.get(i);
-            arduinoListener.updateDeactivatingPlace(place);
-        }
-    }
-
-    @Override
-    public void notifyArduinoListeners(Node sourcePlace, Node transition, Node destinationPlace) {
-        for(int i = 0; i < arduinoListeners.size(); i++) {
-            ArduinoListener arduinoListener = arduinoListeners.get(i);
-            arduinoListener.update(sourcePlace, transition, destinationPlace);
+            arduinoListener.update(sourcePlaces, transition, destinationPlaces);
         }
     }
 

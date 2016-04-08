@@ -2,6 +2,8 @@ package org.pneditor.arduino;
 
 import org.pneditor.petrinet.Node;
 
+import java.util.List;
+
 /**
  * Created by Alzbeta Cesekova
  * xbuckuliakova@stuba.sk
@@ -12,8 +14,5 @@ import org.pneditor.petrinet.Node;
  * (at your option) any later version.
  */
 public interface ArduinoListener {
-    public void updateFiredTransition(Node transition);
-    public void updateActivatingPlace(Node place);
-    public void updateDeactivatingPlace(Node place);
-    public void update(Node sourcePlace, Node transition, Node destinationPlace);
+    public void update(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces);
 }

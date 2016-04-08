@@ -4,7 +4,6 @@ import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,29 +17,22 @@ import java.util.Map;
  * Under GNU GPL v3 licence
  */
 public class ArduinoManager {
-    public final static String ARDUINO_RES_DIR_NAME = "src/main/resources/arduino";
-    public final static String SOURCE_DIR_NAME = "generated";
-    public final static String PROJECT_DIR_NAME = "PetriNet";
-    public final static String MAIN_SKETCH_FILE_NAME = "PetriNet.ino";
-    public final static String SKETCH_TEMPLATE_NAME = "PetriNet.template";
 
     private BoardSettings boardSettings;
     private IODevice device;
 
     private Map<ArduinoComponentType, List<Byte>> pinMap;
 
+
+    // METHODS
     public ArduinoManager() {
         boardSettings = new BoardSettings();    // todo
     }
 
-    public Map<ArduinoComponentType, List<Byte>> getPinMap() {
-        return pinMap;
-    }
 
     public IODevice getDevice() {
         return device;
     }
-
     public void setDevice(IODevice device) {
         this.device = device;
     }
@@ -48,17 +40,14 @@ public class ArduinoManager {
     public void updateSettings(String port, String board) {
         boardSettings.setPort(port);
     }
-
-
-
     public BoardSettings getBoardSettings() {
         return boardSettings;
     }
 
-    public String getProjectDirName() {
-        return SOURCE_DIR_NAME + File.separator + PROJECT_DIR_NAME;
-    }
 
+    public Map<ArduinoComponentType, List<Byte>> getPinMap() {
+        return pinMap;
+    }
 
     public void initializePinMap() {
         Map<ArduinoComponentType, List<Byte>> modelMap = new HashMap<>();

@@ -38,6 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <x><xsl:value-of select="x"/></x>
                 <y><xsl:value-of select="y"/></y>
                 <label><xsl:value-of select="label"/></label>
+                <capacity><xsl:value-of select="capacity"/></capacity>
                 <tokens><xsl:value-of select="tokens"/></tokens>
                 <isStatic><xsl:value-of select="isStatic"/></isStatic>
                 <arduinoComponent>

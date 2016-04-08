@@ -17,11 +17,11 @@ import java.util.Arrays;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public class DigitalOutputSettings extends ArduinoComponentSettings {
+public class AnalogInputSettings extends ArduinoComponentSettings {
 
     private double period;
 
-    public DigitalOutputSettings(ArduinoManager arduinoManager) {
+    public AnalogInputSettings(ArduinoManager arduinoManager) {
         super(arduinoManager);
         super.setType(ArduinoComponentType.OUTPUT);
         super.setPanel(getMyPanel());

@@ -26,9 +26,10 @@ public class SendMessage extends ArduinoComponent {
         color = Color.GRAY;
     }
 
-    public void fire(){
+    @Override
+    public void fire() {
         try {
-            myMessage = ((SendMessageSettings)settings).getMessage();
+            myMessage = ((SendMessageSettings) settings).getMessage();
             arduinoManager.getDevice().sendMessage(myMessage);
             System.out.println("Message was sent");
         } catch (IOException e) {

@@ -42,17 +42,27 @@ public class ArduinoController implements ArduinoListener {
     }
 
     @Override
-    public void update(Node sourcePlace, Node transition, Node destinationPlace) {
+    public void update(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces) {
         new Thread(() -> {
             try {
-                if(sourcePlace != null && sourcePlace.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) sourcePlace) == 0) {
-                    sourcePlace.getArduinoComponent().deactivate();
+                if(sourcePlaces.size() != 0) {
+                    for(Node place : sourcePlaces) {
+                        if(place.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) place) == 0) {
+                            place.getArduinoComponent().deactivate();
+                        }
+                    }
                 }
+
                 if(transition.hasArduinoComponent()) {
                     transition.getArduinoComponent().fire();
                 }
-                if(destinationPlace != null && destinationPlace.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) destinationPlace) > 0) {
-                    destinationPlace.getArduinoComponent().activate();
+
+                if(destinationPlaces.size() != 0) {
+                    for(Node place : destinationPlaces) {
+                        if(place.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) place) > 0) {
+                            place.getArduinoComponent().activate();
+                        }
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -60,52 +70,6 @@ public class ArduinoController implements ArduinoListener {
 
         }).start();
     }
-
-
-    //OBSOLET
-    @Override
-    public void updateFiredTransition(Node transition) {
-        new Thread(() -> {
-            try {
-                if(transition.hasArduinoComponent()) {
-                    transition.getArduinoComponent().fire();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }).start();
-    }
-
-    @Override
-    public void updateActivatingPlace(Node place) {
-        new Thread(() -> {
-            try {
-                if(place.hasArduinoComponent()) {
-                    place.getArduinoComponent().activate();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }).start();
-
-    }
-
-    @Override
-    public void updateDeactivatingPlace(Node place) {
-        new Thread(() -> { //TODO ak deaktivujem a jemu este ostali tokeny
-            try {
-                if(place.hasArduinoComponent()) {
-                    place.getArduinoComponent().deactivate();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }).start();
-    }
-
 
 
 

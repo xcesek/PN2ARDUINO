@@ -1,8 +1,10 @@
 package org.pneditor.arduino.components.common;
 
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.SendMessageSettings;
+import org.pneditor.arduino.components.AnalogInputSettings;
+import org.pneditor.arduino.components.DigitalInputSettings;
 import org.pneditor.arduino.components.DigitalOutputSettings;
+import org.pneditor.arduino.components.SendMessageSettings;
 import org.pneditor.petrinet.Node;
 
 import javax.swing.*;
@@ -16,22 +18,26 @@ import javax.swing.*;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-abstract public class ArduinoComponentSettings {
+public class ArduinoComponentSettings {
 
-    private JPanel panel;
-    private ArduinoComponentType type;
-    private Integer pin;
+    protected JPanel panel;
+    protected ArduinoComponentType type;
+    protected Integer pin;
     protected ArduinoManager arduinoManager;
 
-    protected ArduinoComponentSettings(ArduinoManager arduinoManager){
+    protected ArduinoComponentSettings(ArduinoManager arduinoManager) {
         this.arduinoManager = arduinoManager;
     }
 
     public static ArduinoComponentSettings settingsFactory(ArduinoManager arduinoManager, ArduinoComponentType type, Node node) {
-        // tu doplnit
+        //ADD ARDUINO COMPONENT
         switch (type) {
             case OUTPUT:
-                    return new DigitalOutputSettings(arduinoManager);
+                return new DigitalOutputSettings(arduinoManager);
+            case INPUT:
+                return new DigitalInputSettings(arduinoManager);
+            case ANALOG:
+                return new AnalogInputSettings(arduinoManager);
             case MESSAGE:
                 return new SendMessageSettings(arduinoManager);
             default:
@@ -39,11 +45,20 @@ abstract public class ArduinoComponentSettings {
         }
     }
 
+
+    //COMMON METHODS
+    public void parseSettingsGUI(JPanel panel){}
+
+    //GETTER & SETTER
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+
     public Integer getPin() {
         return pin;
     }
 
-    public void setPin(int pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
 
@@ -51,23 +66,13 @@ abstract public class ArduinoComponentSettings {
         return type;
     }
 
-
-    public JPanel getSettingsGui() {
-
-        return panel;
-    }
-
-    public void parseSettingsGUI(JPanel panel) {
-    }
-
-    //GETTER & SETTER
-
-
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
-    }
-
     public void setType(ArduinoComponentType type) {
         this.type = type;
     }
+
+    public JPanel getSettingsGui() {
+        return panel;
+    }
+
+
 }

@@ -1,14 +1,14 @@
 package org.pneditor.petrinet.xml;
 
-import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.DigitalOutputSettings;
+import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.petrinet.Node;
-import org.pneditor.petrinet.Place;
 
 import javax.xml.bind.annotation.XmlElement;
 
 
 public class XmlArduinoComponentSettings {
+    //ADD ARDUINO COMPONENT SETTINGS
     @XmlElement(name = "period")
     public double period;
 
@@ -21,9 +21,7 @@ public class XmlArduinoComponentSettings {
 
         switch (settings.getType()) {
             case OUTPUT:
-                if(node instanceof Place) {
-                    period = ((DigitalOutputSettings) settings).getPeriod();
-                }
+                period = ((DigitalOutputSettings) settings).getPeriod();
                 break;
             default:
                 period = 0.0;

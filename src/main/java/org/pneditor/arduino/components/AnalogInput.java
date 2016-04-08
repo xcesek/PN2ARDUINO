@@ -18,13 +18,13 @@ import java.io.IOException;
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-public class DigitalOutput extends ArduinoComponent {
+public class AnalogInput extends ArduinoComponent {
 
     private Pin myPin;
 
-    public DigitalOutput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
+    public AnalogInput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
         super(type, settings, arduinoManager);
-        color = Color.CYAN;
+        color = Color.RED;
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.OUTPUT);

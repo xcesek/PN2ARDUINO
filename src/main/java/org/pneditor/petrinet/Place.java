@@ -24,6 +24,7 @@ package org.pneditor.petrinet;
 public class Place extends PlaceNode implements Cloneable {
 
     private boolean isStatic = false;
+    private int capacity = 10;
 
     @Override
     public boolean isStatic() {
@@ -33,5 +34,13 @@ public class Place extends PlaceNode implements Cloneable {
     @Override
     public void setStatic(boolean isStatic) {
         this.isStatic = isStatic;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

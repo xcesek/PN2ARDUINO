@@ -211,9 +211,11 @@ public class DocumentImporter {
         place.setId(xmlPlace.id);
         place.setLabel(xmlPlace.label);
         place.setStatic(xmlPlace.isStatic);
+        place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
         //ARDUINO
         place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
+        //ADD ARDUINO COMPONENT SETTINGS
         switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
             case OUTPUT:
                 ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
@@ -236,6 +238,7 @@ public class DocumentImporter {
         transition.setTimer(timer);
         //ARDUINO
         transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
+        //ADD ARDUINO COMPONENT SETTINGS
         switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
             case OUTPUT:
                 ((DigitalOutputSettings)transition.getArduinoComponent().getSettings()).setPeriod(xmlTransition.arduinoComponent.settings.period);

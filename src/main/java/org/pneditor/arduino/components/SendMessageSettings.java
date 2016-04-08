@@ -26,10 +26,22 @@ public class SendMessageSettings extends ArduinoComponentSettings {
         super.setPanel(getMyPanel());
     }
 
+    private JPanel getMyPanel() {
+        GridLayout customSettingsLayout = new GridLayout(0, 2);
+        JPanel myPanel = new JPanel(customSettingsLayout);
+
+        myPanel.add(new JLabel("Message: ", SwingConstants.LEFT));
+        myPanel.add(new JTextField(message));
+
+        return myPanel;
+    }
+
+    @Override
     public void parseSettingsGUI(JPanel panel) {
         message = ((JTextField) panel.getComponent(1)).getText();
     }
 
+    //GETTER & SETTER
     public String getMessage() {
         return message;
     }
@@ -39,13 +51,5 @@ public class SendMessageSettings extends ArduinoComponentSettings {
         super.setPanel(getMyPanel());
     }
 
-    private JPanel getMyPanel(){
-        GridLayout customSettingsLayout = new GridLayout(0, 2);
-        JPanel myPanel = new JPanel(customSettingsLayout);
 
-        myPanel.add(new JLabel("Message: ", SwingConstants.LEFT));
-        myPanel.add(new JTextField(message));
-
-        return myPanel;
-    }
 }
