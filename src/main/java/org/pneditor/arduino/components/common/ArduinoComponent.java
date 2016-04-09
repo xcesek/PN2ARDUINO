@@ -58,6 +58,10 @@ public class ArduinoComponent {
     public void fire() {
     }
 
+    public boolean isEnabled(){
+        return true;
+    }
+
     //GETTER & SETTER
     public ArduinoComponentType getType() {
         return type;

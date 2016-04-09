@@ -8,6 +8,7 @@ import org.pneditor.arduino.components.SendMessageSettings;
 import org.pneditor.petrinet.Node;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Alzbeta Cesekova
@@ -21,27 +22,34 @@ import javax.swing.*;
 public class ArduinoComponentSettings {
 
     protected JPanel panel;
+    protected JPanel separatorPanel;
     protected ArduinoComponentType type;
     protected Integer pin;
     protected ArduinoManager arduinoManager;
 
     protected ArduinoComponentSettings(ArduinoManager arduinoManager) {
+
         this.arduinoManager = arduinoManager;
+
+        separatorPanel = new JPanel(new GridLayout(0, 1));
+        separatorPanel.add(Box.createVerticalStrut(5));
+        separatorPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+        separatorPanel.add(Box.createVerticalStrut(5));
     }
 
-    public static ArduinoComponentSettings settingsFactory(ArduinoManager arduinoManager, ArduinoComponentType type, Node node) {
+    public static ArduinoComponentSettings settingsFactory(ArduinoManager arduinoManager, Integer pin, ArduinoComponentType type, Node node) {
         //ADD ARDUINO COMPONENT
         switch (type) {
             case OUTPUT:
-                return new DigitalOutputSettings(arduinoManager);
+                return new DigitalOutputSettings(arduinoManager, pin);
             case INPUT:
-                return new DigitalInputSettings(arduinoManager);
+                return new DigitalInputSettings(arduinoManager, pin);
             case ANALOG:
-                return new AnalogInputSettings(arduinoManager);
+                return new AnalogInputSettings(arduinoManager, pin);
             case MESSAGE:
                 return new SendMessageSettings(arduinoManager);
             default:
-                return new DigitalOutputSettings(arduinoManager);
+                return new DigitalOutputSettings(arduinoManager, pin);
         }
     }
 

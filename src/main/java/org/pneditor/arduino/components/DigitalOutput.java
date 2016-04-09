@@ -59,4 +59,9 @@ public class DigitalOutput extends ArduinoComponent {
     public void fire() {
 
     }
+
+    @Override
+    public boolean isEnabled(){
+        return true;
+    }
 }

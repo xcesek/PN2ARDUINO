@@ -21,7 +21,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
 
     private double period;
 
-    public AnalogInputSettings(ArduinoManager arduinoManager) {
+    public AnalogInputSettings(ArduinoManager arduinoManager, Integer pin) {
         super(arduinoManager);
         super.setType(ArduinoComponentType.OUTPUT);
         super.setPanel(getMyPanel());
@@ -55,7 +55,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
     @Override
     public void parseSettingsGUI(JPanel panel) {
         try {
-            setPin(((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
+            pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
             period = Double.parseDouble(((JTextField) panel.getComponent(3)).getText());
         } catch (NumberFormatException e) {
             period = 0;

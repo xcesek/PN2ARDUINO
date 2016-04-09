@@ -24,10 +24,10 @@ public class DigitalInput extends ArduinoComponent {
 
     public DigitalInput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
         super(type, settings, arduinoManager);
-        color = Color.GREEN;
+        color = Color.PINK;
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
-            myPin.setMode(Pin.Mode.OUTPUT);
+            myPin.setMode(Pin.Mode.INPUT);
         } catch (IOException e) {
             e.printStackTrace();
             //LOG
@@ -39,24 +39,26 @@ public class DigitalInput extends ArduinoComponent {
 
     @Override
     public void activate() {
-        try {
-            myPin.setValue(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void deactivate() {
-        try {
-            myPin.setValue(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void fire() {
 
     }
+
+    @Override
+    public boolean isEnabled(){
+       if(myPin.getValue() == 0) {
+           return false;
+       } else {
+           return true;
+       }
+    }
+
 }

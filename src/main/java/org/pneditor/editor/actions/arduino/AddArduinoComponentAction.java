@@ -68,7 +68,7 @@ public class AddArduinoComponentAction extends AbstractAction {
         if (clickedNode.hasArduinoComponent() && clickedNode.getArduinoComponent().getType() == type) {
             arduinoComponentSettings = clickedNode.getArduinoComponent().getSettings();
         } else {
-            arduinoComponentSettings = ArduinoComponentSettings.settingsFactory(root.getArduinoManager(), type, clickedNode);
+            arduinoComponentSettings = ArduinoComponentSettings.settingsFactory(root.getArduinoManager(), null, type, clickedNode);
         }
         JPanel customSettings = arduinoComponentSettings.getSettingsGui();
 

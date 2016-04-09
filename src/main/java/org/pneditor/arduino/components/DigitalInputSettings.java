@@ -19,11 +19,9 @@ import java.util.Arrays;
  */
 public class DigitalInputSettings extends ArduinoComponentSettings {
 
-    private double period;
-
-    public DigitalInputSettings(ArduinoManager arduinoManager) {
+    public DigitalInputSettings(ArduinoManager arduinoManager, Integer pin) {
         super(arduinoManager);
-        super.setType(ArduinoComponentType.OUTPUT);
+        super.setType(ArduinoComponentType.INPUT);
         super.setPanel(getMyPanel());
     }
 
@@ -31,9 +29,7 @@ public class DigitalInputSettings extends ArduinoComponentSettings {
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
         //PIN
-        Object[] modeArray = arduinoManager.getPinMap().get(getType()).toArray();
-        Arrays.sort(modeArray);
-        JComboBox pinComboBox = new JComboBox(modeArray);
+        JComboBox pinComboBox = new JComboBox(arduinoManager.getUnusedPins(type));
         // * if node already has arduino component - load from clickedNode
         if (getPin() != null) {
             pinComboBox.setSelectedItem(getPin().byteValue());
@@ -43,35 +39,15 @@ public class DigitalInputSettings extends ArduinoComponentSettings {
         myPanel.add(new JLabel("Pin: ")); //0
         myPanel.add(pinComboBox); //1
 
-        myPanel.add(new JLabel("Perioda: ", SwingConstants.LEFT)); //2
-        myPanel.add(new JTextField(((Double) period).toString()));  //3
-
-        myPanel.add(new JLabel("Tralalalala: ", SwingConstants.LEFT)); //4
-        myPanel.add(new JTextField(((Double) period).toString()));      //5
+        myPanel.add(Box.createVerticalStrut(5));
+        myPanel.add(Box.createVerticalStrut(5));
 
         return myPanel;
     }
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
-        try {
-            setPin(((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
-            period = Double.parseDouble(((JTextField) panel.getComponent(3)).getText());
-        } catch (NumberFormatException e) {
-            period = 0;
-            //LOG
-            System.out.println("Nepodporovany format periody");
-        }
-    }
-
-    //GETTER & SETTER
-    public void setPeriod(double period) {
-        this.period = period;
-        super.setPanel(getMyPanel());
-    }
-
-    public double getPeriod() {
-        return period;
+        pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
     }
 
 }

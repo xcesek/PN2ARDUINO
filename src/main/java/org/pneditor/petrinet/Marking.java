@@ -141,10 +141,14 @@ public class Marking implements Subject {
      * @return true if transition is enabled in the marking, otherwise false
      */
     public boolean isEnabled(Transition transition) {
-        //TODO ci je enable aj vzhladom k arduinu
         boolean isEnabled = true;
         lock.readLock().lock();
         try {
+            if(transition.hasArduinoComponent()){
+                if(!transition.getArduinoComponent().isEnabled()) {
+                    isEnabled = false;
+                }
+            }
             for (Arc arc : transition.getConnectedArcs()) {
                 if (arc.isPlaceToTransition()) {
                     if (arc.getType().equals(Arc.RESET)) {//reset arc is always fireable

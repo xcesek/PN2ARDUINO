@@ -215,7 +215,7 @@ public class DocumentImporter {
         place.setCenter(xmlPlace.x, xmlPlace.y);
         //ARDUINO
         if(!xmlPlace.arduinoComponent.type.equals("")) {
-            place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
+            place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, xmlPlace.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
             //ADD ARDUINO COMPONENT SETTINGS
             switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
                 case OUTPUT:
@@ -243,7 +243,7 @@ public class DocumentImporter {
         transition.setTimer(timer);
         //ARDUINO
         if(!xmlTransition.arduinoComponent.type.equals("")) {
-            transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
+            transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, xmlTransition.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
             //ADD ARDUINO COMPONENT SETTINGS
             switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
                 case OUTPUT:

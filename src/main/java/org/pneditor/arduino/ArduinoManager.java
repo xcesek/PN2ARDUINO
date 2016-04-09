@@ -4,10 +4,7 @@ import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Pavol Cesek on 2/27/2016.
@@ -22,32 +19,16 @@ public class ArduinoManager {
     private IODevice device;
 
     private Map<ArduinoComponentType, List<Byte>> pinMap;
+    private List<Byte> usedPins;
 
-
-    // METHODS
+    // CONSTRUCTOR
     public ArduinoManager() {
+
         boardSettings = new BoardSettings();    // todo
+        usedPins = new ArrayList<>();
     }
 
 
-    public IODevice getDevice() {
-        return device;
-    }
-    public void setDevice(IODevice device) {
-        this.device = device;
-    }
-
-    public void updateSettings(String port, String board) {
-        boardSettings.setPort(port);
-    }
-    public BoardSettings getBoardSettings() {
-        return boardSettings;
-    }
-
-
-    public Map<ArduinoComponentType, List<Byte>> getPinMap() {
-        return pinMap;
-    }
 
     public void initializePinMap() {
         Map<ArduinoComponentType, List<Byte>> modelMap = new HashMap<>();
@@ -68,8 +49,41 @@ public class ArduinoManager {
                 }
             }
         }
-
-
         pinMap = modelMap;
     }
+
+
+    //GETTER & SETTER
+    public IODevice getDevice() {
+        return device;
+    }
+    public void setDevice(IODevice device) {
+        this.device = device;
+    }
+
+    public void updateSettings(String port, String board) {
+        boardSettings.setPort(port);
+    }
+    public BoardSettings getBoardSettings() {
+        return boardSettings;
+    }
+
+    public Map<ArduinoComponentType, List<Byte>> getPinMap() {
+        return pinMap;
+    }
+
+    public List<Byte> getUsedPins() {
+        return usedPins;
+    }
+
+    public Object[] getUnusedPins(ArduinoComponentType type) {
+        ArrayList<Byte> pinList = (ArrayList<Byte>) pinMap.get(type);
+        pinList.removeAll(usedPins);
+
+        Object[] pinArray = pinList.toArray();
+        Arrays.sort(pinArray);
+
+        return pinArray;
+    }
+
 }
