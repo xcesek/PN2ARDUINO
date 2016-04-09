@@ -17,4 +17,6 @@ public interface Subject {
     public void registerArduinoListener(ArduinoListener arduinoListener);
     public void removeArduinoListener(ArduinoListener arduinoListener);
     public void notifyArduinoListeners(List<Node> sourcePlaces, Node transition, List<Node> destinationPlacse);
+    public void notifyArduinoListenersPhase1(List<Node> sourcePlaces, Node transition);
+    public void notifyArduinoListenersPhase2(Node transition, List<Node> destinationPlaces);
 }

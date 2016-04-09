@@ -16,6 +16,9 @@
  */
 package org.pneditor.editor.commands;
 
+import org.pneditor.editor.PNEditor;
+import org.pneditor.editor.Root;
+import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.Transition;
 import org.pneditor.util.Command;
@@ -36,6 +39,7 @@ public class FireTransitionCommand implements Command {
 
     public void execute() {
         if (marking.isEnabled(transition)) {
+
             if (transition.getTimer() != null) {
                 transition.getTimer().resetTimer();
                 transition.getTimer().startTimer(transition, marking);

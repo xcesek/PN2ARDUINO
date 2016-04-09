@@ -23,10 +23,11 @@ public class XmlArduinoComponent {
 
     public XmlArduinoComponent(ArduinoComponent arduinoComponent, Node node) {
 
-        pin = arduinoComponent.getSettings().getPin();
-        type = arduinoComponent.getType().name();
-        settings = new XmlArduinoComponentSettings(arduinoComponent.getSettings(), node);
-
+       if(node.hasArduinoComponent()) {
+           pin = arduinoComponent.getSettings().getPin();
+           type = arduinoComponent.getType().name();
+           settings = new XmlArduinoComponentSettings(arduinoComponent.getSettings(), node);
+       }
     }
 
 }

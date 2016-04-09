@@ -15,4 +15,6 @@ import java.util.List;
  */
 public interface ArduinoListener {
     public void update(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces);
+    public void updatePhase1(List<Node> sourcePlaces, Node transition);
+    public void updatePhase2(Node transition, List<Node> destinationPlaces);
 }

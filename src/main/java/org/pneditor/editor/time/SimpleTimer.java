@@ -17,28 +17,18 @@ public class SimpleTimer {
     private Marking marking;
     private Transition transition;
 
-    private class PnTimerTask extends TimerTask {
-
-        @Override
-        public void run() {
-            isActive = false;
-            marking.fire(transition);
-
-            PNEditor.getRoot().repaintCanvas();
-        }
-    }
 
     private class SecondsCounter extends TimerTask {
 
         @Override
         public void run() {
+            PNEditor.getRoot().repaintCanvas();
             elapsedSeconds--;
             transition.setLabel(String.valueOf(elapsedSeconds));
             if (elapsedSeconds < 1) {
+                marking.firePhase2(transition);
                 cancel();
-                marking.fire(transition);
             }
-            PNEditor.getRoot().repaintCanvas();
         }
     }
 
@@ -51,12 +41,12 @@ public class SimpleTimer {
         this.transition = transition;
         this.marking = marking;
 
-        // timer = new Timer();   
         timer2 = new Timer();
         isActive = true;
 
-        // timer.schedule(new PnTimerTask(), seconds * 1000);
-        timer2.scheduleAtFixedRate(new SecondsCounter(), 0, 1000);
+        if(marking.firePhase1(transition)){
+            timer2.scheduleAtFixedRate(new SecondsCounter(), 0, 1000);
+        }
     }
 
     public void cancel() {

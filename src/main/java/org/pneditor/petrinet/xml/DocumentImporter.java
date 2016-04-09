@@ -214,15 +214,20 @@ public class DocumentImporter {
         place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
         //ARDUINO
-        place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
-        //ADD ARDUINO COMPONENT SETTINGS
-        switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
-            case OUTPUT:
-                ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
-                break;
-            default:
-                ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(0.0);
+        if(!xmlPlace.arduinoComponent.type.equals("")) {
+            place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager));
+            //ADD ARDUINO COMPONENT SETTINGS
+            switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
+                case OUTPUT:
+                    ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
+                    break;
+                default:
+                    ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(0.0);
+            }
+        } else {
+            place.setArduinoComponent(null);
         }
+
         return place;
     }
 
@@ -237,13 +242,17 @@ public class DocumentImporter {
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
         //ARDUINO
-        transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
-        //ADD ARDUINO COMPONENT SETTINGS
-        switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
-            case OUTPUT:
-                ((DigitalOutputSettings)transition.getArduinoComponent().getSettings()).setPeriod(xmlTransition.arduinoComponent.settings.period);
-            default:
-                ((DigitalOutputSettings)transition.getArduinoComponent().getSettings()).setPeriod(0.0);
+        if(!xmlTransition.arduinoComponent.type.equals("")) {
+            transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager));
+            //ADD ARDUINO COMPONENT SETTINGS
+            switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
+                case OUTPUT:
+                    ((DigitalOutputSettings) transition.getArduinoComponent().getSettings()).setPeriod(xmlTransition.arduinoComponent.settings.period);
+                default:
+                    ((DigitalOutputSettings) transition.getArduinoComponent().getSettings()).setPeriod(0.0);
+            }
+        } else {
+            transition.setArduinoComponent(null);
         }
 
         return transition;

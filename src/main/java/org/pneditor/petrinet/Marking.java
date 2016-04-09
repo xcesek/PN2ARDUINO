@@ -16,18 +16,14 @@
  */
 package org.pneditor.petrinet;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.pneditor.arduino.ArduinoListener;
 import org.pneditor.arduino.Subject;
 import org.pneditor.util.CollectionTools;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Marking stores and manages information about tokens.
@@ -168,7 +164,7 @@ public class Marking implements Subject {
                     }
                 } else {
                     //need to check destination place capacity
-                    if ( arc.getMultiplicity() > ( arc.getPlaceNode().getPlace().getCapacity() - getTokens(arc.getPlaceNode()) ) ){
+                    if (arc.getMultiplicity() > (arc.getPlaceNode().getPlace().getCapacity() - getTokens(arc.getPlaceNode()))) {
                         isEnabled = false;
                         break;
                     }
@@ -196,8 +192,8 @@ public class Marking implements Subject {
                 for (Arc arc : transition.getConnectedArcs()) {
                     if (arc.isPlaceToTransition()) {
                         int tokens = getTokens(arc.getPlaceNode());
-                        if (!arc.getType().equals(Arc.INHIBITOR)) {					//inhibitor arc doesnt consume tokens
-                            if (arc.getType().equals(Arc.RESET)) {						//reset arc consumes them all
+                        if (!arc.getType().equals(Arc.INHIBITOR)) {                    //inhibitor arc doesnt consume tokens
+                            if (arc.getType().equals(Arc.RESET)) {                        //reset arc consumes them all
                                 setTokens(arc.getPlaceNode(), 0);
                             } else {
                                 setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
@@ -212,12 +208,69 @@ public class Marking implements Subject {
                 }
                 success = true;
                 notifyArduinoListeners(sourcePlaces, transition, destinationPlaces);
+
             } else {
                 success = false;
             }
         } finally {
             lock.writeLock().unlock();
         }
+
+        return success;
+    }
+
+    public boolean firePhase1(Transition transition) {
+        boolean success;
+        List<Node> sourcePlaces = new ArrayList<>();
+        lock.writeLock().lock();
+        try {
+            if (isEnabled(transition)) {
+                for (Arc arc : transition.getConnectedArcs(true)) {
+                    int tokens = getTokens(arc.getPlaceNode());
+                    if (!arc.getType().equals(Arc.INHIBITOR)) {                    //inhibitor arc doesnt consume tokens
+                        if (arc.getType().equals(Arc.RESET)) {                        //reset arc consumes them all
+                            setTokens(arc.getPlaceNode(), 0);
+                        } else {
+                            setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
+                        }
+                    }
+                    sourcePlaces.add(arc.getPlaceNode());
+                }
+
+                success = true;
+                notifyArduinoListenersPhase1(sourcePlaces, transition);
+
+            } else {
+                success = false;
+            }
+        } finally {
+            lock.writeLock().unlock();
+        }
+
+        return success;
+    }
+
+    public boolean firePhase2(Transition transition) {
+        boolean success;
+        List<Node> destinationPlaces = new ArrayList<>();
+        lock.writeLock().lock();
+        try {
+            if (isEnabled(transition)) {
+                for (Arc arc : transition.getConnectedArcs(false)) {
+                    int tokens = getTokens(arc.getPlaceNode());
+                    setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
+                    destinationPlaces.add(arc.getPlaceNode());
+                }
+                success = true;
+                notifyArduinoListenersPhase2(transition, destinationPlaces);
+
+            } else {
+                success = false;
+            }
+        } finally {
+            lock.writeLock().unlock();
+        }
+
         return success;
     }
 
@@ -322,8 +375,8 @@ public class Marking implements Subject {
     /**
      * Fires random chosen transition
      *
-     * @throws RuntimeException if no transition is enabled.
      * @return transition, which was fired
+     * @throws RuntimeException if no transition is enabled.
      */
     public Transition fireRandomTransition() {
         List<Transition> fireableTransitions = getAllEnabledTransitionsByList();
@@ -365,7 +418,7 @@ public class Marking implements Subject {
      * marking is not changed.
      *
      * @param firingSequence sequence of transitions to be fired one after the
-     * other
+     *                       other
      * @return a new marking after firing a sequence of transitions
      */
     public Marking getMarkingAfterFiring(FiringSequence firingSequence) {
@@ -384,7 +437,7 @@ public class Marking implements Subject {
      * this marking.
      *
      * @throws PetriNetException if there the same marking is visited more than
-     * once.
+     *                           once.
      */
     public Set<FiringSequence> getAllFiringSequencesRecursively() throws PetriNetException {
         Set<Marking> visitedMarkings = new HashSet<Marking>();
@@ -494,16 +547,32 @@ public class Marking implements Subject {
     @Override
     public void removeArduinoListener(ArduinoListener arduinoListener) {
         int i = arduinoListeners.indexOf(arduinoListener);
-        if(i > 0){
-          arduinoListeners.remove(i);
+        if (i > 0) {
+            arduinoListeners.remove(i);
         }
     }
 
     @Override
     public void notifyArduinoListeners(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces) {
-        for(int i = 0; i < arduinoListeners.size(); i++) {
+        for (int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
             arduinoListener.update(sourcePlaces, transition, destinationPlaces);
+        }
+    }
+
+    @Override
+    public void notifyArduinoListenersPhase1(List<Node> sourcePlaces, Node transition) {
+        for (int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.updatePhase1(sourcePlaces, transition);
+        }
+    }
+
+    @Override
+    public void notifyArduinoListenersPhase2(Node transition, List<Node> destinationPlaces) {
+        for (int i = 0; i < arduinoListeners.size(); i++) {
+            ArduinoListener arduinoListener = arduinoListeners.get(i);
+            arduinoListener.updatePhase2(transition, destinationPlaces);
         }
     }
 
