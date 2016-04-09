@@ -103,6 +103,7 @@ public class CodeGenerator {
         buffer.append("#include \"Place.h\"\n");
         buffer.append("#include \"Transition.h\"\n");
         buffer.append("#include \"Arc.h\"\n");
+        buffer.append("#include \"FiringScheduler.h\"\n");
         buffer.append("\n");
 
         return buffer.toString();
@@ -133,7 +134,7 @@ public class CodeGenerator {
         buffer.append("\n");
 
         buffer.append("// ====== firing policy ======\n");
-        buffer.append("FiringPolicyType firingPolicyType = " + arduinoManager.getFiringPolicyType().name() + ";\n");
+        buffer.append("FiringScheduler *firingScheduler;\n");
         buffer.append("\n");
 
         return buffer.toString();
@@ -178,7 +179,7 @@ public class CodeGenerator {
                     + p.getArduinoNodeExtension().getThresholdRangeLow() + ", "
                     + p.getArduinoNodeExtension().getThresholdRangeHigh() + ");\n");
             buffer.append("p_" + p.getId()
-                    + "->setInverseLogic(" + p.getArduinoNodeExtension().getInverseLogic() +  ");\n");
+                    + "->setInverseLogic(" + p.getArduinoNodeExtension().getInverseLogic() + ");\n");
 
         });
 
@@ -197,11 +198,11 @@ public class CodeGenerator {
                 buffer.append("t_" + t.getId()
                         + "->setDelay(" + t.getEarliestFiringTime() + ", " + t.getLatestFiringTime() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() +  ");\n");
+                        + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() +  ");\n");
+                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setPriority(" + t.getPriority() +  ");\n");
+                        + "->setPriority(" + t.getPriority() + ");\n");
             } else {
                 buffer.append("t_" + t.getId()
                         + " = new Transition(\"t_" + t.getId() + "\");\n");
@@ -237,28 +238,23 @@ public class CodeGenerator {
             buffer.append("t_" + t.getId() + "->setConnectedArcsCount(" + t.getConnectedArcs().size() + ");\n");
         });
 
+        buffer.append("// ====== firing policy ======\n");
+        buffer.append("firingScheduler = new FiringScheduler(" + arduinoManager.getFiringPolicyType().name()
+                + ", allTransitions, allTransitionsCount"
+                + ", allPlaces, allPlacesCount"
+                + ");\n");
+
+
         return buffer.toString();
     }
 
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("switch(firingPolicyType) {\n");
-        buffer.append(" case AS_CREATED:\n");
-        buffer.append("     for (int i = 0; i < allTransitionsCount; i++) {\n" +
-                "           if (allTransitions[i]->isEnabled()) {\n" +
-                "               allTransitions[i]->fire();\n" +
-                "           }\n" +
-                "       }\n" +
-                "       for (int i = 0; i < allPlacesCount; i++) {\n" +
-                "           allPlaces[i]->apply();\n" +
-                "       }\n" +
-                "       break;\n");
-        buffer.append(" case BY_PRIORITY:\n" +
-                "       break;\n");
-        buffer.append(" case RANDOM:\n" +
-                "       break;\n");
-        buffer.append("}\n");
+        buffer.append(" firingScheduler->nextToFire()->fire();\n");
+        buffer.append(" for (int i = 0; i < allPlacesCount; i++) {\n" +
+                "       allPlaces[i]->apply();\n" +
+                "   }\n");
 
         buffer.append("Serial.println(\"=================================================\");\n");
         buffer.append("delay(7000);\n");
