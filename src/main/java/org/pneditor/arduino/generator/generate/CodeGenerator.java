@@ -132,6 +132,10 @@ public class CodeGenerator {
         buffer.append("int allArcsCount;\n");
         buffer.append("\n");
 
+        buffer.append("// ====== firing policy ======\n");
+        buffer.append("FiringPolicyType firingPolicyType = " + arduinoManager.getFiringPolicyType().name() + ";\n");
+        buffer.append("\n");
+
         return buffer.toString();
     }
 
@@ -196,6 +200,8 @@ public class CodeGenerator {
                         + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() +  ");\n");
                 buffer.append("t_" + t.getId()
                         + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() +  ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setPriority(" + t.getPriority() +  ");\n");
             } else {
                 buffer.append("t_" + t.getId()
                         + " = new Transition(\"t_" + t.getId() + "\");\n");
@@ -237,19 +243,25 @@ public class CodeGenerator {
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("  for (int i = 0; i < allTransitionsCount; i++) {\n" +
-                "    if (allTransitions[i]->isEnabled()) {     // todo: more facny logic\n" +
-                "      allTransitions[i]->fire();\n" +
-                "    }\n" +
-                "  }\n" +
-                "  \n" +
-                "  for (int i = 0; i < allPlacesCount; i++) {\n" +
-                "    allPlaces[i]->apply();\n" +
-                "  }\n" +
-                "    \n" +
-                "  Serial.println(\"=================================================\");\n" +
-                "  delay(7000);");
+        buffer.append("switch(firingPolicyType) {\n");
+        buffer.append(" case AS_CREATED:\n");
+        buffer.append("     for (int i = 0; i < allTransitionsCount; i++) {\n" +
+                "           if (allTransitions[i]->isEnabled()) {\n" +
+                "               allTransitions[i]->fire();\n" +
+                "           }\n" +
+                "       }\n" +
+                "       for (int i = 0; i < allPlacesCount; i++) {\n" +
+                "           allPlaces[i]->apply();\n" +
+                "       }\n" +
+                "       break;\n");
+        buffer.append(" case BY_PRIORITY:\n" +
+                "       break;\n");
+        buffer.append(" case RANDOM:\n" +
+                "       break;\n");
+        buffer.append("}\n");
 
+        buffer.append("Serial.println(\"=================================================\");\n");
+        buffer.append("delay(7000);\n");
         return buffer.toString();
     }
 

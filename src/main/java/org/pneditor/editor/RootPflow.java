@@ -19,7 +19,7 @@ package org.pneditor.editor;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.editor.actions.*;
 import org.pneditor.editor.actions.arduino.*;
-import org.pneditor.editor.actions.conflicts.ResolveFiringConflictsPolicyAction;
+import org.pneditor.editor.actions.conflicts.FiringPolicyAction;
 import org.pneditor.editor.actions.time.SetTimingPolicyAction;
 import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.editor.canvas.Selection;
@@ -315,7 +315,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
     //per application
     protected JToggleButton select, place, transition, arc, token;
-    protected Action setLabel, setDelay, setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
+    protected Action setLabel, setDelay, setPriority,  setTokens, setArcMultiplicity, setArcInhibitory, setArcReset, delete;
 //    protected Action setPlaceStatic;
 //    protected Action addSelectedTransitionsToSelectedRoles;
 //    protected Action removeSelectedTransitionsFromSelectedRoles;
@@ -325,7 +325,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action cutAction, copyAction, pasteAction, selectAllAction;
 
     protected Action setTimingPolicy;
-    protected Action firingConflictsResolvingPolicy;
+    protected Action firingPolicy;
     protected Action setPlaceCapacity;
 
     //per application
@@ -398,6 +398,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         setTokens.setEnabled(isPlaceNode);
         setLabel.setEnabled(isPlaceNode || isTransitionNode);
         setDelay.setEnabled(isTransitionNode);
+        setPriority.setEnabled(isTransitionNode);
 //        addSelectedTransitionsToSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
 //        removeSelectedTransitionsFromSelectedRoles.setEnabled((isTransitionNode || areTransitionNodes) && roleSelected);
 //        convertTransitionToSubnet.setEnabled(isTransition || areTransitions || isSubnet || areSubnets);
@@ -506,6 +507,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action quit = new QuitAction(this);
         setLabel = new SetLabelAction(this);
         setDelay = new SetDelayAction(this);
+        setPriority = new SetPriorityAction(this);
         setTokens = new SetTokensAction(this);
 //        setPlaceStatic = new SetPlaceStaticAction(this);
         setPlaceCapacity = new SetPlaceCapacityAction(this);
@@ -520,7 +522,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         delete = new DeleteAction(this);
 
         setTimingPolicy = new SetTimingPolicyAction(this);
-        firingConflictsResolvingPolicy = new ResolveFiringConflictsPolicyAction(this);
+        firingPolicy = new FiringPolicyAction(this);
 
         cutAction = new CutAction(this);
         copyAction = new CopyAction(this);
@@ -581,8 +583,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(pasteAction);
         toolBar.addSeparator();
 
-        toolBar.add(undo);
-        toolBar.add(redo);
+//        toolBar.add(undo);
+//        toolBar.add(redo);
         toolBar.add(delete);
         toolBar.addSeparator();
         toolBar.add(select);
@@ -656,8 +658,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         fileMenu.addSeparator();
         fileMenu.add(quit);
 
-        editMenu.add(undo);
-        editMenu.add(redo);
+//        editMenu.add(undo);
+//        editMenu.add(redo);
         editMenu.addSeparator();
         editMenu.add(cutAction);
         editMenu.add(copyAction);
@@ -692,7 +694,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        subnetMenu.add(convertTransitionToSubnet);
 
         additionalSettingsMenu.add(setTimingPolicy);
-        additionalSettingsMenu.add(firingConflictsResolvingPolicy);
+        additionalSettingsMenu.add(firingPolicy);
 
         // ARDUINO RELATED
         arduinoMenu.add(setBoard);
@@ -721,6 +723,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         transitionPopup.addSeparator();
         transitionPopup.add(associateNodeWithArduinoPin);
         transitionPopup.add(setDelay);
+        transitionPopup.add(setPriority);
         transitionPopup.addSeparator();
         transitionPopup.add(cutAction);
         transitionPopup.add(copyAction);

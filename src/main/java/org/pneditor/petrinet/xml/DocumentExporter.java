@@ -151,6 +151,7 @@ public class DocumentExporter {
         xmlTransition.label = transition.getLabel();
         xmlTransition.earliestFiringTime = transition.getEarliestFiringTime();
         xmlTransition.latestFiringTime = transition.getLatestFiringTime();
+        xmlTransition.priority = transition.getPriority();
         xmlTransition.arduinoNodeExtension = new XmlArduinoNodeExtension(transition.getArduinoNodeExtension());
 
         return xmlTransition;

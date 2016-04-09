@@ -34,6 +34,7 @@ public class Transition extends TransitionNode implements Cloneable {
     
     Integer earliestFiringTime;
     Integer latestFiringTime;
+    Integer priority;
     private SimpleTimer timer;
     private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
 
@@ -86,5 +87,13 @@ public class Transition extends TransitionNode implements Cloneable {
 
     public void setArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
         this.arduinoNodeExtension = arduinoNodeExtension;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

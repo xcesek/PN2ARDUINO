@@ -18,6 +18,7 @@ package org.pneditor.petrinet.xml;
 
 import org.apache.commons.lang3.StringUtils;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
+import org.pneditor.arduino.manager.FiringPolicyType;
 import org.pneditor.arduino.time.SimpleTimer;
 import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.petrinet.*;
@@ -93,6 +94,8 @@ public class DocumentImporter {
                 xmlDocument.arduinoManager.preserveTempFiles);
         document.getArduinoManager().setTimingPolicyType(
                 TimingPolicyType.valueOf(xmlDocument.arduinoManager.timingPolicyType));
+        document.getArduinoManager().setFiringPolicyType(
+                FiringPolicyType.valueOf(xmlDocument.arduinoManager.firingPolicyType));
         return document;
     }
 
@@ -191,7 +194,7 @@ public class DocumentImporter {
         place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
 
-        if(xmlPlace != null) {
+        if (xmlPlace != null) {
             if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.function)) {
                 ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function);
                 nodeExt.setInverseLogic(xmlPlace.arduinoNodeExtension.inverseLogic);
@@ -214,6 +217,7 @@ public class DocumentImporter {
 
         transition.setEarliestFiringTime(xmlTransition.earliestFiringTime);
         transition.setLatestFiringTime(xmlTransition.latestFiringTime);
+        transition.setPriority(xmlTransition.priority);
 
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
@@ -225,7 +229,7 @@ public class DocumentImporter {
             transition.setArduinoNodeExtension(new ArduinoNodeExtension());
         }
 
-        if(xmlTransition != null) {
+        if (xmlTransition != null) {
             if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
                 ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function);
                 nodeExt.setInverseLogic(xmlTransition.arduinoNodeExtension.inverseLogic);

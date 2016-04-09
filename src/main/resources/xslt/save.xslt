@@ -61,6 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label><xsl:value-of select="label"/></label>
                 <earliestFiringTime><xsl:value-of select="earliestFiringTime"/></earliestFiringTime>
                 <latestFiringTime><xsl:value-of select="latestFiringTime"/></latestFiringTime>
+                <priority><xsl:value-of select="priority"/></priority>
                 <arduinoNodeExtension>
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
@@ -135,6 +136,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <verbosetOutput><xsl:value-of select="arduinoManager/verbosetOutput"/></verbosetOutput>
             <preserveTempFiles><xsl:value-of select="arduinoManager/preserveTempFiles"/></preserveTempFiles>
             <timingPolicyType><xsl:value-of select="arduinoManager/timingPolicyType"/></timingPolicyType>
+            <firingPolicyType><xsl:value-of select="arduinoManager/firingPolicyType"/></firingPolicyType>
         </arduinoManager>
     </xsl:template>
 

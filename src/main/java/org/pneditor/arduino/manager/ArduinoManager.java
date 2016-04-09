@@ -22,6 +22,7 @@ public class ArduinoManager {
 
     private BoardSettings boardSettings;
     private TimingPolicyType timingPolicyType;
+    private FiringPolicyType firingPolicyType;
 
 
     public void updateSettings(String port, String board, boolean verboseOutput, boolean preserveTemp) {
@@ -50,5 +51,13 @@ public class ArduinoManager {
 
     public void setTimingPolicyType(TimingPolicyType timingPolicyType) {
         this.timingPolicyType = timingPolicyType;
+    }
+
+    public FiringPolicyType getFiringPolicyType() {
+        return firingPolicyType;
+    }
+
+    public void setFiringPolicyType(FiringPolicyType firingPolicyType) {
+        this.firingPolicyType = firingPolicyType;
     }
 }

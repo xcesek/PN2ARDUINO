@@ -43,6 +43,9 @@ public class XmlArduinoManager {
     @XmlElement(name = "timingPolicyType")
     public String timingPolicyType;
 
+    @XmlElement(name = "firingPolicyType")
+    public String firingPolicyType;
+
     // default constructor needed by automatic xml mapping
     public XmlArduinoManager() {
     }
@@ -53,6 +56,7 @@ public class XmlArduinoManager {
         verbosetOutput = arduinoManager.getBoardSettings().isVerboseOutput();
         preserveTempFiles = arduinoManager.getBoardSettings().isPreserveTempFiles();
         timingPolicyType = arduinoManager.getTimingPolicyType().name();
+        firingPolicyType = arduinoManager.getFiringPolicyType().name();
     }
 
 }

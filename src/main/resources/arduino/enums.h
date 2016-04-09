@@ -20,4 +20,8 @@ enum logLevel {
   info, debug, warn, error 
 };
 
+enum FiringPolicyType {
+  AS_CREATED, BY_PRIORITY, RANDOM
+};
+
 #endif

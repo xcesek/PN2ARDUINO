@@ -16,6 +16,7 @@
  */
 package org.pneditor.editor.actions.conflicts;
 
+import org.pneditor.arduino.manager.FiringPolicyType;
 import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.editor.Root;
 import org.pneditor.util.GraphicsTools;
@@ -30,11 +31,11 @@ import java.awt.event.ActionEvent;
  * Faculty of Electrical Engineering and Information Technology STU
  * Under GNU GPL v3 licence
  */
-public class ResolveFiringConflictsPolicyAction extends AbstractAction {
+public class FiringPolicyAction extends AbstractAction {
 
     private Root root;
 
-    public ResolveFiringConflictsPolicyAction(Root root) {
+    public FiringPolicyAction(Root root) {
         this.root = root;
         String name = "Set firing conflict resolving policy";
         putValue(NAME, name);
@@ -44,6 +45,18 @@ public class ResolveFiringConflictsPolicyAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
+
+        FiringPolicyType answer = (FiringPolicyType) JOptionPane.showInputDialog(
+                root.getParentFrame(),
+                "Select Firing Policy:",
+                "Select Firing Policy:",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                FiringPolicyType.values(),
+                root.getArduinoManager().getFiringPolicyType());
+        if ((answer != null)) {
+            root.getArduinoManager().setFiringPolicyType(answer);
+        }
 
         return;
     }

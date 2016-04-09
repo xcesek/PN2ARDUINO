@@ -15,6 +15,7 @@ class Transition : public Node
     int earliestFiringTime;
     int latestFiringTime;
     int applyDelay;
+    int priority;
     
   public:
     Transition(char* id);
@@ -27,6 +28,8 @@ class Transition : public Node
     int getConnectedArcsCount();
     void setDelay(int _earliestFiringTime, int _latestFiringTime);
     void setApplyDelay(int _applyDelay);
+    void setPriority(int _priority);
+    int getPriority();
 };
 
 #endif

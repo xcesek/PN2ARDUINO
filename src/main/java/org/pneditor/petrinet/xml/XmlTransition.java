@@ -34,6 +34,9 @@ public class XmlTransition extends XmlNode {
     @XmlElement(name = "latestFiringTime")
     public Integer latestFiringTime;
 
+    @XmlElement(name = "priority")
+    public Integer priority;
+
     @XmlElement(name = "arduinoNodeExtension")
     public XmlArduinoNodeExtension arduinoNodeExtension;
 

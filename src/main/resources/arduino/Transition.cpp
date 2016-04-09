@@ -160,3 +160,11 @@ void Transition::setDelay(int _earliestFiringTime, int _latestFiringTime) {
 void Transition::setApplyDelay(int _applyDelay) {
   applyDelay = _applyDelay;
 }
+
+void Transition::setPriority(int _priority) {
+  priority = _priority;
+}
+
+int Transition::getPriority() {
+  return priority;
+}
