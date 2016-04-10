@@ -330,6 +330,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //    protected Action openSubnet;
 //    protected Action closeSubnet;
 
+    protected Action autoFiringAction;
+
     //ARDUINO
     protected Action setBoard;
     protected Action activateArduino;
@@ -339,6 +341,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action addDigitalInput;
     protected Action addAnalogInput;
     protected Action addSendMessage;
+    protected Action addCustomSysex;
 
 
 //    @Override
@@ -420,6 +423,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         addDigitalInput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         addAnalogInput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         addSendMessage.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+        addCustomSysex.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
 
 
     }
@@ -544,14 +548,18 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        replaceSubnet = new ReplaceSubnetAction(this);
 
 
+        autoFiringAction = new AutoFiringAction(this);
+
         //ARDUINO
         setBoard = new SetupBoardAction(this);
         activateArduino = new ActivateArduinoAction(this);
+
         //ADD ARDUINO COMPONENT
         addDigitalOutput = new AddArduinoComponentAction(this, ArduinoComponentType.OUTPUT);
         addDigitalInput = new AddArduinoComponentAction(this, ArduinoComponentType.INPUT);
         addAnalogInput = new AddArduinoComponentAction(this, ArduinoComponentType.ANALOG);
         addSendMessage = new AddArduinoComponentAction(this, ArduinoComponentType.MESSAGE);
+        addCustomSysex = new AddArduinoComponentAction(this, ArduinoComponentType.CUSTOM_SYSEX);
 
 
         //UI
@@ -607,9 +615,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.addSeparator();
         toolBar.add(token);
 
-        //ARDUINO
         toolBar.addSeparator();
-        toolBar.add(activateArduino);
+        toolBar.add(autoFiringAction);
 
         JMenuBar menuBar = new JMenuBar();
         mainFrame.setJMenuBar(menuBar);
@@ -716,6 +723,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoComponentPlaceSubmenu.add(addDigitalInput);
         arduinoComponentPlaceSubmenu.add(addAnalogInput);
         arduinoComponentPlaceSubmenu.add(addSendMessage);
+        arduinoComponentPlaceSubmenu.add(addCustomSysex);
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
@@ -736,6 +744,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoComponentTransitionSubmenu.add(addDigitalInput);
         arduinoComponentTransitionSubmenu.add(addAnalogInput);
         arduinoComponentTransitionSubmenu.add(addSendMessage);
+        arduinoComponentTransitionSubmenu.add(addCustomSysex);
 
         transitionPopup = new JPopupMenu();
         transitionPopup.add(setLabel);
@@ -874,9 +883,15 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //TIME
     protected GlobalTimer globalTimer = new GlobalTimer();
 
-    @Override
     public GlobalTimer getGlobalTimer() {
         return globalTimer;
+    }
+
+    //AUTO FIRING
+    protected AutoFiring autoFiring = new AutoFiring();
+
+    public AutoFiring getAutoFiring() {
+        return autoFiring;
     }
 
     //ARDUINO

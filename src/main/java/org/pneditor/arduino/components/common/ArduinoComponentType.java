@@ -140,10 +140,20 @@ public enum ArduinoComponentType {
 //            return "IGNORED";
 //        }
 //    }
+
+    /**
+     * Custom types
+     */
     MESSAGE {
         @Override
         public String toString() {
             return "Send Message";
+        }
+    },
+    CUSTOM_SYSEX {
+        @Override
+        public String toString() {
+            return "Send Custom Sysex Command";
         }
     },
 }

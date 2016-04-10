@@ -22,13 +22,11 @@ import java.util.Set;
 import javax.swing.JPopupMenu;
 
 import org.pneditor.arduino.ArduinoManager;
+import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
 import org.pneditor.petrinet.Marking;
-import org.pneditor.petrinet.Role;
 import org.pneditor.editor.canvas.Selection;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.util.ListEditor;
 
 /**
  *
@@ -119,6 +117,8 @@ public interface Root {
     public String getAppLongName();
     
     public GlobalTimer getGlobalTimer();
+
+    public AutoFiring getAutoFiring();
 
     //ARDUINO
     public ArduinoManager getArduinoManager();

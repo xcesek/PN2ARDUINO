@@ -1,10 +1,7 @@
 package org.pneditor.arduino.components.common;
 
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.AnalogInput;
-import org.pneditor.arduino.components.DigitalInput;
-import org.pneditor.arduino.components.DigitalOutput;
-import org.pneditor.arduino.components.SendMessage;
+import org.pneditor.arduino.components.*;
 import org.pneditor.petrinet.Node;
 
 import java.awt.*;
@@ -23,28 +20,32 @@ public class ArduinoComponent {
     protected ArduinoComponentType type;
     protected ArduinoComponentSettings settings;
     protected ArduinoManager arduinoManager;
+    protected Node node;
 
     public Color color;
 
-    public ArduinoComponent(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
+    public ArduinoComponent(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         this.type = type;
         this.settings = settings;
         this.arduinoManager = arduinoManager;
+        this.node = node;
     }
 
     public static ArduinoComponent componentFactory(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         //ADD ARDUINO COMPONENT
         switch (type) {
             case OUTPUT:
-                return new DigitalOutput(type, settings, arduinoManager);
+                return new DigitalOutput(type, settings, arduinoManager, node);
             case INPUT:
-                return new DigitalInput(type, settings, arduinoManager);
+                return new DigitalInput(type, settings, arduinoManager, node);
             case ANALOG:
-                return new AnalogInput(type, settings, arduinoManager);
+                return new AnalogInput(type, settings, arduinoManager, node);
             case MESSAGE:
-                return new SendMessage(type, settings, arduinoManager);
+                return new SendMessage(type, settings, arduinoManager, node);
+            case CUSTOM_SYSEX:
+                return new SendSysexCommand(type, settings, arduinoManager, node);
             default:
-                return new DigitalOutput(type, settings, arduinoManager);
+                return new DigitalOutput(type, settings, arduinoManager, node);
         }
     }
 

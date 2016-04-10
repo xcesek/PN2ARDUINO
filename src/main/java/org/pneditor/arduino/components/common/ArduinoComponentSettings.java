@@ -1,10 +1,7 @@
 package org.pneditor.arduino.components.common;
 
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.AnalogInputSettings;
-import org.pneditor.arduino.components.DigitalInputSettings;
-import org.pneditor.arduino.components.DigitalOutputSettings;
-import org.pneditor.arduino.components.SendMessageSettings;
+import org.pneditor.arduino.components.*;
 import org.pneditor.petrinet.Node;
 
 import javax.swing.*;
@@ -48,6 +45,8 @@ public class ArduinoComponentSettings {
                 return new AnalogInputSettings(arduinoManager, pin);
             case MESSAGE:
                 return new SendMessageSettings(arduinoManager);
+            case CUSTOM_SYSEX:
+                return new SendSysexCommandSettings(arduinoManager);
             default:
                 return new DigitalOutputSettings(arduinoManager, pin);
         }

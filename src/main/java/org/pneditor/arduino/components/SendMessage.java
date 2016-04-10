@@ -4,6 +4,7 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.petrinet.Node;
 
 import java.awt.*;
 import java.io.IOException;
@@ -21,8 +22,8 @@ public class SendMessage extends ArduinoComponent {
 
     private String myMessage;
 
-    public SendMessage(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
-        super(type, settings, arduinoManager);
+    public SendMessage(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
+        super(type, settings, arduinoManager, node);
         color = Color.GRAY;
     }
 

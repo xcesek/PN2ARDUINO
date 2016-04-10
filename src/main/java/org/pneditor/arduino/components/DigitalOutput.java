@@ -5,6 +5,7 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.petrinet.Node;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,8 +23,8 @@ public class DigitalOutput extends ArduinoComponent {
 
     private Pin myPin;
 
-    public DigitalOutput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager) {
-        super(type, settings, arduinoManager);
+    public DigitalOutput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
+        super(type, settings, arduinoManager, node);
         color = Color.CYAN;
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
