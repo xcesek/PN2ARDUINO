@@ -72,6 +72,6 @@ public class GenerateCodeAction extends AbstractAction {
 
     private void writeCodeToConsole(String logMessage) {
         LogEditor logEditor = ((RootPflow) root).getLogEditor();
-        logEditor.log(logMessage, LogEditor.logType.ARDUINO);
+        logEditor.log(logMessage, LogEditor.logType.PNEDITOR);
     }
 }

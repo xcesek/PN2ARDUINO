@@ -303,6 +303,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         return canvasPopup;
     }
 
+    public Canvas getCanvas() {return canvas;}
+
     //per tab
     protected Canvas canvas = new Canvas(this);
     protected DrawingBoard drawingBoard = new DrawingBoard(canvas);
@@ -415,7 +417,6 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         associateNodeWithArduinoPin.setEnabled(isPlaceNode || isTransitionNode);
         generateCode.setEnabled(((SetupBoardAction) setBoard).isAlreadySetup());
         uploadCode.setEnabled(((GenerateCodeAction) generateCode).isAlreadyGenerated());
-
     }
 
     @Override
@@ -534,7 +535,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         Action selectTool_TransitionAction = new TransitionSelectToolAction(this);
         Action selectTool_ArcAction = new ArcSelectToolAction(this);
         Action selectTool_TokenAction = new TokenSelectToolAction(this);
-        Action uploadWithPopupAction = new UploadWithPopupAction(this);
+        Action toggleComReaderAction = new ToggleComReaderAction(this);
 
 //        saveSubnetAs = new SaveSubnetAsAction(this);
 //        replaceSubnet = new ReplaceSubnetAction(this);
@@ -600,7 +601,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         toolBar.add(token);
 
         toolBar.addSeparator();
-        toolBar.add(uploadWithPopupAction);
+        toolBar.add(toggleComReaderAction);
 
         JMenuBar menuBar = new JMenuBar();
         mainFrame.setJMenuBar(menuBar);

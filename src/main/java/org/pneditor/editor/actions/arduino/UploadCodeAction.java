@@ -17,19 +17,20 @@
 package org.pneditor.editor.actions.arduino;
 
 import org.pneditor.arduino.generator.upload.CodeUploaderFactory;
-import org.pneditor.arduino.generator.upload.board.ArduinoUnoUploader;
 import org.pneditor.arduino.generator.upload.board.CodeUploader;
 import org.pneditor.arduino.generator.upload.response.UploadResponse;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.arduino.settings.BoardSettings;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.RootPflow;
+import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.LogEditor;
 
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.concurrent.Callable;
 
 
 public class UploadCodeAction extends AbstractAction {
@@ -56,7 +57,13 @@ public class UploadCodeAction extends AbstractAction {
             codeUploader.setBoardSettings(boardSettings);
             codeUploader.setProjectDirName(arduinoManager.getProjectDirName());
 
-            writeCodeToConsole("Starting to upload code.");
+            final Canvas canvas = ((RootPflow) root).getCanvas();
+            final Cursor oldCursor = canvas.getCursor();
+            canvas.activeCursor = GraphicsTools.getCursor("icons/clock.png", new Point(16, 16));
+            canvas.setCursor(canvas.activeCursor);
+            root.repaintCanvas();
+
+            writeCodeToConsole("Starting to upload code. Pleas wait. It may take even one minute!");
             long startTime = System.currentTimeMillis();
             new Thread(() -> {
                 UploadResponse response = codeUploader.upload();
@@ -64,12 +71,15 @@ public class UploadCodeAction extends AbstractAction {
 
                 writeCodeToConsole(response.getCmdOutput());
                 writeCodeToConsole("Uploading finished.");
-                if((endTime - startTime) < 1000 ) {
+                if ((endTime - startTime) < 1000) {
                     writeCodeToConsole("Uploading took " + (endTime - startTime) + " milliseconds.");
-                }else{
+                } else {
                     writeCodeToConsole("Uploading took " + ((endTime - startTime) / 1000) + " seconds.");
                 }
 
+                canvas.activeCursor = oldCursor;
+                canvas.setCursor(canvas.activeCursor);
+                root.repaintCanvas();
             }).start();
 
         }
@@ -77,6 +87,6 @@ public class UploadCodeAction extends AbstractAction {
 
     private void writeCodeToConsole(String logMessage) {
         LogEditor logEditor = ((RootPflow) root).getLogEditor();
-        logEditor.log(logMessage, LogEditor.logType.ARDUINO);
+        logEditor.log(logMessage, LogEditor.logType.PNEDITOR);
     }
 }

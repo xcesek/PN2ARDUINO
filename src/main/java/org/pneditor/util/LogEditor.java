@@ -1,5 +1,7 @@
 package org.pneditor.util;
 
+import org.pneditor.editor.actions.arduino.ToggleComReaderAction;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,7 +76,7 @@ public class LogEditor extends JPanel implements ActionListener {
         bottomButtonPanel = new JPanel(new BorderLayout());
         bottomButtonPanel.add(clearButton, BorderLayout.WEST);
 
-        this.add(bottomButtonPanel,BorderLayout.SOUTH);
+        this.add(bottomButtonPanel, BorderLayout.SOUTH);
 
         pneditorButton.addActionListener(this);
         arduinoButton.addActionListener(this);
@@ -90,7 +92,7 @@ public class LogEditor extends JPanel implements ActionListener {
         switch(textAreaType){
             case ARDUINO:
                 arduinoButton.doClick();
-                textAreaArduinoLog.append("[" + s.format(d) + "] " + logMessage + newline);
+                textAreaArduinoLog.append(logMessage);
                 textAreaArduinoLog.setCaretPosition(textAreaArduinoLog.getDocument().getLength());
                 break;
             case PNEDITOR:

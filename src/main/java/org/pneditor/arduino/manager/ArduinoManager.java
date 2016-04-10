@@ -21,8 +21,8 @@ public class ArduinoManager {
     public final static String SKETCH_TEMPLATE_NAME = "PetriNet.template";
 
     private BoardSettings boardSettings;
-    private TimingPolicyType timingPolicyType;
-    private FiringPolicyType firingPolicyType;
+    private TimingPolicyType timingPolicyType = TimingPolicyType.Deterministic;
+    private FiringPolicyType firingPolicyType = FiringPolicyType.AS_CREATED;
 
 
     public void updateSettings(String port, String board, boolean verboseOutput, boolean preserveTemp) {

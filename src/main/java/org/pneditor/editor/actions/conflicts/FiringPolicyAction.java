@@ -16,9 +16,11 @@
  */
 package org.pneditor.editor.actions.conflicts;
 
+import org.pneditor.arduino.bridge.ArduinoComReader;
 import org.pneditor.arduino.manager.FiringPolicyType;
 import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.editor.Root;
+import org.pneditor.editor.RootPflow;
 import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
