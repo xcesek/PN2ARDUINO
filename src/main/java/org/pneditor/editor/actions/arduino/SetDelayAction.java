@@ -53,7 +53,7 @@ public class SetDelayAction extends AbstractAction {
                         "New earliest firing time:", earliestFiringTimeField,
                         "New latest firing time:", latestFiringTimeField
                 };
-                int option = JOptionPane.showConfirmDialog(root.getParentFrame(), message, "Set firing times", JOptionPane.OK_CANCEL_OPTION);
+                int option = JOptionPane.showConfirmDialog(root.getParentFrame(), message, "Set firing times (milliseconds)", JOptionPane.OK_CANCEL_OPTION);
                 String newEarliestFiringTimeStr = "";
                 String newLatestFiringTimeStr = "";
                 if (option == JOptionPane.OK_OPTION) {
@@ -84,7 +84,7 @@ public class SetDelayAction extends AbstractAction {
 
 
             } else {
-                String newDelayStr = JOptionPane.showInputDialog(root.getParentFrame(), "New delay:", transition.getEarliestFiringTime());
+                String newDelayStr = JOptionPane.showInputDialog(root.getParentFrame(), "New delay: (milliseconds)", transition.getEarliestFiringTime());
 
                 Integer newDelay;
                 try {

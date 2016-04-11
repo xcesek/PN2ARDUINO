@@ -62,6 +62,7 @@ public class CodeGenerator {
             FileUtils.write(mainSketchFile, generatedCodeStr);
 
         } catch (IOException e) {
+            System.out.println(e);
             generatedCodeStr = "Error manipulating with source files.";  // todo
         }
 
@@ -251,7 +252,8 @@ public class CodeGenerator {
     private String getLoopStr() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append(" firingScheduler->nextToFire()->fire();\n");
+        buffer.append(" Transition *nextToFire = firingScheduler->nextToFire();\n");
+        buffer.append(" if(nextToFire != NULL) nextToFire->fire();\n");
         buffer.append(" for (int i = 0; i < allPlacesCount; i++) {\n" +
                 "       allPlaces[i]->apply();\n" +
                 "   }\n");
