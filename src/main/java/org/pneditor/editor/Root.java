@@ -18,9 +18,11 @@ package org.pneditor.editor;
 
 import java.awt.Frame;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JPopupMenu;
 
+import org.pneditor.arduino.ArduinoListener;
 import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
@@ -122,5 +124,7 @@ public interface Root {
 
     //ARDUINO
     public ArduinoManager getArduinoManager();
+
+    public ArrayList<ArduinoListener> getArduinoListeners();
 
 }

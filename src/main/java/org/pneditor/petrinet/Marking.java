@@ -18,6 +18,7 @@ package org.pneditor.petrinet;
 
 import org.pneditor.arduino.ArduinoListener;
 import org.pneditor.arduino.Subject;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.util.CollectionTools;
 
 import java.util.*;
@@ -37,8 +38,7 @@ public class Marking implements Subject {
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true); //fair
 
 
-    //ARDUINO - list of arduinoListeners
-    private ArrayList<ArduinoListener> arduinoListeners = new ArrayList<>();
+
 
     /**
      * Copy constructor.
@@ -144,10 +144,15 @@ public class Marking implements Subject {
         boolean isEnabled = true;
         lock.readLock().lock();
         try {
-            if(transition.hasArduinoComponent()){
-                if(!transition.getArduinoComponent().isEnabled()) {
+            // if is enabled in relationship with arduino
+            if (transition != null && transition.hasArduinoComponent()) {
+                if (!transition.getArduinoComponent().isEnabled()) {
                     isEnabled = false;
                 }
+            }
+          // if is enabled due to timer
+            if(transition != null && transition.getTimer().isActive()) {
+                isEnabled = false;
             }
             for (Arc arc : transition.getConnectedArcs()) {
                 if (arc.isPlaceToTransition()) {
@@ -174,6 +179,8 @@ public class Marking implements Subject {
                     }
                 }
             }
+        } catch (NullPointerException e) {
+            System.out.println("Null pointer - marking - isenabled");
         } finally {
             lock.readLock().unlock();
         }
@@ -228,7 +235,7 @@ public class Marking implements Subject {
         List<Node> sourcePlaces = new ArrayList<>();
         lock.writeLock().lock();
         try {
-            if (isEnabled(transition)) {
+            if (transition.getTimer().isActive() || isEnabled(transition)) {
                 for (Arc arc : transition.getConnectedArcs(true)) {
                     int tokens = getTokens(arc.getPlaceNode());
                     if (!arc.getType().equals(Arc.INHIBITOR)) {                    //inhibitor arc doesnt consume tokens
@@ -259,18 +266,13 @@ public class Marking implements Subject {
         List<Node> destinationPlaces = new ArrayList<>();
         lock.writeLock().lock();
         try {
-            if (isEnabled(transition)) {
-                for (Arc arc : transition.getConnectedArcs(false)) {
-                    int tokens = getTokens(arc.getPlaceNode());
-                    setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
-                    destinationPlaces.add(arc.getPlaceNode());
-                }
-                success = true;
-                notifyArduinoListenersPhase2(transition, destinationPlaces);
-
-            } else {
-                success = false;
+            for (Arc arc : transition.getConnectedArcs(false)) {
+                int tokens = getTokens(arc.getPlaceNode());
+                setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
+                destinationPlaces.add(arc.getPlaceNode());
             }
+            success = true;
+            notifyArduinoListenersPhase2(transition, destinationPlaces);
         } finally {
             lock.writeLock().unlock();
         }
@@ -545,11 +547,13 @@ public class Marking implements Subject {
     //ARDUINO
     @Override
     public void registerArduinoListener(ArduinoListener arduinoListener) {
+        ArrayList<ArduinoListener> arduinoListeners = PNEditor.getRoot().getArduinoListeners();
         arduinoListeners.add(arduinoListener);
     }
 
     @Override
     public void removeArduinoListener(ArduinoListener arduinoListener) {
+        ArrayList<ArduinoListener> arduinoListeners = PNEditor.getRoot().getArduinoListeners();
         int i = arduinoListeners.indexOf(arduinoListener);
         if (i > 0) {
             arduinoListeners.remove(i);
@@ -558,6 +562,7 @@ public class Marking implements Subject {
 
     @Override
     public void notifyArduinoListeners(List<Node> sourcePlaces, Node transition, List<Node> destinationPlaces) {
+        ArrayList<ArduinoListener> arduinoListeners = PNEditor.getRoot().getArduinoListeners();
         for (int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
             arduinoListener.update(sourcePlaces, transition, destinationPlaces);
@@ -566,6 +571,7 @@ public class Marking implements Subject {
 
     @Override
     public void notifyArduinoListenersPhase1(List<Node> sourcePlaces, Node transition) {
+        ArrayList<ArduinoListener> arduinoListeners = PNEditor.getRoot().getArduinoListeners();
         for (int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
             arduinoListener.updatePhase1(sourcePlaces, transition);
@@ -574,6 +580,7 @@ public class Marking implements Subject {
 
     @Override
     public void notifyArduinoListenersPhase2(Node transition, List<Node> destinationPlaces) {
+        ArrayList<ArduinoListener> arduinoListeners = PNEditor.getRoot().getArduinoListeners();
         for (int i = 0; i < arduinoListeners.size(); i++) {
             ArduinoListener arduinoListener = arduinoListeners.get(i);
             arduinoListener.updatePhase2(transition, destinationPlaces);

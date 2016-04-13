@@ -27,6 +27,7 @@ public class SimpleTimer {
             transition.setLabel(String.valueOf(elapsedSeconds));
             if (elapsedSeconds < 1) {
                 marking.firePhase2(transition);
+                isActive = false;
                 cancel();
             }
         }

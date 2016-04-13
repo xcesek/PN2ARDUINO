@@ -16,44 +16,31 @@
  */
 package org.pneditor.petrinet.xml;
 
-import java.awt.Point;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.pneditor.arduino.ArduinoManager;
+import org.pneditor.arduino.components.DigitalOutputSettings;
+import org.pneditor.arduino.components.common.ArduinoComponent;
+import org.pneditor.arduino.components.common.ArduinoComponentSettings;
+import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
+import org.pneditor.editor.time.GlobalTimer;
+import org.pneditor.editor.time.SimpleTimer;
+import org.pneditor.editor.time.TimingPolicyType;
+import org.pneditor.petrinet.*;
+import org.pneditor.util.Xslt;
+
+import javax.swing.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
-
-import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.common.ArduinoComponent;
-import org.pneditor.arduino.components.common.ArduinoComponentSettings;
-import org.pneditor.arduino.components.common.ArduinoComponentType;
-import org.pneditor.arduino.components.DigitalOutputSettings;
-import org.pneditor.editor.time.GlobalTimer;
-import org.pneditor.editor.time.SimpleTimer;
-import org.pneditor.editor.time.TimingPolicyType;
-import org.pneditor.petrinet.Arc;
-import org.pneditor.petrinet.Document;
-import org.pneditor.petrinet.Marking;
-import org.pneditor.petrinet.Node;
-import org.pneditor.petrinet.Place;
-import org.pneditor.petrinet.PlaceNode;
-import org.pneditor.petrinet.ReferenceArc;
-import org.pneditor.petrinet.ReferencePlace;
-import org.pneditor.petrinet.Subnet;
-import org.pneditor.petrinet.Transition;
-import org.pneditor.petrinet.Role;
-import org.pneditor.util.Xslt;
+import java.awt.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class DocumentImporter {
@@ -63,7 +50,7 @@ public class DocumentImporter {
     private ArduinoManager arduinoManager;
 
     public DocumentImporter() {
-        arduinoManager = new ArduinoManager();
+        arduinoManager = PNEditor.getRoot().getArduinoManager();
     }
 
     public Document readFromFile(File file) throws JAXBException, FileNotFoundException, IOException {
@@ -154,7 +141,7 @@ public class DocumentImporter {
         subnet.setId(xmlSubnet.id);
         subnet.setLabel(xmlSubnet.label);
         subnet.setCenter(xmlSubnet.x, xmlSubnet.y);
-        
+
         for (XmlArc xmlArc : xmlSubnet.arcs) {
             subnet.addElement((Arc) getObject(xmlArc));
         }
@@ -175,11 +162,11 @@ public class DocumentImporter {
         }
         return subnet;
     }
-    
-    private GlobalTimer getNewTimer(XmlSubnet xmlSubnet){
+
+    private GlobalTimer getNewTimer(XmlSubnet xmlSubnet) {
         GlobalTimer timer = new GlobalTimer();
-        timer.setType(TimingPolicyType.valueOf( xmlSubnet.type));
-        
+        timer.setType(TimingPolicyType.valueOf(xmlSubnet.type));
+
         return timer;
     }
 
@@ -214,20 +201,26 @@ public class DocumentImporter {
         place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
         //ARDUINO
-        if(!xmlPlace.arduinoComponent.type.equals("")) {
-            place.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, xmlPlace.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type), place), arduinoManager, place));
-            //ADD ARDUINO COMPONENT SETTINGS
-            switch (ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type)) {
-                case OUTPUT:
-                    ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(xmlPlace.arduinoComponent.settings.period);
-                    break;
-                default:
-                    ((DigitalOutputSettings)place.getArduinoComponent().getSettings()).setPeriod(0.0);
+        if (!xmlPlace.arduinoComponent.type.equals("")) {
+            if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
+                JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ArduinoComponentType type = ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type);
+                ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlPlace.arduinoComponent.pin, type, place);
+                //ADD ARDUINO COMPONENT SETTINGS
+                switch (type) {
+                    case OUTPUT:
+                        ((DigitalOutputSettings) settings).setPeriod(xmlPlace.arduinoComponent.settings.period);
+                        break;
+                    default:
+                        break;
+                }
+                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(type, settings, arduinoManager, place);
+                place.setArduinoComponent(arduinoComponent);
             }
         } else {
             place.setArduinoComponent(null);
         }
-
         return place;
     }
 
@@ -238,22 +231,32 @@ public class DocumentImporter {
         transition.setCenter(xmlTransition.x, xmlTransition.y);
         transition.setEarliestFiringTime(xmlTransition.earliestFiringTime);
         transition.setLatestFiringTime(xmlTransition.latestFiringTime);
-        
+
         SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
         transition.setTimer(timer);
+
         //ARDUINO
-        if(!xmlTransition.arduinoComponent.type.equals("")) {
-            transition.setArduinoComponent(new ArduinoComponent(ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), ArduinoComponentSettings.settingsFactory(arduinoManager, xmlTransition.arduinoComponent.pin, ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type), transition), arduinoManager, transition));
-            //ADD ARDUINO COMPONENT SETTINGS
-            switch (ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type)) {
-                case OUTPUT:
-                    ((DigitalOutputSettings) transition.getArduinoComponent().getSettings()).setPeriod(xmlTransition.arduinoComponent.settings.period);
-                default:
-                    ((DigitalOutputSettings) transition.getArduinoComponent().getSettings()).setPeriod(0.0);
+        if (!xmlTransition.arduinoComponent.type.equals("")) {
+            if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
+                JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ArduinoComponentType type = ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type);
+                ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlTransition.arduinoComponent.pin, type, transition);
+                //ADD ARDUINO COMPONENT SETTINGS
+                switch (type) {
+                    case OUTPUT:
+                        ((DigitalOutputSettings) settings).setPeriod(xmlTransition.arduinoComponent.settings.period);
+                        break;
+                    default:
+                        break;
+                }
+                ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(type, settings, arduinoManager, transition);
+                transition.setArduinoComponent(arduinoComponent);
             }
         } else {
             transition.setArduinoComponent(null);
         }
+
 
         return transition;
     }

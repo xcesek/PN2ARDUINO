@@ -3,7 +3,9 @@ package org.pneditor.arduino;
 import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
 
+import javax.swing.*;
 import java.util.*;
 
 /**
@@ -37,15 +39,19 @@ public class ArduinoManager {
             modelMap.put(type, new ArrayList<>());
         }
 
-        for (Pin pin : getDevice().getPins()) {
-            for (Pin.Mode mode : pin.getSupportedModes()) {
-                try {
-                    ArduinoComponentType type = ArduinoComponentType.valueOf(mode.name());
-                    modelMap.get(type).add(pin.getIndex());
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Nepodporovany mod" + mode.name());
-                } catch (Exception e) {
-                    System.out.println("Nobody knows what happend");
+        if(getDevice() == null) {
+            JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "Please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+        } else{
+            for (Pin pin : getDevice().getPins()) {
+                for (Pin.Mode mode : pin.getSupportedModes()) {
+                    try {
+                        ArduinoComponentType type = ArduinoComponentType.valueOf(mode.name());
+                        modelMap.get(type).add(pin.getIndex());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Nepodporovany mod" + mode.name());
+                    } catch (Exception e) {
+                        System.out.println("Nobody knows what happend");
+                    }
                 }
             }
         }
@@ -77,6 +83,9 @@ public class ArduinoManager {
     }
 
     public Object[] getUnusedPins(ArduinoComponentType type) {
+        if(pinMap == null) {
+            initializePinMap();
+        }
         ArrayList<Byte> pinList = (ArrayList<Byte>) pinMap.get(type);
         pinList.removeAll(usedPins);
 

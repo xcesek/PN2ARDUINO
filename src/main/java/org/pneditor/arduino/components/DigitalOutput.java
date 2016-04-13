@@ -5,7 +5,10 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
+import org.pneditor.editor.RootPflow;
 import org.pneditor.petrinet.Node;
+import org.pneditor.util.LogEditor;
 
 import java.awt.*;
 import java.io.IOException;
@@ -40,6 +43,8 @@ public class DigitalOutput extends ArduinoComponent {
 
     @Override
     public void activate() {
+        ((RootPflow)PNEditor.getRoot()).getLogEditor().log("Firing: " + settings.getPin(), LogEditor.logType.ARDUINO);
+        System.out.println("Firing: " + settings.getPin());
         try {
             myPin.setValue(1);
         } catch (IOException e) {

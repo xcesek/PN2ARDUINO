@@ -16,6 +16,7 @@
  */
 package org.pneditor.editor;
 
+import org.pneditor.arduino.ArduinoListener;
 import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
 import org.pneditor.editor.actions.*;
@@ -42,10 +43,8 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -900,6 +899,14 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     @Override
     public ArduinoManager getArduinoManager() {
         return arduinoManager;
+    }
+
+    //ARDUINO - list of arduinoListeners
+    protected ArrayList<ArduinoListener> arduinoListeners = new ArrayList<>();
+
+    @Override
+    public ArrayList<ArduinoListener> getArduinoListeners() {
+        return arduinoListeners;
     }
 
     //LOGGER
