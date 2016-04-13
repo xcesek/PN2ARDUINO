@@ -33,8 +33,14 @@ NodeType Node::getNodeType() {
 }
 
 void Node::setThresholdRange(int _thresholdRangeLow, int _thresholdRangeHigh) {
-  thresholdRangeLow = _thresholdRangeLow;
-  thresholdRangeHigh = _thresholdRangeHigh;
+  if (thresholdRangeLow < thresholdRangeHigh) {
+    thresholdRangeLow = _thresholdRangeLow;
+    thresholdRangeHigh = _thresholdRangeHigh;
+  } else { // try to be proactive, user changed values by mistake
+    thresholdRangeLow = _thresholdRangeHigh;
+    thresholdRangeHigh = _thresholdRangeLow;
+  }
+
   Serial.print(F("(node) setting thresholdRange: ")); Serial.print(thresholdRangeLow);Serial.print(F(" - "));Serial.println(thresholdRangeHigh);
 }
 

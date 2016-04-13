@@ -16,7 +16,13 @@ class Transition : public Node
     int latestFiringTime;
     int applyDelay;
     int priority;
-    
+
+    int getRandomValueFromInterval(int thresholdRangeLow, int thresholdRangeHigh, int max);
+    int getRandomValueFromIntervalComplement(int thresholdRangeLow, int thresholdRangeHigh, int max);
+    void takePreDelayAction();
+    void takePostDelayAction();
+
+
   public:
     Transition(char* id);
     Transition(char* id, int _pin, FunctionType _functionType);

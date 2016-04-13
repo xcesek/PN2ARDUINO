@@ -21,7 +21,7 @@ enum logLevel {
 };
 
 enum FiringPolicyType {
-  AS_CREATED, BY_PRIORITY, RANDOM
+  AS_CREATED, ROUND_ROBIN, BY_PRIORITY, RANDOM
 };
 
 #endif

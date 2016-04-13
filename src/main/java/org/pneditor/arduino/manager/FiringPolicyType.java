@@ -9,6 +9,11 @@ public enum FiringPolicyType {
             return "As created";
         }
     },
+    ROUND_ROBIN{
+        public String toString() {
+            return "Round robin";
+        }
+    },
     BY_PRIORITY{
         public String toString() {
             return "By priority";

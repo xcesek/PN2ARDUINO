@@ -245,6 +245,7 @@ public class CodeGenerator {
                 + ", allPlaces, allPlacesCount"
                 + ");\n");
 
+        buffer.append("randomSeed(analogRead(0));\n");
 
         return buffer.toString();
     }
