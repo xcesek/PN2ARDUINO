@@ -29,6 +29,7 @@ import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.editor.canvas.Selection;
+import org.pneditor.util.LogEditor;
 
 /**
  *
@@ -126,5 +127,8 @@ public interface Root {
     public ArduinoManager getArduinoManager();
 
     public ArrayList<ArduinoListener> getArduinoListeners();
+
+    //Logger
+    public LogEditor getLogEditor();
 
 }

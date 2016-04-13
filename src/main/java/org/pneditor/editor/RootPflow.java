@@ -912,6 +912,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     //LOGGER
     protected LogEditor logEditor;
 
+    @Override
     public LogEditor getLogEditor() {
         return logEditor;
     }
