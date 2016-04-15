@@ -13,6 +13,7 @@ import org.pneditor.util.GraphicsTools;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -36,8 +37,6 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
         if (root.getClickedElement() != null
                 && (root.getClickedElement() instanceof Place || root.getClickedElement() instanceof Transition)) {
             Node clickedNode = (Node) root.getClickedElement();
-
-//            ArduinoPin[] enablesPins = ArduinoPin.values();
 
             JCheckBox extEnabledCheckBox = new JCheckBox("Enable association");
             JComboBox pinCombo = new JComboBox(enablesPins.toArray());
@@ -155,7 +154,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                     ArduinoPin pin = (ArduinoPin) pinCombo.getSelectedItem();
 
                     // remove only selected pin
-                    enablesPins.remove(pin);
+                    //enablesPins.remove(pin);
 
                     ArduinoSupportedFunction selectedFunction = (ArduinoSupportedFunction) supportedFunctionsCombo.getSelectedItem();
 
@@ -164,7 +163,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                         //delete pins reserved for 8 segment led display (D2-D8 needed)
                         ArduinoPin[] pinsForLed = new ArduinoPin[]{ ArduinoPin.D2, ArduinoPin.D3, ArduinoPin.D4, ArduinoPin.D5, ArduinoPin.D6, ArduinoPin.D7, ArduinoPin.D8 };
                         for(ArduinoPin i : pinsForLed){
-                            enablesPins.remove(i);
+                            //enablesPins.remove(i);
                         }
                     }
                     arduinoNodeExtension = new ArduinoNodeExtension(pin, selectedFunction);

@@ -32,9 +32,9 @@ import org.pneditor.util.GraphicsTools.VerticalAlignment;
  */
 public class Transition extends TransitionNode implements Cloneable {
     
-    Integer earliestFiringTime;
-    Integer latestFiringTime;
-    Integer priority;
+    Integer earliestFiringTime = 0;
+    Integer latestFiringTime = 0;
+    Integer priority = 0;
     private SimpleTimer timer;
     private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
 

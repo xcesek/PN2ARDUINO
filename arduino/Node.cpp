@@ -24,8 +24,6 @@ Node::Node(char* _id, NodeType _nodeType, int _pin, FunctionType _functionType)
   thresholdRangeLow = -1;
   thresholdRangeHigh = -1;
   inverseLogic = 0;
-  
-  Helper::log(1,"(node) initializing -> ", id);
 };
 
 NodeType Node::getNodeType() {
@@ -33,7 +31,7 @@ NodeType Node::getNodeType() {
 }
 
 void Node::setThresholdRange(int _thresholdRangeLow, int _thresholdRangeHigh) {
-  if (thresholdRangeLow < thresholdRangeHigh) {
+  if (_thresholdRangeLow < _thresholdRangeHigh) {
     thresholdRangeLow = _thresholdRangeLow;
     thresholdRangeHigh = _thresholdRangeHigh;
   } else { // try to be proactive, user changed values by mistake
@@ -41,7 +39,7 @@ void Node::setThresholdRange(int _thresholdRangeLow, int _thresholdRangeHigh) {
     thresholdRangeHigh = _thresholdRangeLow;
   }
 
-  Serial.print(F("(node) setting thresholdRange: ")); Serial.print(thresholdRangeLow);Serial.print(F(" - "));Serial.println(thresholdRangeHigh);
+  Serial.print(F("      (node) setting thresholdRange: ")); Serial.print(thresholdRangeLow);Serial.print(F(" - "));Serial.println(thresholdRangeHigh);
 }
 
 void Node::setInverseLogic(int _inverseLogic) {

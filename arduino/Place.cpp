@@ -11,6 +11,8 @@ Place::Place(char* _id)
 {
   tokens = 0; 
   capacity = 100000;
+
+  Serial.print(F("(place) initializing NOT ARDUINO place with ID: ")); Serial.println(id);
 }
 
 Place::Place(char* _id, int _pin, FunctionType _functionType)
@@ -19,9 +21,7 @@ Place::Place(char* _id, int _pin, FunctionType _functionType)
   tokens = 0; 
   capacity = 100000;
   
-  Serial.print(F("(place) initializing -> ")); Serial.print(id);  Serial.print(F(" -> "));
-  
-  
+  Serial.print(F("(place) initializing place with ID: ")); Serial.print(id);  Serial.print(F(" -> "));
   switch (functionType) {
     case DIGITAL_IN:
       pinMode(pin, INPUT);   // not applicable -> do not initialize?
@@ -45,14 +45,15 @@ Place::Place(char* _id, int _pin, FunctionType _functionType)
      break;
     case LED_DISPLAY: 
       //8 SEGMENT LED display need to use 8 artudino pins, so reserverd pin 2 - 9
-      int i=2;
-      for(i=2;i<10;i++)
+      for(int i=2;i<10;i++)
       {
          pinMode(i,OUTPUT);
          digitalWrite(i,HIGH);
       }
       Serial.println(F("ledDisplay"));
       break;
+    default:
+            Serial.println(F("!!! not supported operation on place !!!"));
   }
 }
 
@@ -60,9 +61,7 @@ Place::Place(char* _id, int _pin, FunctionType _functionType)
 void Place::apply()
 {
   Serial.print(F("(place) applying ")); Serial.println(id);
-  Serial.print(F("   (place) capacity: ")); Serial.println(capacity);
-  Serial.print(F("   (place) tokens: ")); Serial.println(tokens);
-  Serial.print(F("   (place) functions: ")); Serial.println(functionType);
+  Serial.print(F("      (place) tokens: ")); Serial.println(tokens);
   if (!extended) return;
   
   switch (functionType) {
@@ -71,25 +70,31 @@ void Place::apply()
       break;
       
     case DIGITAL_OUT: 
-      Serial.print(F("   (place) thresholdRangeLow: ")); Serial.println(thresholdRangeLow);
-      Serial.print(F("   (place) thresholdRangeHigh: ")); Serial.println(thresholdRangeHigh);
+      Serial.print(F("      (place) thresholdRange: ")); Serial.print(thresholdRangeLow);
+      Serial.print(F(" - ")); Serial.println(thresholdRangeHigh);
       switch (inverseLogic) {
         case 0:
-          if((thresholdRangeLow != -1) && (thresholdRangeLow <= tokens) && (tokens <= thresholdRangeHigh)) {
+          if ((thresholdRangeLow == -1) && tokens > 0) {
+            digitalWrite(pin, HIGH);
+            Serial.print(F("      (place) digital out ~1: ")); Serial.println(1);
+          } else if((thresholdRangeLow != -1) && (thresholdRangeLow <= tokens) && (tokens <= thresholdRangeHigh)) {
             digitalWrite(pin, HIGH);  
-            Serial.print(F("   (place) digital out: ")); Serial.println(1);
+            Serial.print(F("      (place) digital out ~2: ")); Serial.println(1);
           } else {
             digitalWrite(pin, LOW);
-            Serial.print(F("   (place) digital out: ")); Serial.println(0);
+            Serial.print(F("      (place) digital out ~3: ")); Serial.println(0);
           }
           break;
         case 1:
-          if((thresholdRangeLow != -1) && ((tokens < thresholdRangeLow) || (tokens > thresholdRangeHigh))) {
+          if ((thresholdRangeLow == -1) && tokens == 0) {
+            digitalWrite(pin, HIGH);
+            Serial.print(F("      (place) digital out ^1: ")); Serial.println(1);
+          } else if((thresholdRangeLow != -1) && ((tokens < thresholdRangeLow) || (tokens > thresholdRangeHigh))) {
             digitalWrite(pin, HIGH);  
-            Serial.print(F("   (place) digital out: ")); Serial.println(1);
+            Serial.print(F("      (place) digital out ^2: ")); Serial.println(1);
           } else {
             digitalWrite(pin, LOW);
-            Serial.print(F("   (place) digital out: ")); Serial.println(0);
+            Serial.print(F("      (place) digital out ^3: ")); Serial.println(0);
           }
           break;          
       }
@@ -101,17 +106,17 @@ void Place::apply()
       break;
       
     case ANALOG_OUT: 
-      Serial.print(F("   (place) analog out: ")); Serial.println((int)(tokens/(capacity*1.0)*255));
+      Serial.print(F("      (place) analog out: ")); Serial.println((int)(tokens/(capacity*1.0)*255));
       analogWrite(pin, (int)(tokens/(capacity*1.0)*255));
       break;
       
     case SERVO:    
-      Serial.print(F("   (place) servo: ")); Serial.println((int)(tokens/(capacity*1.0)*180));
+      Serial.print(F("      (place) servo: ")); Serial.println((int)(tokens/(capacity*1.0)*180));
       myservo.write((int)(tokens/(capacity*1.0)*180)); 
       break;
 
     case LED_DISPLAY: 
-      Serial.print(F("   (place) LED Display number: ")); Serial.println((int)(tokens));
+      Serial.print(F("      (place) LED Display number: ")); Serial.println((int)(tokens));
       /*
         1 Digital 8-Segment LED Display
         Display the number from 1-9
@@ -147,6 +152,7 @@ void Place::removeTokens(int howMany) {
 }
 
 void Place::setCapacity(int _capacity) {
+  Serial.print(F("      (place) setting capacity: ")); Serial.println(_capacity);
   capacity = _capacity;
 }
 

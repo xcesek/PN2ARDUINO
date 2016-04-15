@@ -11,6 +11,9 @@ Transition::Transition(char* _id)
   latestFiringTime = 0;
   applyDelay = 0;
   priority = 0;
+
+  Serial.print(F("(transition) initializing NOT ARDUINO transition with ID: ")); Serial.println(id);
+  Serial.print(F("      (transition) will be using function: ")); Serial.println(functionType);
 }
 
 
@@ -22,7 +25,7 @@ Transition::Transition(char* _id, int _pin, FunctionType _functionType)
   applyDelay = 0;
   priority = 0;
 
-  Serial.print(F("(transition) initializing -> ")); Serial.print(id);  Serial.print(" -> ");
+  Serial.print(F("(transition) initializing transition with ID: ")); Serial.print(id);  Serial.print(" -> ");
   
   switch (functionType) {
     case DIGITAL_IN:
@@ -44,13 +47,13 @@ Transition::Transition(char* _id, int _pin, FunctionType _functionType)
     default:
       Serial.println(F("!!! not supported operation on transition !!!"));
   }
+
+  Serial.print(F("      (transition) will be using function: ")); Serial.println(functionType);
 }
 
 void Transition::fire()
 {
-  Serial.print(F("(transition) firing ")); Serial.println(id);
-  Serial.print(F("   (transition) functions: ")); Serial.println(functionType);
-  Serial.print(F("   (transition) connectedArcsCount: ")); Serial.println(connectedArcsCount);
+  Serial.print(F("(transition) firing transition with ID: ")); Serial.println(id);
 
   // take token(s) from all in places
   for (int i = 0; i < connectedArcsCount; i++) {
@@ -65,14 +68,17 @@ void Transition::fire()
   if (extended) {
     takePreDelayAction();
   } else {
-    Serial.println(F("   (transition) no pre delay action as no extended transition"));
+    Serial.println(F("      (transition) no pre delay action as no extended transition"));
   }
 
   // delay
-  if (applyDelay) {
+  if (applyDelay || extended == 0) {  // if not extended, ignore applyDelay flag
     if (earliestFiringTime != latestFiringTime) {
-      delay(random(earliestFiringTime, latestFiringTime));
+      int randomTime = random(earliestFiringTime, latestFiringTime);
+      Serial.print(F("      (transition) waiting for ")); Serial.print(randomTime); Serial.println(F(" millis"));
+      delay(randomTime);
     } else {
+      Serial.print(F("      (transition) waiting for ")); Serial.print(earliestFiringTime); Serial.println(F(" millis"));
       delay(earliestFiringTime);
     }
   }
@@ -81,7 +87,7 @@ void Transition::fire()
   if (extended) {
       takePostDelayAction();
     } else {
-      Serial.println(F("   (transition) no post delay action as no extended transition"));
+      Serial.println(F("      (transition) no post delay action as no extended transition"));
   }
 
   // put token(s) to all out places
@@ -96,7 +102,7 @@ void Transition::fire()
 
 int Transition::isEnabled()
 {
-  Serial.print(F("(transition) isEnabled? ")); Serial.println(id);
+  Serial.print(F("(transition) checking firability on transition with ID: ")); Serial.println(id);
 
   // internal condition
   int internalTriggerActive = 1;
@@ -114,10 +120,11 @@ int Transition::isEnabled()
       }
     }
   }
-  Serial.print(F("(transition) internal : ")); Serial.println(internalTriggerActive);
+  Serial.print(F("      (transition) internal condition: ")); Serial.println(internalTriggerActive);
 
   // if not extended finish here, as no arduino pin is associated with transition instance
   if (!extended) {
+    Serial.print(F("      (transition) not assoc with arduino, returning ")); Serial.println(internalTriggerActive);
     return internalTriggerActive; 
   }
   
@@ -127,7 +134,7 @@ int Transition::isEnabled()
   switch (functionType) {
     case DIGITAL_IN:
       readValue = digitalRead(pin);
-      Serial.print(F("   (transition) digital read value: ")); Serial.println(readValue);
+      Serial.print(F("      (transition) DIGITAL read value: ")); Serial.println(readValue);
       if(readValue == 1) externalTriggerActive = 1;
       break;
       
@@ -137,7 +144,7 @@ int Transition::isEnabled()
       
     case ANALOG_IN:
       readValue = analogRead(pin);
-      Serial.print(F("   (transition) analog read value: ")); Serial.println(readValue);
+      Serial.print(F("      (transition) ANALOG read value: ")); Serial.println(readValue);
       switch(inverseLogic){
         case 0:
           if((thresholdRangeLow <= readValue) && (readValue <= thresholdRangeHigh))
@@ -154,8 +161,11 @@ int Transition::isEnabled()
     case ANALOG_OUT: 
       // not applicable in isEnabled() method, bud in fire() method
       break;
+     default:
+      Serial.println("      (transition) Unsupported operation processed in isActive method");
   }
-  Serial.print(F("   (transition) isActive: ")); Serial.println(internalTriggerActive && externalTriggerActive);
+
+  Serial.print(F("      (transition) isActive: ")); Serial.println(internalTriggerActive && externalTriggerActive);
   return internalTriggerActive && externalTriggerActive;
 }
 
@@ -176,6 +186,8 @@ int Transition::getConnectedArcsCount() {
 }
 
 void Transition::setDelay(int _earliestFiringTime, int _latestFiringTime) {
+  Serial.print(F("      (transition) trying to set delay: "));
+  Serial.print(_earliestFiringTime);Serial.print(" - ");Serial.println(_latestFiringTime);
   _earliestFiringTime = max(_earliestFiringTime, 0);
   _latestFiringTime = max(_latestFiringTime, 0);
 
@@ -187,13 +199,18 @@ void Transition::setDelay(int _earliestFiringTime, int _latestFiringTime) {
     latestFiringTime = _earliestFiringTime;
   }
 
+  Serial.print(F("      (transition) delay set to: "));
+  Serial.print(earliestFiringTime);Serial.print(" - ");Serial.println(latestFiringTime);
+
 }
 
 void Transition::setApplyDelay(int _applyDelay) {
+  Serial.print(F("      (transition) setting apply delay flag to: ")); Serial.println(_applyDelay);
   applyDelay = _applyDelay;
 }
 
 void Transition::setPriority(int _priority) {
+  Serial.print(F("      (transition) setting priority flag to: ")); Serial.println(_priority);
   priority = _priority;
 }
 
@@ -213,6 +230,9 @@ int Transition::getRandomValueFromInterval(int thresholdRangeLow, int thresholdR
     toWrite = thresholdRangeLow;
   }
 
+  Serial.print(F("      (transition) getRandomValueFromInterval "));
+  Serial.print(thresholdRangeLow);Serial.print(" - ");Serial.println(thresholdRangeHigh);
+  Serial.print(F("      (transition) generated random value: ")); Serial.println(toWrite);
   return toWrite;
 }
 
@@ -234,6 +254,11 @@ int Transition::getRandomValueFromIntervalComplement(int thresholdRangeLow, int 
   } else {
     toWrite = random(0, max); // lets hope we wont randomly get thresholdRangeLow :)
   }
+
+  Serial.print(F("      (transition) getRandomValueFromInterval "));
+  Serial.print(thresholdRangeLow);Serial.print(" - ");Serial.println(thresholdRangeHigh);
+  Serial.print(F("      (transition) generated random value: ")); Serial.println(toWrite);
+  return toWrite;
 }
 
 void Transition::takePreDelayAction() {
@@ -246,10 +271,10 @@ void Transition::takePreDelayAction() {
           // thresholdRange not applicable here
           if (inverseLogic == 0) {
             digitalWrite(pin, HIGH);
-            Serial.print(F("   (transition) digital out: ")); Serial.println(1);
+            Serial.print(F("      (transition) DIGITAL out: ")); Serial.println(1);
           } else {
             digitalWrite(pin, LOW);
-            Serial.print(F("   (transition) digital out: ")); Serial.println(0);
+            Serial.print(F("      (transition) DIGITAL out: ")); Serial.println(0);
           }
           break;
 
@@ -267,11 +292,11 @@ void Transition::takePreDelayAction() {
               // or if they are the same, take any value from interval (0 - 255) except for the thresholdRangeLow or thresholdRangeHigh
               toWrite = getRandomValueFromIntervalComplement(thresholdRangeLow, thresholdRangeHigh, 255);
             }
-            Serial.print(F("   (transition) analog out: ")); Serial.println(toWrite);
+            Serial.print(F("      (transition) ANALOG out: ")); Serial.println(toWrite);
             analogWrite(pin, toWrite);
           break;
           default:
-            Serial.print(F("   (transition) not supported operation in fire pre delay method: "));
+            Serial.println(F("      (transition) not supported operation in fire pre delay method"));
     }
 }
 
@@ -285,10 +310,10 @@ void Transition::takePostDelayAction() {
         // thresholdRange not applicable here
         if (inverseLogic == 0) {
           digitalWrite(pin, LOW);
-          Serial.print(F("   (transition) digital out: ")); Serial.println(0);
+          Serial.print(F("      (transition) (post delay) DIGITAL out: ")); Serial.println(0);
         } else {
           digitalWrite(pin, HIGH);
-          Serial.print(F("   (transition) digital out: ")); Serial.println(1);
+          Serial.print(F("      (transition) (post delay) DIGITAL out: ")); Serial.println(1);
         }
         break;
 
@@ -298,10 +323,10 @@ void Transition::takePostDelayAction() {
 
       case ANALOG_OUT:
           // inverse logic not applicable here, only turn off analog out
-          Serial.print(F("   (transition) (post delay) analog out: ")); Serial.println(0);
+          Serial.print(F("      (transition) (post delay) ANALOG out: ")); Serial.println(0);
           analogWrite(pin, 0);
         break;
       default:
-        Serial.print(F("   (transition) not supported operation in fire post delay method: "));
+        Serial.println(F("      (transition) not supported operation in fire post delay method: "));
       }
 }

@@ -15,9 +15,10 @@ class FiringScheduler
   Place **allPlaces;
   int allPlacesCount;
   int lastFiredTransitionIndex;
+  int *priorityTableInd;
   int *priorityTable;
 
-  void sortTable(int *numbers, int array_size);
+  void sortTable(int *priority_arr, int* indexes_arr, int array_size);
 
   public:
     FiringScheduler(FiringPolicyType _firingPolicyType, Transition **_allTransitions, int _allTransitionsCount, Place **_allPlaces, int _allPlacesCount);

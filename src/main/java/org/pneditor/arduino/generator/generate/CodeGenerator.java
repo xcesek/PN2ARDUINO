@@ -1,6 +1,7 @@
 package org.pneditor.arduino.generator.generate;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.pneditor.arduino.manager.ArduinoManager;
 import org.pneditor.petrinet.*;
@@ -162,12 +163,12 @@ public class CodeGenerator {
         places.forEach(p -> {
             if (p.getArduinoNodeExtension().isEnabled()) {
                 buffer.append("p_" + p.getId()
-                        + " = new Place(\"p_" + p.getId() + "\", "
+                        + " = new Place(\"p_" + (StringUtils.isEmpty(p.getLabel()) ? p.getId() : p.getLabel()) + "\", "
                         + p.getArduinoNodeExtension().getPin().getNumber() + ", "
                         + p.getArduinoNodeExtension().getFunction().name() + ");\n");
             } else {
                 buffer.append("p_" + p.getId()
-                        + " = new Place(\"p_" + p.getId() + "\");\n");
+                        + " = new Place(\"p_" + (StringUtils.isEmpty(p.getLabel()) ? p.getId() : p.getLabel()) + "\");\n");
             }
 
             buffer.append("p_" + p.getId()
@@ -189,7 +190,7 @@ public class CodeGenerator {
         transitions.forEach(t -> {
             if (t.getArduinoNodeExtension().isEnabled()) {
                 buffer.append("t_" + t.getId()
-                        + " = new Transition(\"t_" + t.getId() + "\", "
+                        + " = new Transition(\"t_" + (StringUtils.isEmpty(t.getLabel()) ? t.getId() : t.getLabel()) + "\", "
                         + t.getArduinoNodeExtension().getPin().getNumber() + ", "
                         + t.getArduinoNodeExtension().getFunction().name() + ");\n");
                 buffer.append("t_" + t.getId()
@@ -206,7 +207,15 @@ public class CodeGenerator {
                         + "->setPriority(" + t.getPriority() + ");\n");
             } else {
                 buffer.append("t_" + t.getId()
-                        + " = new Transition(\"t_" + t.getId() + "\");\n");
+                        + " = new Transition(\"t_" + (StringUtils.isEmpty(t.getLabel()) ? t.getId() : t.getLabel()) + "\");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setDelay(" + t.getEarliestFiringTime() + ", " + t.getLatestFiringTime() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setPriority(" + t.getPriority() + ");\n");
             }
 
             buffer.append("allTransitions[" + transOrd.getNumber() + "] = t_" + t.getId() + ";\n");
@@ -259,8 +268,10 @@ public class CodeGenerator {
                 "       allPlaces[i]->apply();\n" +
                 "   }\n");
 
+        buffer.append("Serial.println();\n");
         buffer.append("Serial.println(\"=================================================\");\n");
-        buffer.append("delay(7000);\n");
+        buffer.append("Serial.println();\n");
+        buffer.append("delay(3000);\n");
         return buffer.toString();
     }
 

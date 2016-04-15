@@ -14,16 +14,15 @@ public class ArduinoNodeExtension {
     private ArduinoPin pin;
     private ArduinoSupportedFunction function;
 
-    private boolean withDelay;
-    private boolean inverseLogic;
-    private int thresholdRangeLow;
-    private int thresholdRangeHigh;
+    private boolean withDelay = false;
+    private boolean inverseLogic = false;
+    private int thresholdRangeLow = -1;
+    private int thresholdRangeHigh = -1;
 
-    private boolean enabled;
+    private boolean enabled = false;
 
 
     public ArduinoNodeExtension() {
-        enabled = false;
     }
 
     public ArduinoNodeExtension(ArduinoPin pin, ArduinoSupportedFunction function) {
