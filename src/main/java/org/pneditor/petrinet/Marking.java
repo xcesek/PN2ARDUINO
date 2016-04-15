@@ -155,7 +155,7 @@ public class Marking implements Subject {
                 }
             }
           // if is enabled due to timer
-            if(transition != null && transition.getTimer().isActive()) {
+            if(transition != null && transition.getTimer() != null && transition.getTimer().isActive()) {
                 isEnabled = false;
             }
             for (Arc arc : transition.getConnectedArcs()) {

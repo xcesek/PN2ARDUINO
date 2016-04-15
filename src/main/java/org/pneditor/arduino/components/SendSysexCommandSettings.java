@@ -19,6 +19,7 @@ import java.awt.*;
 public class SendSysexCommandSettings extends ArduinoComponentSettings {
 
     private CustomSysexCommand command;
+    private String message;
 
     public SendSysexCommandSettings(ArduinoManager arduinoManager) {
         super(arduinoManager);
@@ -40,12 +41,19 @@ public class SendSysexCommandSettings extends ArduinoComponentSettings {
         myPanel.add(new JLabel("Command: ", SwingConstants.LEFT)); //0
         myPanel.add(commandComboBox); //1
 
+        myPanel.add(Box.createVerticalStrut(5)); //2
+        myPanel.add(Box.createVerticalStrut(5)); //3
+
+        myPanel.add(new JLabel("Message: ", SwingConstants.LEFT)); //4
+        myPanel.add(new JTextField(message)); //5
+
         return myPanel;
     }
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
         command = (CustomSysexCommand) ((JComboBox) panel.getComponent(1)).getSelectedItem();
+        message = ((JTextField) panel.getComponent(5)).getText();
     }
 
     //GETTER & SETTER
@@ -56,28 +64,119 @@ public class SendSysexCommandSettings extends ArduinoComponentSettings {
     public void setCommand(CustomSysexCommand command) {
         this.command = command;
         super.setPanel(getMyPanel());
-        //CustomSysexCommand.PID_TURN;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+        super.setPanel(getMyPanel());
+    }
+
 
 
     public enum CustomSysexCommand {
 
-        PID_TURN((byte) 0x00) {
+        CUSTOM_0((byte) 0x00) {
             @Override
             public String toString() {
-                return "PID turn";
+                return "0x00";
             }
         },
-        PID_TURN2((byte) 0x46);
+        CUSTOM_1((byte) 0x01) {
+            @Override
+            public String toString() {
+                return "0x01";
+            }
+        },
+        CUSTOM_2((byte) 0x02) {
+            @Override
+            public String toString() {
+                return "0x02";
+            }
+        },
+        CUSTOM_3((byte) 0x03) {
+            @Override
+            public String toString() {
+                return "0x03";
+            }
+        },
+        CUSTOM_4((byte) 0x04) {
+            @Override
+            public String toString() {
+                return "0x04";
+            }
+        },
+        CUSTOM_5((byte) 0x05) {
+            @Override
+            public String toString() {
+                return "0x05";
+            }
+        },
+        CUSTOM_6((byte) 0x06) {
+            @Override
+            public String toString() {
+                return "0x06";
+            }
+        },
+        CUSTOM_7((byte) 0x07) {
+            @Override
+            public String toString() {
+                return "0x07";
+            }
+        },
+        CUSTOM_8((byte) 0x08) {
+            @Override
+            public String toString() {
+                return "0x08";
+            }
+        },
+        CUSTOM_9((byte) 0x09) {
+            @Override
+            public String toString() {
+                return "0x09";
+            }
+        },
+        CUSTOM_10((byte) 0x0A) {
+            @Override
+            public String toString() {
+                return "0x0A";
+            }
+        },
+        CUSTOM_11((byte) 0x0B) {
+            @Override
+            public String toString() {
+                return "0x0B";
+            }
+        },
+        CUSTOM_12((byte) 0x0C) {
+            @Override
+            public String toString() {
+                return "0x0C";
+            }
+        },
+        CUSTOM_13((byte) 0x0D) {
+            @Override
+            public String toString() {
+                return "0x0D";
+            }
+        },
+        CUSTOM_14((byte) 0x0E) {
+            @Override
+            public String toString() {
+                return "0x0E";
+            }
+        },
+        CUSTOM_15((byte) 0x0F) {
+            @Override
+            public String toString() {
+                return "0x0F";
+            }
+        };
 
         private byte commandIdentifier;
-
-//        PID_TURN{
-//            @Override
-//            public String toString() {
-//                return "PID turn";
-//            }
-//        },
 
         CustomSysexCommand(byte commandIdentifier) {
             this.commandIdentifier = commandIdentifier;
@@ -86,7 +185,7 @@ public class SendSysexCommandSettings extends ArduinoComponentSettings {
         public byte getCommandIdentifier() {
             return commandIdentifier;
         }
+
+
     }
-
-
 }

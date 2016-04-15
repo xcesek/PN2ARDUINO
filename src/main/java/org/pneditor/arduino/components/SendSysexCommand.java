@@ -23,21 +23,25 @@ import java.io.IOException;
  */
 public class SendSysexCommand extends ArduinoComponent {
 
-    private String myMessage;
-
     public SendSysexCommand(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
         color = Color.lightGray;
-        arduinoManager.getDevice().addEventListener(new EventListener());
+        arduinoManager.getDevice().addEventListener(EventListener.getInstance());
     }
 
     @Override
     public void fire() {
-        int messageLength = 3;
-        byte[] msg = new byte[messageLength];
+        byte[] bytes = ((SendSysexCommandSettings) settings).getMessage().getBytes();
+        byte[] msg = new byte[bytes.length * 2 + 3];
+
         msg[0] = FirmataToken.START_SYSEX;
         msg[1] = ((SendSysexCommandSettings) settings).getCommand().getCommandIdentifier();
-        msg[2] = FirmataToken.END_SYSEX;
+        for (int i = 0; i < bytes.length; i++) {
+            byte b = bytes[i];
+            msg[i * 2 + 2] = (byte) (b & 0x7F);
+            msg[i * 2 + 3] = (byte) ((b >> 7) & 0x7F);
+        }
+        msg[msg.length - 1] = FirmataToken.END_SYSEX;
 
         try {
             arduinoManager.getDevice().sendMessage(msg);
@@ -46,7 +50,24 @@ public class SendSysexCommand extends ArduinoComponent {
         }
     }
 
-    private class EventListener implements IODeviceEventListener {
+    @Override
+    public void activate(){
+        fire();
+    }
+
+
+
+    private static class EventListener implements IODeviceEventListener {
+        private static EventListener eventListener;
+
+        private EventListener(){}
+
+        public static EventListener getInstance(){
+            if(eventListener == null) {
+                eventListener = new EventListener();
+            }
+            return eventListener;
+        }
 
         @Override
         public void onStart(IOEvent ioEvent) {
