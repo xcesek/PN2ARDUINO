@@ -29,7 +29,7 @@ public class AutoFiring {
     public void start(){
         running = true;
         timer = new Timer();
-        timer.scheduleAtFixedRate(new FiringTimer(), 0, 5000);
+        timer.scheduleAtFixedRate(new FiringTimer(), 0, 1000);
     }
 
     public void stop(){
@@ -51,8 +51,9 @@ public class AutoFiring {
             try{
                 transition = initialMarking.fireRandomTransition();
                 PNEditor.getRoot().getUndoManager().executeCommand(new FireTransitionCommand(transition, initialMarking));
+                PNEditor.getRoot().selectTool_Token();
             } catch(RuntimeException e){
-                //((RootPflow)PNEditor.getRoot()).getLogEditor().log("No transitions is enabled", LogEditor.logType.PNEDITOR);
+                PNEditor.getRoot().getLogEditor().log("No transitions is enabled", LogEditor.logType.PNEDITOR);
             }
         }
     }

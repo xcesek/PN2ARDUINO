@@ -28,6 +28,7 @@ public class SimpleTimer {
             if (elapsedSeconds < 1) {
                 marking.firePhase2(transition);
                 isActive = false;
+                PNEditor.getRoot().repaintCanvas();
                 cancel();
             }
         }

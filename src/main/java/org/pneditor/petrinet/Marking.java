@@ -116,8 +116,6 @@ public class Marking implements Subject {
      */
     public void setTokens(PlaceNode placeNode, int tokens) {
 
-        PNEditor.getRoot().getLogEditor().log("!!!SET TOKENS: " + tokens, LogEditor.logType.ARDUINO);
-
         if (tokens < 0) {
             //throw new RuntimeException("Number of tokens must be non-negative");
             throw new IllegalStateException("Number of tokens must be non-negative");
@@ -237,7 +235,12 @@ public class Marking implements Subject {
     public boolean firePhase1(Transition transition) {
         boolean success;
         List<Node> sourcePlaces = new ArrayList<>();
-        Integer pinNum = transition.getArduinoComponent().getSettings().getPin();
+        Integer pinNum;
+        if(transition.hasArduinoComponent()) {
+            pinNum = transition.getArduinoComponent().getSettings().getPin();
+        } else {
+            pinNum = 100;
+        }
         lock.writeLock().lock();
         try {
             if (transition.getTimer().isActive() || isEnabled(transition)) {
@@ -272,7 +275,12 @@ public class Marking implements Subject {
     public boolean firePhase2(Transition transition) {
         boolean success;
         List<Node> destinationPlaces = new ArrayList<>();
-        Integer pinNum = transition.getArduinoComponent().getSettings().getPin();
+        Integer pinNum;
+        if(transition.hasArduinoComponent()) {
+            pinNum = transition.getArduinoComponent().getSettings().getPin();
+        } else {
+            pinNum = 100;
+        }
         lock.writeLock().lock();
         try {
             PNEditor.getRoot().getLogEditor().log("Phase2 - arc count - "+pinNum+" : " + transition.getConnectedArcs(false).size(), LogEditor.logType.ARDUINO);

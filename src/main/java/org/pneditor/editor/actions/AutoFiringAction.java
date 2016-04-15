@@ -24,6 +24,7 @@ public class AutoFiringAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
+        root.selectTool_Token();
         if(!root.getAutoFiring().isRunning()) {
             putValue(SMALL_ICON,  GraphicsTools.getIcon("pneditor/stop16.png"));
             root.getAutoFiring().start();
