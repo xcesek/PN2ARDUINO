@@ -5,7 +5,9 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.petrinet.Node;
+import org.pneditor.util.LogEditor;
 
 import java.awt.*;
 import java.io.IOException;
@@ -31,12 +33,19 @@ public class DigitalInput extends ArduinoComponent {
             myPin.setMode(Pin.Mode.INPUT);
         } catch (IOException e) {
             e.printStackTrace();
-            //LOG
-            System.out.println("!!! Pin " + settings.getPin() + " was not set!");
+            PNEditor.getRoot().getLogEditor().log("ERROR: Pin " + settings.getPin() + " was not set to digital input mode!", LogEditor.logType.ARDUINO);
         }
-        //LOG
-        System.out.println("Pin " + settings.getPin() + " was set to output mode.");
+        PNEditor.getRoot().getLogEditor().log("Pin " + settings.getPin() + " was set to digital input mode.", LogEditor.logType.ARDUINO);
     }
+
+    @Override
+    public void freeResources(){
+        int index = arduinoManager.getUsedPins().indexOf(getSettings().getPin().byteValue());
+        if(index != -1) {
+            arduinoManager.getUsedPins().remove(index);
+        }
+    }
+
 
     @Override
     public void activate() {

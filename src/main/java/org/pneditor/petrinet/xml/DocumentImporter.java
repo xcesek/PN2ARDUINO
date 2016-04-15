@@ -17,6 +17,7 @@
 package org.pneditor.petrinet.xml;
 
 import org.pneditor.arduino.ArduinoManager;
+import org.pneditor.arduino.components.AnalogInputSettings;
 import org.pneditor.arduino.components.DigitalOutputSettings;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
@@ -209,8 +210,9 @@ public class DocumentImporter {
                 ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlPlace.arduinoComponent.pin, type, place);
                 //ADD ARDUINO COMPONENT SETTINGS
                 switch (type) {
-                    case OUTPUT:
-                        ((DigitalOutputSettings) settings).setPeriod(xmlPlace.arduinoComponent.settings.period);
+                    case ANALOG:
+                        ((AnalogInputSettings) settings).setBottomThreshold(xmlPlace.arduinoComponent.settings.bottomThreshold);
+                        ((AnalogInputSettings) settings).setUpThreshold(xmlPlace.arduinoComponent.settings.upThreshold);
                         break;
                     default:
                         break;
@@ -244,8 +246,9 @@ public class DocumentImporter {
                 ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlTransition.arduinoComponent.pin, type, transition);
                 //ADD ARDUINO COMPONENT SETTINGS
                 switch (type) {
-                    case OUTPUT:
-                        ((DigitalOutputSettings) settings).setPeriod(xmlTransition.arduinoComponent.settings.period);
+                    case ANALOG:
+                        ((AnalogInputSettings) settings).setBottomThreshold(xmlTransition.arduinoComponent.settings.bottomThreshold);
+                        ((AnalogInputSettings) settings).setUpThreshold(xmlTransition.arduinoComponent.settings.upThreshold);
                         break;
                     default:
                         break;

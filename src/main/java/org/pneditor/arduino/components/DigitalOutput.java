@@ -34,17 +34,22 @@ public class DigitalOutput extends ArduinoComponent {
             myPin.setMode(Pin.Mode.OUTPUT);
         } catch (IOException e) {
             e.printStackTrace();
-            //LOG
-            System.out.println("!!! Pin " + settings.getPin() + " was not set!");
+            PNEditor.getRoot().getLogEditor().log("ERROR: Pin " + settings.getPin() + " was not set to digital output mode!", LogEditor.logType.ARDUINO);
         }
-        //LOG
-        System.out.println("Pin " + settings.getPin() + " was set to output mode.");
+        PNEditor.getRoot().getLogEditor().log("Pin " + settings.getPin() + " was set to digital output mode.", LogEditor.logType.ARDUINO);
+    }
+
+    @Override
+    public void freeResources(){
+        int index = arduinoManager.getUsedPins().indexOf(getSettings().getPin().byteValue());
+        if(index != -1) {
+            arduinoManager.getUsedPins().remove(index);
+        }
     }
 
     @Override
     public void activate() {
-        ((RootPflow)PNEditor.getRoot()).getLogEditor().log("Firing: " + settings.getPin(), LogEditor.logType.ARDUINO);
-        System.out.println("Firing: " + settings.getPin());
+        PNEditor.getRoot().getLogEditor().log("Firing: " + settings.getPin(), LogEditor.logType.ARDUINO);
         try {
             myPin.setValue(1);
         } catch (IOException e) {

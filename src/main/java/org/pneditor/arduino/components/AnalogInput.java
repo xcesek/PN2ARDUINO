@@ -5,7 +5,9 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.petrinet.Node;
+import org.pneditor.util.LogEditor;
 
 import java.awt.*;
 import java.io.IOException;
@@ -28,36 +30,44 @@ public class AnalogInput extends ArduinoComponent {
         color = Color.RED;
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
-            myPin.setMode(Pin.Mode.OUTPUT);
+            myPin.setMode(Pin.Mode.ANALOG);
         } catch (IOException e) {
             e.printStackTrace();
-            //LOG
-            System.out.println("!!! Pin " + settings.getPin() + " was not set!");
+            PNEditor.getRoot().getLogEditor().log("ERROR: Pin " + settings.getPin() + " was not set to analog input mode!", LogEditor.logType.ARDUINO);
         }
-        //LOG
-        System.out.println("Pin " + settings.getPin() + " was set to output mode.");
+        PNEditor.getRoot().getLogEditor().log("Pin " + settings.getPin() + " was set to analog input mode.", LogEditor.logType.ARDUINO);
     }
 
     @Override
-    public void activate() {
-        try {
-            myPin.setValue(1);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void freeResources(){
+        int index = arduinoManager.getUsedPins().indexOf(getSettings().getPin().byteValue());
+        if(index != -1) {
+            arduinoManager.getUsedPins().remove(index);
         }
+    }
+
+
+    @Override
+    public void activate() {
+
     }
 
     @Override
     public void deactivate() {
-        try {
-            myPin.setValue(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void fire() {
 
+    }
+
+    @Override
+    public boolean isEnabled(){
+        if(myPin.getValue() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

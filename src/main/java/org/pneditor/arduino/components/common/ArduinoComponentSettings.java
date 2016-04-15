@@ -19,19 +19,12 @@ import java.awt.*;
 public class ArduinoComponentSettings {
 
     protected JPanel panel;
-    protected JPanel separatorPanel;
     protected ArduinoComponentType type;
     protected Integer pin;
     protected ArduinoManager arduinoManager;
 
     protected ArduinoComponentSettings(ArduinoManager arduinoManager) {
-
         this.arduinoManager = arduinoManager;
-
-        separatorPanel = new JPanel(new GridLayout(0, 1));
-        separatorPanel.add(Box.createVerticalStrut(5));
-        separatorPanel.add(new JSeparator(JSeparator.HORIZONTAL));
-        separatorPanel.add(Box.createVerticalStrut(5));
     }
 
     public static ArduinoComponentSettings settingsFactory(ArduinoManager arduinoManager, Integer pin, ArduinoComponentType type, Node node) {
@@ -56,6 +49,8 @@ public class ArduinoComponentSettings {
     //COMMON METHODS
     public void parseSettingsGUI(JPanel panel){}
 
+    public void actualizeSettingsGUI() {}
+
     //GETTER & SETTER
     public void setPanel(JPanel panel) {
         this.panel = panel;
@@ -78,6 +73,7 @@ public class ArduinoComponentSettings {
     }
 
     public JPanel getSettingsGui() {
+        actualizeSettingsGUI();
         return panel;
     }
 

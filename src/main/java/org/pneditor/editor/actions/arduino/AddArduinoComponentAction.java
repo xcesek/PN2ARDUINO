@@ -1,20 +1,16 @@
 package org.pneditor.editor.actions.arduino;
 
-import org.firmata4j.Pin;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.commands.arduino.SetArduinoComponentCommand;
 import org.pneditor.petrinet.Node;
 import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
-import java.util.List;
 
 /**
  * Created by Alzbeta Cesekova
@@ -28,11 +24,11 @@ import java.util.List;
 public class AddArduinoComponentAction extends AbstractAction {
 
     private Root root;
+    private Node clickedNode;
     //COMPONENT SETTINGS
     private ArduinoComponentType type;
     private ArduinoComponentSettings arduinoComponentSettings;
-
-    private Node clickedNode;
+    private JPanel customSettings;
 
     public AddArduinoComponentAction(Root root, ArduinoComponentType type) {
         this.root = root;
@@ -41,8 +37,6 @@ public class AddArduinoComponentAction extends AbstractAction {
         putValue(NAME, name);
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/addArduinoComponent16.png"));
         putValue(SHORT_DESCRIPTION, name);
-//		putValue(MNEMONIC_KEY, KeyEvent.VK_R);
-//		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("R"));
         setEnabled(false);
     }
 
@@ -52,29 +46,43 @@ public class AddArduinoComponentAction extends AbstractAction {
                     && root.getClickedElement() instanceof Node) {
                 clickedNode = (Node) root.getClickedElement();
 
-                if (requestComponentSettings()) {
-                    //TODO prerobit cez comand
+                String option = requestComponentSettings();
+                if (option.equals("Save")) {
+                    arduinoComponentSettings.parseSettingsGUI(customSettings);
                     ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(type, arduinoComponentSettings, root.getArduinoManager(), clickedNode);
-                    root.getUndoManager().executeCommand(new SetArduinoComponentCommand(clickedNode, arduinoComponent));
+                    clickedNode.setArduinoComponent(arduinoComponent);
+                }
+                if (option.equals("Delete") && clickedNode.getArduinoComponent().getType() == type) {
+                    if (clickedNode.hasArduinoComponent() ) {
+                        clickedNode.getArduinoComponent().freeResources();
+                        clickedNode.setArduinoComponent(null);
+                        PNEditor.getRoot().repaintCanvas();
+                    }
+                }
+                if (option.equals("Cancel")) {
+                    // do nothing
                 }
             }
         }
-
         arduinoComponentSettings = null;
+
     }
 
-    public boolean requestComponentSettings() {
+    public String requestComponentSettings() {
 
         if (clickedNode.hasArduinoComponent() && clickedNode.getArduinoComponent().getType() == type) {
             arduinoComponentSettings = clickedNode.getArduinoComponent().getSettings();
         } else {
             arduinoComponentSettings = ArduinoComponentSettings.settingsFactory(root.getArduinoManager(), null, type, clickedNode);
         }
-        JPanel customSettings = arduinoComponentSettings.getSettingsGui();
+        customSettings = arduinoComponentSettings.getSettingsGui();
+
+        Object[] options = {"Save", "Delete", "Cancel"};
 
         JOptionPane optionPane = new JOptionPane();
         optionPane.setMessage(customSettings);
-        optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
+        optionPane.setOptions(options);
+        optionPane.setInitialValue(options[0]);
 
         JDialog dialog = optionPane.createDialog(root.getParentFrame(), type.toString());
         dialog.setVisible(true);
@@ -82,11 +90,10 @@ public class AddArduinoComponentAction extends AbstractAction {
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
         //if OK
-        int value = (optionPane.getValue() != null) ? ((Integer) optionPane.getValue()).intValue() : JOptionPane.CANCEL_OPTION;
-        if (value == JOptionPane.YES_OPTION) {
-            arduinoComponentSettings.parseSettingsGUI(customSettings);
-            return true;
+        if (optionPane.getValue() != null) {
+            return (String) optionPane.getValue();
+        } else {
+            return "Cancel";
         }
-        return false;
     }
 }

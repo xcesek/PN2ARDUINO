@@ -31,7 +31,6 @@ public class ArduinoManager {
     }
 
 
-
     public void initializePinMap() {
         Map<ArduinoComponentType, List<Byte>> modelMap = new HashMap<>();
 
@@ -39,9 +38,9 @@ public class ArduinoManager {
             modelMap.put(type, new ArrayList<>());
         }
 
-        if(getDevice() == null) {
+        if (getDevice() == null) {
             JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "Please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
-        } else{
+        } else {
             for (Pin pin : getDevice().getPins()) {
                 for (Pin.Mode mode : pin.getSupportedModes()) {
                     try {
@@ -63,6 +62,7 @@ public class ArduinoManager {
     public IODevice getDevice() {
         return device;
     }
+
     public void setDevice(IODevice device) {
         this.device = device;
     }
@@ -70,6 +70,7 @@ public class ArduinoManager {
     public void updateSettings(String port, String board) {
         boardSettings.setPort(port);
     }
+
     public BoardSettings getBoardSettings() {
         return boardSettings;
     }
@@ -83,9 +84,7 @@ public class ArduinoManager {
     }
 
     public Object[] getUnusedPins(ArduinoComponentType type) {
-        if(pinMap == null) {
-            initializePinMap();
-        }
+        initializePinMap();
         ArrayList<Byte> pinList = (ArrayList<Byte>) pinMap.get(type);
         pinList.removeAll(usedPins);
 

@@ -59,8 +59,11 @@ public class ArduinoComponent {
     public void fire() {
     }
 
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
+    }
+
+    public void freeResources() {
     }
 
     //GETTER & SETTER

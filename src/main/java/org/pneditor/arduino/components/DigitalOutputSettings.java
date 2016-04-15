@@ -6,8 +6,6 @@ import org.pneditor.arduino.components.common.ArduinoComponentType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Alzbeta Cesekova
@@ -20,27 +18,34 @@ import java.util.Arrays;
  */
 public class DigitalOutputSettings extends ArduinoComponentSettings {
 
-    private double period;
-
     public DigitalOutputSettings(ArduinoManager arduinoManager, Integer pin) {
         super(arduinoManager);
         super.setType(ArduinoComponentType.OUTPUT);
-        super.setPanel(getMyPanel());
-        if(pin != null) {
+        if (pin != null) {
             arduinoManager.getUsedPins().add(pin.byteValue());
         }
         super.pin = pin;
+        super.setPanel(getMyPanel());
     }
 
     private JPanel getMyPanel() {
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
         //PIN
-        JComboBox pinComboBox = new JComboBox(arduinoManager.getUnusedPins(type));
+        Object[] comboBoxModel = arduinoManager.getUnusedPins(type);
+        JComboBox pinComboBox;
         // * if node already has arduino component - load from clickedNode
         if (getPin() != null) {
-            pinComboBox.setSelectedItem(getPin().byteValue());
+            Object[] newComboBoxModel = new Object[comboBoxModel.length + 1];
+            newComboBoxModel[0] = pin.byteValue();
+            int i = 1;
+            for (Object o : comboBoxModel) {
+                newComboBoxModel[i++] = o;
+            }
+            pinComboBox = new JComboBox(newComboBoxModel);
+            pinComboBox.setSelectedItem(pin.byteValue());
         } else {
+            pinComboBox = new JComboBox(comboBoxModel);
             pinComboBox.setSelectedIndex(0);
         }
         myPanel.add(new JLabel("Pin: ")); //0
@@ -49,35 +54,28 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
         myPanel.add(Box.createVerticalStrut(5));
         myPanel.add(Box.createVerticalStrut(5));
 
-        myPanel.add(new JLabel("Perioda: ", SwingConstants.LEFT)); //2
-        myPanel.add(new JTextField(((Double) period).toString()));  //3
-
         return myPanel;
     }
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
-        try {
-            pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
-            period = 0;
-            //period = Double.parseDouble(((JTextField) panel.getComponent(3)).getText());
-            //Mark pin as used
-            arduinoManager.getUsedPins().add(pin.byteValue());
-        } catch (NumberFormatException e) {
-            period = 0;
-            //LOG
-            System.out.println("Nepodporovany format periody");
+        // free old pin
+        if (pin != null) {
+            int index = arduinoManager.getUsedPins().indexOf(pin.byteValue());
+            if (index != -1) {
+                arduinoManager.getUsedPins().remove(index);
+            }
         }
+
+        // add new pin
+        pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
+        //Mark pin as used
+        arduinoManager.getUsedPins().add(pin.byteValue());
     }
 
-    //GETTER & SETTER
-    public void setPeriod(double period) {
-        this.period = period;
+    @Override
+    public void actualizeSettingsGUI() {
         super.setPanel(getMyPanel());
-    }
-
-    public double getPeriod() {
-        return period;
     }
 
 }

@@ -45,7 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <pin><xsl:value-of select="arduinoComponent/pin"/></pin>
                     <type><xsl:value-of select="arduinoComponent/type"/></type>
                     <settings>
-                        <period><xsl:value-of select="arduinoComponent/settings/period"/></period>
+                        <bottomThreshold><xsl:value-of select="arduinoComponent/settings/bottomThreshold"/></bottomThreshold>
+                        <upThreshold><xsl:value-of select="arduinoComponent/settings/upThreshold"/></upThreshold>
                     </settings>
                 </arduinoComponent>
             </place>
@@ -62,7 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <pin><xsl:value-of select="arduinoComponent/pin"/></pin>
                     <type><xsl:value-of select="arduinoComponent/type"/></type>
                     <settings>
-                        <period><xsl:value-of select="arduinoComponent/settings/period"/></period>
+                        <bottomThreshold><xsl:value-of select="arduinoComponent/settings/bottomThreshold"/></bottomThreshold>
+                        <upThreshold><xsl:value-of select="arduinoComponent/settings/upThreshold"/></upThreshold>
                     </settings>
                 </arduinoComponent>
             </transition>
