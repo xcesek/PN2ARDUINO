@@ -98,9 +98,11 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
             objects.add(Box.createVerticalStrut(5));
             objects.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            objects.add(withDelayCheckBox);
-            objects.add(Box.createVerticalStrut(5));
-            objects.add(new JSeparator(JSeparator.HORIZONTAL));
+            if (clickedNode instanceof Transition) {
+                objects.add(withDelayCheckBox);
+                objects.add(Box.createVerticalStrut(5));
+                objects.add(new JSeparator(JSeparator.HORIZONTAL));
+            }
 
             objects.add(new JLabel("Threshold range low:"));
             objects.add(thresholdLowTf);

@@ -21,6 +21,8 @@ public class LogEditor extends JPanel implements ActionListener {
     private Frame parentFrame;
     private final static String newline = "\n";
 
+    private LogEditorFileWriter logEditorFileWriter;
+
     public enum logType {
         ARDUINO, PNEDITOR
     }
@@ -81,6 +83,8 @@ public class LogEditor extends JPanel implements ActionListener {
         pneditorButton.addActionListener(this);
         arduinoButton.addActionListener(this);
         clearButton.addActionListener(this);
+
+        logEditorFileWriter = new LogEditorFileWriter("PNEditorArduino.log");
     }
 
     public void log(String logMessage, logType textAreaType) {
@@ -93,6 +97,7 @@ public class LogEditor extends JPanel implements ActionListener {
             case ARDUINO:
                 arduinoButton.doClick();
                 textAreaArduinoLog.append(logMessage);
+                logEditorFileWriter.write(logMessage);
                 textAreaArduinoLog.setCaretPosition(textAreaArduinoLog.getDocument().getLength());
                 break;
             case PNEDITOR:
