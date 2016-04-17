@@ -1,6 +1,7 @@
 package org.pneditor.editor.actions.arduino;
 
 
+import org.pneditor.arduino.component.device.DelayOccurrenceType;
 import org.pneditor.arduino.component.pin.ArduinoPin;
 import org.pneditor.arduino.component.pin.ArduinoSupportedFunction;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
@@ -13,7 +14,6 @@ import org.pneditor.util.GraphicsTools;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
             JCheckBox extEnabledCheckBox = new JCheckBox("Enable association");
             JComboBox pinCombo = new JComboBox(enablesPins.toArray());
             JComboBox supportedFunctionsCombo = new JComboBox(ArduinoSupportedFunction.values());
-            JCheckBox withDelayCheckBox = new JCheckBox("Apply delay");
+            JComboBox delayOccurrenceTypeCombo = new JComboBox(DelayOccurrenceType.values());
             JTextField thresholdHighTf = new JTextField();
             JTextField thresholdLowTf = new JTextField();
             JCheckBox inverseLogicCheckBox = new JCheckBox("Inverse logic");
@@ -59,23 +59,15 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                 extension = ((Transition) clickedNode).getArduinoNodeExtension();
             }
 
-            if (extension == null || !extension.isEnabled()) {   //defaults
-                extension = new ArduinoNodeExtension(ArduinoPin.D2, ArduinoSupportedFunction.DIGITAL_OUT);
-                extension.setEnabled(false);
+            if (extension.getPin() == null) {   // not yet initialized: use defaults
+                extension = new ArduinoNodeExtension();
+                extension.setPin(ArduinoPin.D2);
+                extension.setFunction(ArduinoSupportedFunction.DIGITAL_OUT);
+            }
 
+            if (!extension.isEnabled()) {
                 pinCombo.setEnabled(false);
                 supportedFunctionsCombo.setEnabled(false);
-                withDelayCheckBox.setEnabled(false);
-                inverseLogicCheckBox.setEnabled(false);
-                thresholdLowTf.setEnabled(false);
-                thresholdHighTf.setEnabled(false);
-            } else {
-                pinCombo.setEnabled(true);
-                supportedFunctionsCombo.setEnabled(true);
-                withDelayCheckBox.setEnabled(true);
-                inverseLogicCheckBox.setEnabled(true);
-                thresholdLowTf.setEnabled(true);
-                thresholdHighTf.setEnabled(true);
             }
 
             // init with stored values
@@ -83,7 +75,7 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
             pinCombo.setSelectedItem(extension.getPin());
             supportedFunctionsCombo.setModel(new DefaultComboBoxModel(extension.getPin().getSupportedFunctions()));
             supportedFunctionsCombo.setSelectedItem(extension.getFunction());
-            withDelayCheckBox.setSelected(extension.isWithDelay());
+            delayOccurrenceTypeCombo.setSelectedItem(extension.getDelayOccurrenceType());
             inverseLogicCheckBox.setSelected(extension.getInverseLogic());
             thresholdLowTf.setText(String.valueOf(extension.getThresholdRangeLow()));
             thresholdHighTf.setText(String.valueOf((extension.getThresholdRangeHigh())));
@@ -99,7 +91,8 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
             objects.add(new JSeparator(JSeparator.HORIZONTAL));
 
             if (clickedNode instanceof Transition) {
-                objects.add(withDelayCheckBox);
+                objects.add(new JLabel("Apply delay: "));
+                objects.add(delayOccurrenceTypeCombo);
                 objects.add(Box.createVerticalStrut(5));
                 objects.add(new JSeparator(JSeparator.HORIZONTAL));
             }
@@ -116,17 +109,9 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
                         if (((AbstractButton) e.getSource()).getModel().isSelected()) {
                             pinCombo.setEnabled(true);
                             supportedFunctionsCombo.setEnabled(true);
-                            withDelayCheckBox.setEnabled(true);
-                            inverseLogicCheckBox.setEnabled(true);
-                            thresholdLowTf.setEnabled(true);
-                            thresholdHighTf.setEnabled(true);
                         } else {
                             pinCombo.setEnabled(false);
                             supportedFunctionsCombo.setEnabled(false);
-                            withDelayCheckBox.setEnabled(false);
-                            inverseLogicCheckBox.setEnabled(false);
-                            thresholdLowTf.setEnabled(false);
-                            thresholdHighTf.setEnabled(false);
                         }
                     }
             );
@@ -151,41 +136,36 @@ public class AssociateNodeWithArduinoPinAction extends AbstractAction {
 
             //save user input
             if (JOptionPane.YES_OPTION == (Integer) optionPane.getValue()) {
-                ArduinoNodeExtension arduinoNodeExtension;
-                if (extEnabledCheckBox.isSelected()) {
-                    ArduinoPin pin = (ArduinoPin) pinCombo.getSelectedItem();
+                ArduinoPin pin = (ArduinoPin) pinCombo.getSelectedItem();
+                ArduinoSupportedFunction selectedFunction = (ArduinoSupportedFunction) supportedFunctionsCombo.getSelectedItem();
 
-                    // remove only selected pin
-                    //enablesPins.remove(pin);
+                // remove only selected pin
+                //enablesPins.remove(pin);
 
-                    ArduinoSupportedFunction selectedFunction = (ArduinoSupportedFunction) supportedFunctionsCombo.getSelectedItem();
-
-                    if(selectedFunction.equals(ArduinoSupportedFunction.LED_DISPLAY)){
-
-                        //delete pins reserved for 8 segment led display (D2-D8 needed)
-                        ArduinoPin[] pinsForLed = new ArduinoPin[]{ ArduinoPin.D2, ArduinoPin.D3, ArduinoPin.D4, ArduinoPin.D5, ArduinoPin.D6, ArduinoPin.D7, ArduinoPin.D8 };
-                        for(ArduinoPin i : pinsForLed){
-                            //enablesPins.remove(i);
-                        }
+                if (selectedFunction.equals(ArduinoSupportedFunction.LED_DISPLAY)) {
+                    //delete pins reserved for 8 segment led display (D2-D8 needed)
+                    ArduinoPin[] pinsForLed = new ArduinoPin[]{ArduinoPin.D2, ArduinoPin.D3, ArduinoPin.D4, ArduinoPin.D5, ArduinoPin.D6, ArduinoPin.D7, ArduinoPin.D8};
+                    for (ArduinoPin i : pinsForLed) {
+                        //enablesPins.remove(i);
                     }
-                    arduinoNodeExtension = new ArduinoNodeExtension(pin, selectedFunction);
-                    arduinoNodeExtension.setWithDelay(withDelayCheckBox.isSelected());
-                    arduinoNodeExtension.setInverseLogic(inverseLogicCheckBox.isSelected());
+                }
 
-                    try {
-                        int high = Integer.parseInt(thresholdHighTf.getText());
-                        int low = Integer.parseInt(thresholdLowTf.getText());
-                        arduinoNodeExtension.setThresholdRangeHigh(high);
-                        arduinoNodeExtension.setThresholdRangeLow(low);
-                    } catch (NumberFormatException ignore) {
-                        arduinoNodeExtension.setThresholdRangeHigh(-1);
-                        arduinoNodeExtension.setThresholdRangeLow(-1);
-                        JOptionPane.showMessageDialog(root.getParentFrame(), "Wrong threshold value", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
+                arduinoNodeExtension.setEnabled(extEnabledCheckBox.isSelected());
+                arduinoNodeExtension.setPin(pin);
+                arduinoNodeExtension.setFunction(selectedFunction);
+                arduinoNodeExtension.setDelayOccurrenceType((DelayOccurrenceType) delayOccurrenceTypeCombo.getSelectedItem());
+                arduinoNodeExtension.setInverseLogic(inverseLogicCheckBox.isSelected());
 
-                } else {
-                    arduinoNodeExtension = new ArduinoNodeExtension();  // won't be enabled
-                    arduinoNodeExtension.setEnabled(false);
+                try {
+                    int high = Integer.parseInt(thresholdHighTf.getText());
+                    int low = Integer.parseInt(thresholdLowTf.getText());
+                    arduinoNodeExtension.setThresholdRangeHigh(high);
+                    arduinoNodeExtension.setThresholdRangeLow(low);
+                } catch (NumberFormatException ignore) {
+                    arduinoNodeExtension.setThresholdRangeHigh(-1);
+                    arduinoNodeExtension.setThresholdRangeLow(-1);
+                    JOptionPane.showMessageDialog(root.getParentFrame(), "Wrong threshold value", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 if (clickedNode instanceof Place) {

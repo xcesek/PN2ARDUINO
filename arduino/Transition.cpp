@@ -9,7 +9,7 @@ Transition::Transition(char* _id)
 {  
   earliestFiringTime = 0;
   latestFiringTime = 0;
-  applyDelay = 0;
+  delayOccurrenceType = NO;
   priority = 0;
 
   Serial.print(F("(transition) initializing NOT ARDUINO transition with ID: ")); Serial.println(id);
@@ -22,7 +22,7 @@ Transition::Transition(char* _id, int _pin, FunctionType _functionType)
 { 
   earliestFiringTime = 0;
   latestFiringTime = 0;
-  applyDelay = 0;
+  delayOccurrenceType = NO;
   priority = 0;
 
   Serial.print(F("(transition) initializing transition with ID: ")); Serial.print(id);  Serial.print(" -> ");
@@ -55,40 +55,19 @@ void Transition::fire()
 {
   Serial.print(F("(transition) firing transition with ID: ")); Serial.println(id);
 
+  if (delayOccurrenceType == BEFORE) doDelay();
+
   // take token(s) from all in places
   for (int i = 0; i < connectedArcsCount; i++) {
     Node *source = connectedArcs[i]->getSource();
     if (source->getNodeType() == placeType) {
       Place *place = (Place*) source;
       place->removeTokens(connectedArcs[i]->getMultiplicity());
+      place->apply();
     }
   }
 
-  // pre delay action
-  if (extended) {
-    takePreDelayAction();
-  } else {
-    Serial.println(F("      (transition) no pre delay action as no extended transition"));
-  }
-
-  // delay
-  if (applyDelay || extended == 0) {  // if not extended, ignore applyDelay flag
-    if (earliestFiringTime != latestFiringTime) {
-      int randomTime = random(earliestFiringTime, latestFiringTime);
-      Serial.print(F("      (transition) waiting for ")); Serial.print(randomTime); Serial.println(F(" millis"));
-      delay(randomTime);
-    } else {
-      Serial.print(F("      (transition) waiting for ")); Serial.print(earliestFiringTime); Serial.println(F(" millis"));
-      delay(earliestFiringTime);
-    }
-  }
-
-  // post delay action
-  if (extended) {
-      takePostDelayAction();
-    } else {
-      Serial.println(F("      (transition) no post delay action as no extended transition"));
-  }
+  if (delayOccurrenceType == DURING) doDelay();
 
   // put token(s) to all out places
   for (int i = 0; i < connectedArcsCount; i++) {
@@ -96,8 +75,11 @@ void Transition::fire()
     if (destination->getNodeType() == placeType) {
       Place *place = (Place*) destination;
       place->addTokens(connectedArcs[i]->getMultiplicity());
+      place->apply();
     }
   }
+
+  if (delayOccurrenceType == AFTER) doDelay();
 }
 
 int Transition::isEnabled()
@@ -204,9 +186,9 @@ void Transition::setDelay(int _earliestFiringTime, int _latestFiringTime) {
 
 }
 
-void Transition::setApplyDelay(int _applyDelay) {
-  Serial.print(F("      (transition) setting apply delay flag to: ")); Serial.println(_applyDelay);
-  applyDelay = _applyDelay;
+void Transition::setDelayOccurrenceType(DelayOccurrenceType _delayOccurrenceType) {
+  Serial.print(F("      (transition) setting DelayOccurrenceType flag to: ")); Serial.println(_delayOccurrenceType);
+  delayOccurrenceType = _delayOccurrenceType;
 }
 
 void Transition::setPriority(int _priority) {
@@ -329,4 +311,29 @@ void Transition::takePostDelayAction() {
       default:
         Serial.println(F("      (transition) not supported operation in fire post delay method: "));
       }
+}
+
+void Transition::doDelay() {
+  // pre delay action
+  if (extended) {
+    takePreDelayAction();
+  } else {
+    Serial.println(F("      (transition) no pre delay action as no extended transition"));
+   }
+
+  if (earliestFiringTime != latestFiringTime) {
+    int randomTime = random(earliestFiringTime, latestFiringTime);
+    Serial.print(F("      (transition) waiting for ")); Serial.print(randomTime); Serial.println(F(" millis"));
+    delay(randomTime);
+  } else {
+    Serial.print(F("      (transition) waiting for ")); Serial.print(earliestFiringTime); Serial.println(F(" millis"));
+    delay(earliestFiringTime);
+  }
+
+  // post delay action
+  if (extended) {
+      takePostDelayAction();
+    } else {
+      Serial.println(F("      (transition) no post delay action as no extended transition"));
+  }
 }

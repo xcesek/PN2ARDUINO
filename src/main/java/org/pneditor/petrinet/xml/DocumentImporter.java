@@ -17,6 +17,9 @@
 package org.pneditor.petrinet.xml;
 
 import org.apache.commons.lang3.StringUtils;
+import org.pneditor.arduino.component.device.DelayOccurrenceType;
+import org.pneditor.arduino.component.pin.ArduinoPin;
+import org.pneditor.arduino.component.pin.ArduinoSupportedFunction;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
 import org.pneditor.arduino.manager.FiringPolicyType;
 import org.pneditor.arduino.time.TimingPolicyType;
@@ -193,18 +196,23 @@ public class DocumentImporter {
         place.setCapacity(xmlPlace.capacity);
         place.setCenter(xmlPlace.x, xmlPlace.y);
 
-        if (xmlPlace != null) {
-            if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.function)) {
-                ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlPlace.arduinoNodeExtension.pin, xmlPlace.arduinoNodeExtension.function);
-                nodeExt.setInverseLogic(xmlPlace.arduinoNodeExtension.inverseLogic);
-                nodeExt.setWithDelay(xmlPlace.arduinoNodeExtension.withDelay);
-                nodeExt.setThresholdRangeHigh(xmlPlace.arduinoNodeExtension.thresholdRangeHigh);
-                nodeExt.setThresholdRangeLow(xmlPlace.arduinoNodeExtension.thresholdRangeLow);
-                place.setArduinoNodeExtension(nodeExt);
-            }
-        } else {
-            place.setArduinoNodeExtension(new ArduinoNodeExtension());
+        ArduinoNodeExtension nodeExt = new ArduinoNodeExtension();
+        nodeExt.setEnabled(xmlPlace.arduinoNodeExtension.enabled);
+        if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.pin)) {
+            nodeExt.setPin(ArduinoPin.valueOf(xmlPlace.arduinoNodeExtension.pin));
         }
+        if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.function)) {
+            nodeExt.setFunction(ArduinoSupportedFunction.valueOf(xmlPlace.arduinoNodeExtension.function));
+        }
+        if (!StringUtils.isEmpty(xmlPlace.arduinoNodeExtension.delayOccurrenceType)) {
+            nodeExt.setDelayOccurrenceType(DelayOccurrenceType.valueOf(xmlPlace.arduinoNodeExtension.delayOccurrenceType));
+        }
+        nodeExt.setInverseLogic(xmlPlace.arduinoNodeExtension.inverseLogic);
+        nodeExt.setThresholdRangeHigh(xmlPlace.arduinoNodeExtension.thresholdRangeHigh);
+        nodeExt.setThresholdRangeLow(xmlPlace.arduinoNodeExtension.thresholdRangeLow);
+        place.setArduinoNodeExtension(nodeExt);
+
+
         return place;
     }
 
@@ -220,27 +228,22 @@ public class DocumentImporter {
 
 //        SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
 //        transition.setTimer(timer);
-        if (xmlTransition.arduinoNodeExtension != null) {
-            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
-                transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));
-            }
-        } else {
-            transition.setArduinoNodeExtension(new ArduinoNodeExtension());
-        }
 
-        if (xmlTransition != null) {
-            if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
-                ArduinoNodeExtension nodeExt = new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function);
-                nodeExt.setInverseLogic(xmlTransition.arduinoNodeExtension.inverseLogic);
-                nodeExt.setWithDelay(xmlTransition.arduinoNodeExtension.withDelay);
-                nodeExt.setThresholdRangeHigh(xmlTransition.arduinoNodeExtension.thresholdRangeHigh);
-                nodeExt.setThresholdRangeLow(xmlTransition.arduinoNodeExtension.thresholdRangeLow);
-                transition.setArduinoNodeExtension(nodeExt);
-            }
-        } else {
-            transition.setArduinoNodeExtension(new ArduinoNodeExtension());
+        ArduinoNodeExtension nodeExt = new ArduinoNodeExtension();
+        nodeExt.setEnabled(xmlTransition.arduinoNodeExtension.enabled);
+        if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin)) {
+            nodeExt.setPin(ArduinoPin.valueOf(xmlTransition.arduinoNodeExtension.pin));
         }
-
+        if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
+            nodeExt.setFunction(ArduinoSupportedFunction.valueOf(xmlTransition.arduinoNodeExtension.function));
+        }
+        if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.delayOccurrenceType)) {
+            nodeExt.setDelayOccurrenceType(DelayOccurrenceType.valueOf(xmlTransition.arduinoNodeExtension.delayOccurrenceType));
+        }
+        nodeExt.setInverseLogic(xmlTransition.arduinoNodeExtension.inverseLogic);
+        nodeExt.setThresholdRangeHigh(xmlTransition.arduinoNodeExtension.thresholdRangeHigh);
+        nodeExt.setThresholdRangeLow(xmlTransition.arduinoNodeExtension.thresholdRangeLow);
+        transition.setArduinoNodeExtension(nodeExt);
 
         return transition;
     }

@@ -12,14 +12,17 @@ import javax.xml.bind.annotation.XmlElement;
  * Under GNU GPL v3 licence
  */
 public class XmlArduinoNodeExtension {
+    @XmlElement(name = "enabled")
+    public boolean enabled;
+
     @XmlElement(name = "pin")
     public String pin;
 
     @XmlElement(name = "function")
     public String function;
 
-    @XmlElement(name = "withDelay")
-    public boolean withDelay;
+    @XmlElement(name = "delayOccurrenceType")
+    public String delayOccurrenceType;
 
     @XmlElement(name = "inverseLogic")
     public boolean inverseLogic;
@@ -34,14 +37,20 @@ public class XmlArduinoNodeExtension {
     }
 
     public XmlArduinoNodeExtension(ArduinoNodeExtension arduinoNodeExtension) {
-        if (arduinoNodeExtension.isEnabled()) {
+        enabled = arduinoNodeExtension.isEnabled();
+
+        if (arduinoNodeExtension.getPin() != null) {
             pin = arduinoNodeExtension.getPin().name();
-            function = arduinoNodeExtension.getFunction().name();
-            withDelay = arduinoNodeExtension.isWithDelay();
-            inverseLogic = arduinoNodeExtension.getInverseLogic();
-            thresholdRangeLow = arduinoNodeExtension.getThresholdRangeLow();
-            thresholdRangeHigh = arduinoNodeExtension.getThresholdRangeHigh();
         }
+        if (arduinoNodeExtension.getFunction() != null) {
+            function = arduinoNodeExtension.getFunction().name();
+        }
+        if (arduinoNodeExtension.getDelayOccurrenceType() != null) {
+            delayOccurrenceType = arduinoNodeExtension.getDelayOccurrenceType().name();
+        }
+        inverseLogic = arduinoNodeExtension.getInverseLogic();
+        thresholdRangeLow = arduinoNodeExtension.getThresholdRangeLow();
+        thresholdRangeHigh = arduinoNodeExtension.getThresholdRangeHigh();
     }
 
 }

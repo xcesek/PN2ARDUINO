@@ -42,9 +42,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <tokens><xsl:value-of select="tokens"/></tokens>
                 <isStatic><xsl:value-of select="isStatic"/></isStatic>
                 <arduinoNodeExtension>
+                    <enabled><xsl:value-of select="arduinoNodeExtension/enabled"/></enabled>
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
-                    <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
+                    <delayOccurrenceType><xsl:value-of select="arduinoNodeExtension/delayOccurrenceType"/></delayOccurrenceType>
                     <inverseLogic><xsl:value-of select="arduinoNodeExtension/inverseLogic"/></inverseLogic>
                     <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
                     <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>
@@ -61,9 +62,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <latestFiringTime><xsl:value-of select="latestFiringTime"/></latestFiringTime>
                 <priority><xsl:value-of select="priority"/></priority>
                 <arduinoNodeExtension>
+                    <enabled><xsl:value-of select="arduinoNodeExtension/enabled"/></enabled>
                     <pin><xsl:value-of select="arduinoNodeExtension/pin"/></pin>
                     <function><xsl:value-of select="arduinoNodeExtension/function"/></function>
-                    <withDelay><xsl:value-of select="arduinoNodeExtension/withDelay"/></withDelay>
+                    <delayOccurrenceType><xsl:value-of select="arduinoNodeExtension/delayOccurrenceType"/></delayOccurrenceType>
                     <inverseLogic><xsl:value-of select="arduinoNodeExtension/inverseLogic"/></inverseLogic>
                     <thresholdRangeLow><xsl:value-of select="arduinoNodeExtension/thresholdRangeLow"/></thresholdRangeLow>
                     <thresholdRangeHigh><xsl:value-of select="arduinoNodeExtension/thresholdRangeHigh"/></thresholdRangeHigh>

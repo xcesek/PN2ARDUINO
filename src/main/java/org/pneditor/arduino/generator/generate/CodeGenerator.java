@@ -202,7 +202,7 @@ public class CodeGenerator {
                 buffer.append("t_" + t.getId()
                         + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() + ");\n");
+                        + "->setDelayOccurrenceType(" + t.getArduinoNodeExtension().getDelayOccurrenceType().name() + ");\n");
                 buffer.append("t_" + t.getId()
                         + "->setPriority(" + t.getPriority() + ");\n");
             } else {
@@ -213,7 +213,7 @@ public class CodeGenerator {
                 buffer.append("t_" + t.getId()
                         + "->setInverseLogic(" + t.getArduinoNodeExtension().getInverseLogic() + ");\n");
                 buffer.append("t_" + t.getId()
-                        + "->setApplyDelay(" + t.getArduinoNodeExtension().isWithDelay() + ");\n");
+                        + "->setDelayOccurrenceType(" + t.getArduinoNodeExtension().getDelayOccurrenceType().name() + ");\n");
                 buffer.append("t_" + t.getId()
                         + "->setPriority(" + t.getPriority() + ");\n");
             }
@@ -255,6 +255,10 @@ public class CodeGenerator {
                 + ");\n");
 
         buffer.append("randomSeed(analogRead(0));\n");
+
+        buffer.append("Serial.println();\n");
+        buffer.append("Serial.println(\"=================================================\");\n");
+        buffer.append("Serial.println();\n");
 
         return buffer.toString();
     }

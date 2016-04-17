@@ -14,7 +14,7 @@ class Transition : public Node
     int connectedArcsCount;
     int earliestFiringTime;
     int latestFiringTime;
-    int applyDelay;
+    DelayOccurrenceType delayOccurrenceType;
     int priority;
 
     int getRandomValueFromInterval(int thresholdRangeLow, int thresholdRangeHigh, int max);
@@ -33,9 +33,10 @@ class Transition : public Node
     Arc **getConnectedArcs();
     int getConnectedArcsCount();
     void setDelay(int _earliestFiringTime, int _latestFiringTime);
-    void setApplyDelay(int _applyDelay);
+    void setDelayOccurrenceType(DelayOccurrenceType _delayOccurrenceType);
     void setPriority(int _priority);
     int getPriority();
+    void doDelay();
 };
 
 #endif

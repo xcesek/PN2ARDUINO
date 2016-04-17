@@ -1,5 +1,6 @@
 package org.pneditor.arduino.manager;
 
+import org.pneditor.arduino.component.device.DelayOccurrenceType;
 import org.pneditor.arduino.component.pin.ArduinoPin;
 import org.pneditor.arduino.component.pin.ArduinoSupportedFunction;
 
@@ -14,7 +15,7 @@ public class ArduinoNodeExtension {
     private ArduinoPin pin;
     private ArduinoSupportedFunction function;
 
-    private boolean withDelay = false;
+    private DelayOccurrenceType delayOccurrenceType = DelayOccurrenceType.NO;
     private boolean inverseLogic = false;
     private int thresholdRangeLow = -1;
     private int thresholdRangeHigh = -1;
@@ -25,36 +26,28 @@ public class ArduinoNodeExtension {
     public ArduinoNodeExtension() {
     }
 
-    public ArduinoNodeExtension(ArduinoPin pin, ArduinoSupportedFunction function) {
-        this.pin = pin;
-        this.function = function;
-        enabled = true;
-    }
-
-    public ArduinoNodeExtension(String pinStr, String functionStr) {
-        try {
-            this.pin = ArduinoPin.valueOf(pinStr);
-            this.function = ArduinoSupportedFunction.valueOf(functionStr);
-            enabled = true;
-        } catch (Exception e) {
-            enabled = false;
-        }
-    }
-
     public ArduinoPin getPin() {
         return pin;
+    }
+
+    public void setPin(ArduinoPin pin) {
+        this.pin = pin;
+    }
+
+    public void setFunction(ArduinoSupportedFunction function) {
+        this.function = function;
     }
 
     public ArduinoSupportedFunction getFunction() {
         return function;
     }
 
-    public boolean isWithDelay() {
-        return withDelay;
+    public DelayOccurrenceType getDelayOccurrenceType() {
+        return delayOccurrenceType;
     }
 
-    public void setWithDelay(boolean withDelay) {
-        this.withDelay = withDelay;
+    public void setDelayOccurrenceType(DelayOccurrenceType delayOccurrenceType) {
+        this.delayOccurrenceType = delayOccurrenceType;
     }
 
     public void setInverseLogic(boolean inverseLogic) {
@@ -88,4 +81,6 @@ public class ArduinoNodeExtension {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+
 }

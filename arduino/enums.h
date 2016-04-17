@@ -24,4 +24,7 @@ enum FiringPolicyType {
   AS_CREATED, ROUND_ROBIN, BY_PRIORITY, RANDOM
 };
 
+enum DelayOccurrenceType {
+  NO, BEFORE, DURING, AFTER
+};
 #endif
