@@ -115,14 +115,20 @@ public class CodeGenerator {
         StringBuffer buffer = new StringBuffer();
         buffer.append("// ====== places ======\n");
 
-        Set<Place> places = subnet.getPlaces();
+        Set<Place> placesSet = subnet.getPlaces();
+        List<Place> places = new ArrayList<>(placesSet.size());
+        places.addAll(placesSet);
+        places.sort((p1, p2) -> p1.getId().compareTo(p2.getId()));
         places.forEach(p -> buffer.append("Place *p_" + p.getId() + ";\n"));
         buffer.append("Place **allPlaces;\n");
         buffer.append("int allPlacesCount;\n");
         buffer.append("\n");
 
         buffer.append("// ====== transitions ======\n");
-        Set<Transition> transitions = subnet.getTransitions();
+        Set<Transition> transitionsSet = subnet.getTransitions();
+        List<Transition> transitions = new ArrayList<>(transitionsSet.size());
+        transitions.addAll(transitionsSet);
+        transitions.sort((t1, t2) -> t1.getId().compareTo(t2.getId()));
         transitions.forEach(t -> buffer.append("Transition *t_" + t.getId() + ";\n"));
         buffer.append("Transition **allTransitions;\n");
         buffer.append("int allTransitionsCount;\n");
@@ -139,17 +145,29 @@ public class CodeGenerator {
         buffer.append("FiringScheduler *firingScheduler;\n");
         buffer.append("\n");
 
+        buffer.append("Helper *helper;\n");
+        buffer.append("\n");
+
         return buffer.toString();
     }
 
     private String getSetupStr() {
-        Set<Place> places = subnet.getPlaces();
-        Set<Transition> transitions = subnet.getTransitions();
+        Set<Place> placesSet = subnet.getPlaces();
+        List<Place> places = new ArrayList<>(placesSet.size());
+        places.addAll(placesSet);
+        places.sort((p1, p2) -> p1.getId().compareTo(p2.getId()));
+
+        Set<Transition> transitionsSet = subnet.getTransitions();
+        List<Transition> transitions = new ArrayList<>(transitionsSet.size());
+        transitions.addAll(transitionsSet);
+        transitions.sort((t1, t2) -> t1.getId().compareTo(t2.getId()));
+
         Set<Arc> arcs = subnet.getArcs();
 
         StringBuffer buffer = new StringBuffer();
         buffer.append("Serial.begin(9600);\n\n");
         buffer.append("// ====== general ======\n");
+        buffer.append("helper = new Helper(" + (arduinoManager.getBoardSettings().isVerboseOutput() ? 1 : 0 ) + ");\n");
         buffer.append("allPlacesCount = " + places.size() + ";\n");
         buffer.append("allPlaces = (Place**) malloc(allPlacesCount*sizeof(Place*));\n");
         buffer.append("allTransitionsCount = " + transitions.size() + ";\n");
@@ -182,6 +200,8 @@ public class CodeGenerator {
                     + p.getArduinoNodeExtension().getThresholdRangeHigh() + ");\n");
             buffer.append("p_" + p.getId()
                     + "->setInverseLogic(" + p.getArduinoNodeExtension().getInverseLogic() + ");\n");
+            buffer.append("p_" + p.getId()
+                    + "->setHelper(helper);\n");
 
         });
 
@@ -205,6 +225,8 @@ public class CodeGenerator {
                         + "->setDelayOccurrenceType(" + t.getArduinoNodeExtension().getDelayOccurrenceType().name() + ");\n");
                 buffer.append("t_" + t.getId()
                         + "->setPriority(" + t.getPriority() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setHelper(helper);\n");
             } else {
                 buffer.append("t_" + t.getId()
                         + " = new Transition(\"t_" + (StringUtils.isEmpty(t.getLabel()) ? t.getId() : t.getLabel()) + "\");\n");
@@ -216,6 +238,8 @@ public class CodeGenerator {
                         + "->setDelayOccurrenceType(" + t.getArduinoNodeExtension().getDelayOccurrenceType().name() + ");\n");
                 buffer.append("t_" + t.getId()
                         + "->setPriority(" + t.getPriority() + ");\n");
+                buffer.append("t_" + t.getId()
+                        + "->setHelper(helper);\n");
             }
 
             buffer.append("allTransitions[" + transOrd.getNumber() + "] = t_" + t.getId() + ";\n");
@@ -256,9 +280,11 @@ public class CodeGenerator {
 
         buffer.append("randomSeed(analogRead(0));\n");
 
-        buffer.append("Serial.println();\n");
-        buffer.append("Serial.println(\"=================================================\");\n");
-        buffer.append("Serial.println();\n");
+        if (arduinoManager.getBoardSettings().isVerboseOutput()) {
+            buffer.append("Serial.println();\n");
+            buffer.append("Serial.println(\"=================================================\");\n");
+            buffer.append("Serial.println();\n");
+        }
 
         return buffer.toString();
     }
@@ -272,10 +298,12 @@ public class CodeGenerator {
                 "       allPlaces[i]->apply();\n" +
                 "   }\n");
 
-        buffer.append("Serial.println();\n");
-        buffer.append("Serial.println(\"=================================================\");\n");
-        buffer.append("Serial.println();\n");
-        buffer.append("delay(3000);\n");
+        if (arduinoManager.getBoardSettings().isVerboseOutput()) {
+            buffer.append("Serial.println();\n");
+            buffer.append("Serial.println(\"=================================================\");\n");
+            buffer.append("Serial.println();\n");
+            buffer.append("delay(5000);\n");
+        }
         return buffer.toString();
     }
 

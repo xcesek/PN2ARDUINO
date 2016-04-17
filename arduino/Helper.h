@@ -2,12 +2,20 @@
 #define Helper_h
 
 #include "Arduino.h"
-#include "Node.h"
 
 class Helper
 {
 public:
-    static void log(int enabled, char *str1, char *str2);
+    int loggingEnabled;
+
+    Helper(int _loggingEnabled);
+    void logMessage(char *str1, char *str2);
+    void log(char *str1);
+    void logLn(char *str1);
+    void log(int value);
+    void logLn(int value);
+    void log(const __FlashStringHelper *ifsh);
+    void logLn(const __FlashStringHelper *ifsh);
 };
 
 #endif

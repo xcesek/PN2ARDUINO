@@ -38,9 +38,9 @@ void Node::setThresholdRange(int _thresholdRangeLow, int _thresholdRangeHigh) {
     thresholdRangeLow = _thresholdRangeHigh;
     thresholdRangeHigh = _thresholdRangeLow;
   }
-
-  Serial.print(F("      (node) setting thresholdRange: ")); Serial.print(thresholdRangeLow);Serial.print(F(" - "));Serial.println(thresholdRangeHigh);
+  helper->log(F("      (node) setting thresholdRange: ")); helper->log(thresholdRangeLow);helper->log(" - ");helper->logLn(thresholdRangeHigh);
 }
+
 
 void Node::setInverseLogic(int _inverseLogic) {
   inverseLogic = _inverseLogic;
@@ -48,4 +48,8 @@ void Node::setInverseLogic(int _inverseLogic) {
 
 char* Node::getId() {
   return id;
+}
+
+void Node::setHelper(Helper *_helper) {
+  helper = _helper;
 }

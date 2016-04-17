@@ -16,6 +16,7 @@ class Node
     int thresholdRangeLow;
     int thresholdRangeHigh;
     int inverseLogic;
+    Helper *helper;
     
   public:
     Node(char* id, NodeType _nodeType);
@@ -24,6 +25,8 @@ class Node
     void setThresholdRange(int _tresholdRangeLow, int _tresholdRangeHigh);
     void setInverseLogic(int _inverseLogic);
     char* getId();
+    void setHelper(Helper *_helper);
+
 };
 
 #endif
