@@ -1,8 +1,7 @@
 package org.pneditor.editor.actions.arduino;
 
-import org.pneditor.editor.Root;
-import org.pneditor.editor.commands.SetDelayCommand;
 import org.pneditor.arduino.time.TimingPolicyType;
+import org.pneditor.editor.Root;
 import org.pneditor.petrinet.Transition;
 import org.pneditor.util.GraphicsTools;
 
@@ -50,8 +49,8 @@ public class SetDelayAction extends AbstractAction {
                 JTextField earliestFiringTimeField = new JTextField(earliestFiringTimeValue);
                 JTextField latestFiringTimeField = new JTextField(latestFiringTimeValue);
                 Object[] message = {
-                        "New earliest firing time:", earliestFiringTimeField,
-                        "New latest firing time:", latestFiringTimeField
+                        "New earliest firing time (milliseconds):", earliestFiringTimeField,
+                        "New latest firing time (milliseconds):", latestFiringTimeField
                 };
                 int option = JOptionPane.showConfirmDialog(root.getParentFrame(), message, "Set firing times (milliseconds)", JOptionPane.OK_CANCEL_OPTION);
                 String newEarliestFiringTimeStr = "";
@@ -76,7 +75,9 @@ public class SetDelayAction extends AbstractAction {
                 if (newEarliestFiringTime != null && !newEarliestFiringTimeStr.equals(transition.getEarliestFiringTime())
                         && newLatestFiringTime != null && !newLatestFiringTimeStr.equals(transition.getLatestFiringTime())
                         && newLatestFiringTime >= newEarliestFiringTime) {
-                    root.getUndoManager().executeCommand(new SetDelayCommand(transition, newEarliestFiringTime, newLatestFiringTime));
+                    transition.setEarliestFiringTime(newEarliestFiringTime);
+                    transition.setLatestFiringTime(newLatestFiringTime);
+//                    root.getUndoManager().executeCommand(new SetDelayCommand(transition, newEarliestFiringTime, newLatestFiringTime));
                 } else {
                     //error
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Firing times weren't changed!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -94,7 +95,9 @@ public class SetDelayAction extends AbstractAction {
                 }
 
                 if (newDelayStr != null && !newDelayStr.equals(transition.getEarliestFiringTime())) {
-                    root.getUndoManager().executeCommand(new SetDelayCommand(transition, newDelay, newDelay)); //set earliest and latest firing time to one value
+                    transition.setEarliestFiringTime(newDelay);
+                    transition.setLatestFiringTime(newDelay);
+//                    root.getUndoManager().executeCommand(new SetDelayCommand(transition, newDelay, newDelay)); //set earliest and latest firing time to one value
                 } else {
                     //error
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Delay wasn't changed!", "Error", JOptionPane.ERROR_MESSAGE);

@@ -19,7 +19,6 @@ package org.pneditor.petrinet.xml;
 import org.apache.commons.lang3.StringUtils;
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
 import org.pneditor.arduino.manager.FiringPolicyType;
-import org.pneditor.arduino.time.SimpleTimer;
 import org.pneditor.arduino.time.TimingPolicyType;
 import org.pneditor.petrinet.*;
 import org.pneditor.util.Xslt;
@@ -219,8 +218,8 @@ public class DocumentImporter {
         transition.setLatestFiringTime(xmlTransition.latestFiringTime);
         transition.setPriority(xmlTransition.priority);
 
-        SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
-        transition.setTimer(timer);
+//        SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
+//        transition.setTimer(timer);
         if (xmlTransition.arduinoNodeExtension != null) {
             if (!StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.pin) && !StringUtils.isEmpty(xmlTransition.arduinoNodeExtension.function)) {
                 transition.setArduinoNodeExtension(new ArduinoNodeExtension(xmlTransition.arduinoNodeExtension.pin, xmlTransition.arduinoNodeExtension.function));

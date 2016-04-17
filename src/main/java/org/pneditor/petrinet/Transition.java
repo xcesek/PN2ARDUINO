@@ -16,14 +16,12 @@
  */
 package org.pneditor.petrinet;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import org.pneditor.arduino.manager.ArduinoNodeExtension;
-import org.pneditor.arduino.time.SimpleTimer;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;
+
+import java.awt.*;
 
 /**
  * Represents a transition in Petri net
@@ -31,11 +29,11 @@ import org.pneditor.util.GraphicsTools.VerticalAlignment;
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class Transition extends TransitionNode implements Cloneable {
-    
+
     Integer earliestFiringTime = 0;
     Integer latestFiringTime = 0;
     Integer priority = 0;
-    private SimpleTimer timer;
+    //    private SimpleTimer timer;
     private ArduinoNodeExtension arduinoNodeExtension = new ArduinoNodeExtension();
 
     @Override
@@ -70,15 +68,15 @@ public class Transition extends TransitionNode implements Cloneable {
 
     public void setLatestFiringTime(Integer latestFiringTime) {
         this.latestFiringTime = latestFiringTime;
-    }  
-
-    public SimpleTimer getTimer() {
-        return timer;
     }
 
-    public void setTimer(SimpleTimer timer) {
-        this.timer = timer;
-    }
+//    public SimpleTimer getTimer() {
+//        return timer;
+//    }
+
+//    public void setTimer(SimpleTimer timer) {
+//        this.timer = timer;
+//    }
 
 
     public ArduinoNodeExtension getArduinoNodeExtension() {
