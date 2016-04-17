@@ -17,11 +17,11 @@
 package org.pneditor.petrinet.xml;
 
 import org.pneditor.arduino.ArduinoManager;
-import org.pneditor.arduino.components.AnalogInputSettings;
-import org.pneditor.arduino.components.DigitalOutputSettings;
+import org.pneditor.arduino.components.*;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.arduino.components.common.CustomSysexCommand;
 import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.editor.time.SimpleTimer;
@@ -49,6 +49,8 @@ public class DocumentImporter {
     private XmlDocument xmlDocument;
     private IdToXmlObject idToXmlObject;
     private ArduinoManager arduinoManager;
+
+    private boolean warningShowed = false;
 
     public DocumentImporter() {
         arduinoManager = PNEditor.getRoot().getArduinoManager();
@@ -78,6 +80,10 @@ public class DocumentImporter {
     }
 
     private Document getDocument() {
+        // ARDUINO
+        PNEditor.getRoot().getArduinoManager().getUsedPins().clear();
+        warningShowed = false;
+
         Document document = new Document();
         Subnet rootSubnet = getNewSubnet(xmlDocument.rootSubnet);
         document.petriNet.setRootSubnet(rootSubnet);
@@ -204,7 +210,10 @@ public class DocumentImporter {
         //ARDUINO
         if (!xmlPlace.arduinoComponent.type.equals("")) {
             if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
-                JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                if (!warningShowed) {
+                    warningShowed = true;
+                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components \n\n If you want to use Arduino Component, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 ArduinoComponentType type = ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type);
                 ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlPlace.arduinoComponent.pin, type, place);
@@ -213,6 +222,19 @@ public class DocumentImporter {
                     case ANALOG:
                         ((AnalogInputSettings) settings).setBottomThreshold(xmlPlace.arduinoComponent.settings.bottomThreshold);
                         ((AnalogInputSettings) settings).setUpThreshold(xmlPlace.arduinoComponent.settings.upThreshold);
+                        break;
+                    case MESSAGE:
+                        ((SendMessageSettings) settings).setMessage(xmlPlace.arduinoComponent.settings.message);
+                        break;
+                    case CUSTOM_SYSEX:
+                        ((SendSysexCommandSettings) settings).setMessage(xmlPlace.arduinoComponent.settings.message);
+                        ((SendSysexCommandSettings) settings).setCommand(CustomSysexCommand.valueOf(xmlPlace.arduinoComponent.settings.command));
+                        break;
+                    case PWM:
+                        ((PWMSettings) settings).setValue(xmlPlace.arduinoComponent.settings.value);
+                        break;
+                    case SERVO:
+                        ((ServoSettings) settings).setValue(xmlPlace.arduinoComponent.settings.value);
                         break;
                     default:
                         break;
@@ -240,7 +262,10 @@ public class DocumentImporter {
         //ARDUINO
         if (!xmlTransition.arduinoComponent.type.equals("")) {
             if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
-                JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                if (!warningShowed) {
+                    warningShowed = true;
+                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components \n\n If you want to use Arduino Component, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 ArduinoComponentType type = ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type);
                 ArduinoComponentSettings settings = ArduinoComponentSettings.settingsFactory(arduinoManager, xmlTransition.arduinoComponent.pin, type, transition);
@@ -249,6 +274,19 @@ public class DocumentImporter {
                     case ANALOG:
                         ((AnalogInputSettings) settings).setBottomThreshold(xmlTransition.arduinoComponent.settings.bottomThreshold);
                         ((AnalogInputSettings) settings).setUpThreshold(xmlTransition.arduinoComponent.settings.upThreshold);
+                        break;
+                    case MESSAGE:
+                        ((SendMessageSettings) settings).setMessage(xmlTransition.arduinoComponent.settings.message);
+                        break;
+                    case CUSTOM_SYSEX:
+                        ((SendSysexCommandSettings) settings).setMessage(xmlTransition.arduinoComponent.settings.message);
+                        ((SendSysexCommandSettings) settings).setCommand(CustomSysexCommand.valueOf(xmlTransition.arduinoComponent.settings.command));
+                        break;
+                    case PWM:
+                        ((PWMSettings) settings).setValue(xmlTransition.arduinoComponent.settings.value);
+                        break;
+                    case SERVO:
+                        ((ServoSettings) settings).setValue(xmlTransition.arduinoComponent.settings.value);
                         break;
                     default:
                         break;

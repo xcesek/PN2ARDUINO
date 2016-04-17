@@ -47,6 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <settings>
                         <bottomThreshold><xsl:value-of select="arduinoComponent/settings/bottomThreshold"/></bottomThreshold>
                         <upThreshold><xsl:value-of select="arduinoComponent/settings/upThreshold"/></upThreshold>
+                        <message><xsl:value-of select="arduinoComponent/settings/message"/></message>
+                        <command><xsl:value-of select="arduinoComponent/settings/command"/></command>
+                        <value><xsl:value-of select="arduinoComponent/settings/value"/></value>
                     </settings>
                 </arduinoComponent>
             </place>
@@ -67,6 +70,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <settings>
                         <bottomThreshold><xsl:value-of select="arduinoComponent/settings/bottomThreshold"/></bottomThreshold>
                         <upThreshold><xsl:value-of select="arduinoComponent/settings/upThreshold"/></upThreshold>
+                        <message><xsl:value-of select="arduinoComponent/settings/message"/></message>
+                        <command><xsl:value-of select="arduinoComponent/settings/command"/></command>
+                        <value><xsl:value-of select="arduinoComponent/settings/value"/></value>
                     </settings>
                 </arduinoComponent>
             </transition>

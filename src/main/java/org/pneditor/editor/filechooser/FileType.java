@@ -55,16 +55,16 @@ public abstract class FileType extends FileFilter {
 
     public abstract Icon getIcon();
 
-    public BufferedImage getPreview(File file) {
-        try {
-            Document document = load(file);
-            PetriNet petriNet = document.petriNet;
-            BufferedImage image = petriNet.getRootSubnet().getPreview(petriNet.getInitialMarking());
-            return image;
-        } catch (FileTypeException ex) {
-        }
-        return null;
-    }
+//    public BufferedImage getPreview(File file) {
+//        try {
+//            Document document = load(file);
+//            PetriNet petriNet = document.petriNet;
+//            BufferedImage image = petriNet.getRootSubnet().getPreview(petriNet.getInitialMarking());
+//            return image;
+//        } catch (FileTypeException ex) {
+//        }
+//        return null;
+//    }
 
     public String getDescription() {
         return getName() + " (*." + getExtension() + ")";

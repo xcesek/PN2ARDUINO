@@ -341,6 +341,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     protected Action addAnalogInput;
     protected Action addSendMessage;
     protected Action addCustomSysex;
+    protected Action addPWM;
+    protected Action addServo;
 
 
 //    @Override
@@ -423,7 +425,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         addAnalogInput.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         addSendMessage.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
         addCustomSysex.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
-
+        addPWM.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
+        addServo.setEnabled((isPlaceNode || isTransitionNode) && ((ActivateArduinoAction) activateArduino).isAlreadyActivated());
 
     }
 
@@ -559,6 +562,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         addAnalogInput = new AddArduinoComponentAction(this, ArduinoComponentType.ANALOG);
         addSendMessage = new AddArduinoComponentAction(this, ArduinoComponentType.MESSAGE);
         addCustomSysex = new AddArduinoComponentAction(this, ArduinoComponentType.CUSTOM_SYSEX);
+        addPWM = new AddArduinoComponentAction(this, ArduinoComponentType.PWM);
+        addServo = new AddArduinoComponentAction(this, ArduinoComponentType.SERVO);
 
 
         //UI
@@ -723,6 +728,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoComponentPlaceSubmenu.add(addAnalogInput);
         arduinoComponentPlaceSubmenu.add(addSendMessage);
         arduinoComponentPlaceSubmenu.add(addCustomSysex);
+        arduinoComponentPlaceSubmenu.add(addPWM);
+        arduinoComponentPlaceSubmenu.add(addServo);
 
         placePopup = new JPopupMenu();
         placePopup.add(setLabel);
@@ -744,6 +751,8 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
         arduinoComponentTransitionSubmenu.add(addAnalogInput);
         arduinoComponentTransitionSubmenu.add(addSendMessage);
         arduinoComponentTransitionSubmenu.add(addCustomSysex);
+        arduinoComponentTransitionSubmenu.add(addPWM);
+        arduinoComponentTransitionSubmenu.add(addServo);
 
         transitionPopup = new JPopupMenu();
         transitionPopup.add(setLabel);

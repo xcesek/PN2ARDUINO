@@ -55,10 +55,10 @@ public class EpsFileType extends FileType {
         throw new UnsupportedOperationException("Loading not supported.");
     }
 
-    @Override
-    public BufferedImage getPreview(File file) {
-        return null;
-    }
+//    @Override
+//    public BufferedImage getPreview(File file) {
+//        return null;
+//    }
 
     @Override
     public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {

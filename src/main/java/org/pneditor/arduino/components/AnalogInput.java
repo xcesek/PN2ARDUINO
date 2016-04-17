@@ -64,10 +64,12 @@ public class AnalogInput extends ArduinoComponent {
 
     @Override
     public boolean isEnabled(){
-        if(myPin.getValue() == 0) {
-            return false;
-        } else {
+        double bottomThreshold = ((AnalogInputSettings) settings).getBottomThreshold();
+        double upThreshold = ((AnalogInputSettings) settings).getUpThreshold();
+        if(myPin.getValue() >= bottomThreshold && myPin.getValue() <= upThreshold) {
             return true;
+        } else {
+            return false;
         }
     }
 }

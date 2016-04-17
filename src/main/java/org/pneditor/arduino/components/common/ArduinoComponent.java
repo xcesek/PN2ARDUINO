@@ -44,6 +44,10 @@ public class ArduinoComponent {
                 return new SendMessage(type, settings, arduinoManager, node);
             case CUSTOM_SYSEX:
                 return new SendSysexCommand(type, settings, arduinoManager, node);
+            case PWM:
+                return new PWM(type, settings, arduinoManager, node);
+            case SERVO:
+                return new Servo(type, settings, arduinoManager, node);
             default:
                 return new DigitalOutput(type, settings, arduinoManager, node);
         }

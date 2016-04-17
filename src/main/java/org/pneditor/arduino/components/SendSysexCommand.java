@@ -7,7 +7,9 @@ import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponent;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.petrinet.Node;
+import org.pneditor.util.LogEditor;
 
 import java.awt.*;
 import java.io.IOException;
@@ -31,6 +33,11 @@ public class SendSysexCommand extends ArduinoComponent {
 
     @Override
     public void fire() {
+        String message = ((SendSysexCommandSettings) settings).getMessage();
+        if(message.length() > 14) {
+            PNEditor.getRoot().getLogEditor().log("Your message is longer then 14 characters, it would by trimmed.", LogEditor.logType.ARDUINO);
+            ((SendSysexCommandSettings) settings).setMessage(message.substring(0,13));
+        }
         byte[] bytes = ((SendSysexCommandSettings) settings).getMessage().getBytes();
         byte[] msg = new byte[bytes.length * 2 + 3];
 
@@ -53,6 +60,11 @@ public class SendSysexCommand extends ArduinoComponent {
     @Override
     public void activate(){
         fire();
+    }
+
+   @Override
+    public boolean isEnabled(){
+        return true;
     }
 
 
@@ -91,7 +103,7 @@ public class SendSysexCommand extends ArduinoComponent {
 
         @Override
         public void onMessageReceive(IOEvent ioEvent, String s) {
-            System.out.println("Prisla sprava: " + s);
+            PNEditor.getRoot().getLogEditor().log("Arduino sent message: " + s, LogEditor.logType.ARDUINO);
         }
     }
 

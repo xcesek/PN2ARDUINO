@@ -16,21 +16,14 @@
  */
 package org.pneditor.editor.filechooser;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 
 /**
- *
  * @author Martin Riesz <riesz.martin at gmail.com>
  */
 public class Preview extends JPanel implements PropertyChangeListener {
@@ -81,7 +74,8 @@ public class Preview extends JPanel implements PropertyChangeListener {
             thumbnail = null;
             return;
         }
-        BufferedImage image = fileType.getPreview(file);
+//        BufferedImage image = fileType.getPreview(file);
+        BufferedImage image = null;
         if (image == null) {
             thumbnail = null;
             return;

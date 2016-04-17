@@ -52,7 +52,7 @@ public class AddArduinoComponentAction extends AbstractAction {
                     ArduinoComponent arduinoComponent = ArduinoComponent.componentFactory(type, arduinoComponentSettings, root.getArduinoManager(), clickedNode);
                     clickedNode.setArduinoComponent(arduinoComponent);
                 }
-                if (option.equals("Delete") && clickedNode.getArduinoComponent().getType() == type) {
+                if (option.equals("Delete") && clickedNode.hasArduinoComponent() && clickedNode.getArduinoComponent().getType() == type) {
                     if (clickedNode.hasArduinoComponent() ) {
                         clickedNode.getArduinoComponent().freeResources();
                         clickedNode.setArduinoComponent(null);

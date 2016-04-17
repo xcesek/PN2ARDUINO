@@ -34,6 +34,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
     }
 
     private JPanel getMyPanel() {
+        JPanel panel = new JPanel(new GridLayout(0, 1));
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
         //PIN
@@ -79,6 +80,12 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         myPanel.add(upLabel); //8
         myPanel.add(upTextField); //9
 
+        myPanel.add(Box.createVerticalStrut(5));
+        myPanel.add(Box.createVerticalStrut(5));
+
+        panel.add(myPanel);
+        panel.add(getSupportedFunctionality());
+
         treshholdEnable.addChangeListener(e -> {
             if(treshholdEnable.isSelected()) {
                 botomLabel.setEnabled(true);
@@ -93,7 +100,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
             }
         });
 
-        return myPanel;
+        return panel;
     }
 
     @Override
@@ -131,6 +138,55 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
     @Override
     public void actualizeSettingsGUI(){
         super.setPanel(getMyPanel());
+    }
+
+    private JPanel getSupportedFunctionality(){
+        JPanel panel = new JPanel(new GridLayout(0,1));
+        String newline = "\n";
+
+        JTextArea featuresTitle = new JTextArea();
+        featuresTitle.setEditable(false);
+        featuresTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        featuresTitle.append("Supported Features: ");
+
+        JTextArea featuresContent = new JTextArea();
+        featuresContent.setEditable(false);
+        featuresContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        featuresContent.append("- if you Enable Threshold logic, you can enter custom Bottom and Up Threshold" + newline);
+        featuresContent.append("- default value of Bottom Threshol is 0" + newline);
+        featuresContent.append("- default value of Up Threshol is 1023" + newline);
+
+        JTextArea inputTitle = new JTextArea();
+        inputTitle.setEditable(false);
+        inputTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        inputTitle.append("Input value: ");
+
+        JTextArea inputContent = new JTextArea();
+        inputContent.setEditable(false);
+        inputContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        inputContent.append("- Bottom Threshold: greater than 0 & lower than Up Threshold" + newline);
+        inputContent.append("- Up Threshold: lower than 1023 & greater than Bottom Threshold" + newline);
+
+        JTextArea netTitle = new JTextArea();
+        netTitle.setEditable(false);
+        netTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        netTitle.append("Petri net support: ");
+
+        JTextArea netContent = new JTextArea();
+        netContent.setEditable(false);
+        netContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        netContent.append("- condition if transition is fireable" + newline);
+
+        panel.add(featuresTitle);
+        panel.add(featuresContent);
+
+        panel.add(inputTitle);
+        panel.add(inputContent);
+
+        panel.add(netTitle);
+        panel.add(netContent);
+
+        return panel;
     }
 
     //GETTER & SETTER

@@ -54,6 +54,7 @@ public class AutoFiring {
                 PNEditor.getRoot().selectTool_Token();
             } catch(RuntimeException e){
                 PNEditor.getRoot().getLogEditor().log("No transitions is enabled", LogEditor.logType.PNEDITOR);
+                PNEditor.getRoot().selectTool_Token();
             }
         }
     }

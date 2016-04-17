@@ -54,24 +54,24 @@ public class PngFileType extends FileType {
         throw new UnsupportedOperationException("Loading not supported.");
     }
 
-    @Override
-    public BufferedImage getPreview(File file) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(file);
-        } catch (IOException ex) {
-        }
-        return image;
-    }
+//    @Override
+//    public BufferedImage getPreview(File file) {
+//        BufferedImage image = null;
+//        try {
+//            image = ImageIO.read(file);
+//        } catch (IOException ex) {
+//        }
+//        return image;
+//    }
 
     @Override
     public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
-        try {
-            Marking initialMarking = document.petriNet.getInitialMarking();
-            BufferedImage bufferedImage = document.petriNet.getCurrentSubnet().getPreview(initialMarking);
-            ImageIO.write(bufferedImage, "png", file);
-        } catch (IOException ex) {
-            throw new FileTypeException(ex.getMessage());
-        }
+//        try {
+//            Marking initialMarking = document.petriNet.getInitialMarking();
+//            BufferedImage bufferedImage = document.petriNet.getCurrentSubnet().getPreview(initialMarking);
+//            ImageIO.write(bufferedImage, "png", file);
+//        } catch (IOException ex) {
+//            throw new FileTypeException(ex.getMessage());
+//        }
     }
 }

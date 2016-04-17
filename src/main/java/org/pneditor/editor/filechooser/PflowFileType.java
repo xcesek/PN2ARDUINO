@@ -20,10 +20,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 
+import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
@@ -84,6 +86,8 @@ public class PflowFileType extends FileType {
             final InputStream xslt = getClass().getResourceAsStream("/xslt/load.xslt");;
             Document document = new DocumentImporter().readFromFileWithXslt(file, xslt);
             document.petriNet.getRootSubnet().setViewTranslationToCenterRecursively();
+
+
             return document;
         } catch (JAXBException ex) {
             if (!file.exists()) {

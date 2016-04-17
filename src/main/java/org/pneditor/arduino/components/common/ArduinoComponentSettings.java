@@ -40,6 +40,10 @@ public class ArduinoComponentSettings {
                 return new SendMessageSettings(arduinoManager);
             case CUSTOM_SYSEX:
                 return new SendSysexCommandSettings(arduinoManager);
+            case PWM:
+                return new PWMSettings(arduinoManager, pin, node);
+            case SERVO:
+                return new ServoSettings(arduinoManager, pin, node);
             default:
                 return new DigitalOutputSettings(arduinoManager, pin);
         }
