@@ -31,10 +31,10 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         }
         super.pin = pin;
         super.setPanel(getMyPanel());
+        super.setInfoPanel(initInfoPanel());
     }
 
     private JPanel getMyPanel() {
-        JPanel panel = new JPanel(new GridLayout(0, 1));
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
         //PIN
@@ -83,9 +83,6 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         myPanel.add(Box.createVerticalStrut(5));
         myPanel.add(Box.createVerticalStrut(5));
 
-        panel.add(myPanel);
-        panel.add(getSupportedFunctionality());
-
         treshholdEnable.addChangeListener(e -> {
             if(treshholdEnable.isSelected()) {
                 botomLabel.setEnabled(true);
@@ -100,7 +97,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
             }
         });
 
-        return panel;
+        return myPanel;
     }
 
     @Override
@@ -140,8 +137,9 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         super.setPanel(getMyPanel());
     }
 
-    private JPanel getSupportedFunctionality(){
-        JPanel panel = new JPanel(new GridLayout(0,1));
+    private JPanel initInfoPanel(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         String newline = "\n";
 
         JTextArea featuresTitle = new JTextArea();
@@ -149,7 +147,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         featuresTitle.setFont(new Font("Serif", Font.BOLD, 13));
         featuresTitle.append("Supported Features: ");
 
-        JTextArea featuresContent = new JTextArea();
+        JTextArea featuresContent = new JTextArea(3, 40);
         featuresContent.setEditable(false);
         featuresContent.setFont(new Font("Serif", Font.PLAIN, 12));
         featuresContent.append("- if you Enable Threshold logic, you can enter custom Bottom and Up Threshold" + newline);
@@ -185,6 +183,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
 
         panel.add(netTitle);
         panel.add(netContent);
+
 
         return panel;
     }

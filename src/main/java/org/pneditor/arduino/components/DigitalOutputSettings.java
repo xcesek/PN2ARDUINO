@@ -26,6 +26,7 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
         }
         super.pin = pin;
         super.setPanel(getMyPanel());
+        super.setInfoPanel(initInfoPanel());
     }
 
     private JPanel getMyPanel() {
@@ -48,6 +49,8 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
             pinComboBox = new JComboBox(comboBoxModel);
             pinComboBox.setSelectedIndex(0);
         }
+        pinComboBox.setPreferredSize(new Dimension(50, 25));
+
         myPanel.add(new JLabel("Pin: ")); //0
         myPanel.add(pinComboBox); //1
 
@@ -76,6 +79,29 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
     @Override
     public void actualizeSettingsGUI() {
         super.setPanel(getMyPanel());
+    }
+
+    private JPanel initInfoPanel(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        String newline = "\n";
+
+        JTextArea netTitle = new JTextArea();
+        netTitle.setEditable(false);
+        netTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        netTitle.append("Petri net support: ");
+
+        JTextArea netContent = new JTextArea();
+        netContent.setEditable(false);
+        netContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        netContent.append("- firing transition with delay" + newline);
+        netContent.append("- place" + newline);
+
+        panel.add(netTitle);
+        panel.add(netContent);
+
+
+        return panel;
     }
 
 }

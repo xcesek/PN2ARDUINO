@@ -49,7 +49,7 @@ public class DigitalOutput extends ArduinoComponent {
 
     @Override
     public void activate() {
-        PNEditor.getRoot().getLogEditor().log("Firing: " + settings.getPin(), LogEditor.logType.ARDUINO);
+        PNEditor.getRoot().getLogEditor().log("Activating: " + settings.getPin(), LogEditor.logType.ARDUINO);
         try {
             myPin.setValue(1);
         } catch (IOException e) {

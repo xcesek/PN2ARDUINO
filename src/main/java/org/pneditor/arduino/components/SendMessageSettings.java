@@ -26,6 +26,7 @@ public class SendMessageSettings extends ArduinoComponentSettings {
         super(arduinoManager);
         super.setType(ArduinoComponentType.MESSAGE);
         super.setPanel(getMyPanel());
+        super.setInfoPanel(initInfoPanel());
     }
 
     private JPanel getMyPanel() {
@@ -33,7 +34,11 @@ public class SendMessageSettings extends ArduinoComponentSettings {
         JPanel myPanel = new JPanel(customSettingsLayout);
 
         myPanel.add(new JLabel("Message: ", SwingConstants.LEFT));
-        myPanel.add(new JTextField(message));
+
+        JTextField messageTextField = new JTextField(message);
+        messageTextField.setPreferredSize(new Dimension(95, 25));
+
+        myPanel.add(messageTextField);
 
         myPanel.add(Box.createVerticalStrut(5)); //2
         myPanel.add(Box.createVerticalStrut(5)); //3
@@ -53,6 +58,42 @@ public class SendMessageSettings extends ArduinoComponentSettings {
     @Override
     public void actualizeSettingsGUI() {
         super.setPanel(getMyPanel());
+    }
+
+    private JPanel initInfoPanel(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        String newline = "\n";
+
+        JTextArea inputTitle = new JTextArea();
+        inputTitle.setEditable(false);
+        inputTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        inputTitle.append("Input value: ");
+
+        JTextArea inputContent = new JTextArea();
+        inputContent.setEditable(false);
+        inputContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        inputContent.append("- Message: custom string, not longer then 14 characters" + newline);
+
+        JTextArea netTitle = new JTextArea();
+        netTitle.setEditable(false);
+        netTitle.setFont(new Font("Serif", Font.BOLD, 13));
+        netTitle.append("Petri net support: ");
+
+        JTextArea netContent = new JTextArea();
+        netContent.setEditable(false);
+        netContent.setFont(new Font("Serif", Font.PLAIN, 12));
+        netContent.append("- firing transition" + newline);
+        netContent.append("- place" + newline);
+
+        panel.add(inputTitle);
+        panel.add(inputContent);
+
+        panel.add(netTitle);
+        panel.add(netContent);
+
+
+        return panel;
     }
 
     //GETTER & SETTER

@@ -719,7 +719,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 
         // ARDUINO RELATED
         arduinoMenu.add(setBoard);
-        arduinoMenu.add(activateArduino);
+        //arduinoMenu.add(activateArduino);
 
         //ADD ARDUINO COMPONENT SUBMENU
         JMenu arduinoComponentPlaceSubmenu = new JMenu("Add Arduino Component");
@@ -908,6 +908,14 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
     @Override
     public ArduinoManager getArduinoManager() {
         return arduinoManager;
+    }
+
+    public Action getActivateArduino(){
+        return activateArduino;
+    }
+
+    public Canvas getCanvas(){
+        return canvas;
     }
 
     //ARDUINO - list of arduinoListeners

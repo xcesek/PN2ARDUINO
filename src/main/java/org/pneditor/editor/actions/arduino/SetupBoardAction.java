@@ -20,6 +20,9 @@ import jssc.SerialPortList;
 import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.BoardSettings;
 import org.pneditor.editor.Root;
+import org.pneditor.editor.RootPflow;
+import org.pneditor.editor.canvas.*;
+import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
@@ -36,6 +39,9 @@ public class SetupBoardAction extends AbstractAction {
     private JTextField portField;
 
     private boolean alreadySetup;
+
+    private Cursor oldCursor;
+    private Canvas canvas;
 
     public SetupBoardAction(Root root) {
         this.root = root;
@@ -59,7 +65,15 @@ public class SetupBoardAction extends AbstractAction {
             final JOptionPane optionPane = new JOptionPane();
             optionPane.setMessage(popupContent(boardSettings));
 
-            boardSettings.setPort(requestPort());
+            String port = requestPort();
+            if(!port.equals("")) {
+                boardSettings.setPort(port);
+                ((RootPflow)root).getActivateArduino().setEnabled(true);
+                ((RootPflow)root).getActivateArduino().actionPerformed(e);
+
+                canvas.activeCursor = oldCursor;
+                canvas.setCursor(canvas.activeCursor);
+            }
             root.refreshAll();
         }
     }
@@ -93,6 +107,13 @@ public class SetupBoardAction extends AbstractAction {
             panel.add(portNameSelector);
             if (JOptionPane.showConfirmDialog(root.getParentFrame(), panel, "Select the port", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 alreadySetup = true;
+
+                canvas = ((RootPflow) root).getCanvas();
+                oldCursor = canvas.getCursor();
+                canvas.activeCursor = GraphicsTools.getCursor("pneditor/arduino/wait.png", new Point(16, 16));
+                canvas.setCursor(canvas.activeCursor);
+                root.repaintCanvas();
+
                 return portNameSelector.getSelectedItem().toString();
             } else {
                 return "";

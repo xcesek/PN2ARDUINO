@@ -70,6 +70,8 @@ public class AddArduinoComponentAction extends AbstractAction {
 
     public String requestComponentSettings() {
 
+        JPanel message = new JPanel();
+
         if (clickedNode.hasArduinoComponent() && clickedNode.getArduinoComponent().getType() == type) {
             arduinoComponentSettings = clickedNode.getArduinoComponent().getSettings();
         } else {
@@ -77,10 +79,14 @@ public class AddArduinoComponentAction extends AbstractAction {
         }
         customSettings = arduinoComponentSettings.getSettingsGui();
 
+        message.add(customSettings);
+        message.add(Box.createHorizontalStrut(10));
+        message.add(arduinoComponentSettings.getInfoPanel());
+
         Object[] options = {"Save", "Delete", "Cancel"};
 
         JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessage(customSettings);
+        optionPane.setMessage(message);
         optionPane.setOptions(options);
         optionPane.setInitialValue(options[0]);
 

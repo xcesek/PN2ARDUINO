@@ -22,10 +22,12 @@ import org.pneditor.arduino.ArduinoController;
 import org.pneditor.arduino.BoardSettings;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.RootPflow;
+import org.pneditor.editor.canvas.Canvas;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -52,7 +54,7 @@ public class ActivateArduinoAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         if (isEnabled()) {
-            //TODO thread
+
             //doska
             root.getArduinoManager().setDevice(new FirmataDevice(boardSettings.getPort()));
             try {
@@ -64,6 +66,8 @@ public class ActivateArduinoAction extends AbstractAction {
                 //ARDUINO CONTROLLER INITIALIZATION
                 ArduinoController arduinoController = new ArduinoController(root.getArduinoManager(), root.getDocument().getPetriNet().getInitialMarking());
                 alreadyActivated = true;
+
+
             } catch (IOException exception) {
                 if (exception.getCause().toString().contains("Port busy")) {
                     ((RootPflow)root).getLogEditor().log("Port busy / Device is already started", LogEditor.logType.ARDUINO);

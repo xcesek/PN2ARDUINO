@@ -19,6 +19,7 @@ import java.awt.*;
 public class ArduinoComponentSettings {
 
     protected JPanel panel;
+    protected JPanel infoPanel;
     protected ArduinoComponentType type;
     protected Integer pin;
     protected ArduinoManager arduinoManager;
@@ -79,6 +80,13 @@ public class ArduinoComponentSettings {
     public JPanel getSettingsGui() {
         actualizeSettingsGUI();
         return panel;
+    }
+
+    public JPanel getInfoPanel(){
+        return infoPanel;
+    }
+    public void setInfoPanel(JPanel panel) {
+        infoPanel = panel;
     }
 
 
