@@ -27,7 +27,7 @@ public class SendSysexCommand extends ArduinoComponent {
 
     public SendSysexCommand(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.lightGray;
+        color = new Color(198, 110, 220);
         arduinoManager.getDevice().addEventListener(EventListener.getInstance());
     }
 

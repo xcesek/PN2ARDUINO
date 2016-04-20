@@ -50,7 +50,7 @@ public class SendMessageSettings extends ArduinoComponentSettings {
     public void parseSettingsGUI(JPanel panel) {
         message = ((JTextField) panel.getComponent(1)).getText();
         if(message.length() > 14) {
-            PNEditor.getRoot().getLogEditor().log("Your message is longer then 14 characters, it would by trimmed.", LogEditor.logType.ARDUINO);
+            PNEditor.getRoot().getLogEditor().log("Your message is longer then 14 characters, it will by trimmed.", LogEditor.logType.ARDUINO);
             message = message.substring(0,13);
         }
     }

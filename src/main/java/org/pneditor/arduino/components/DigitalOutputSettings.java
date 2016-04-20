@@ -3,6 +3,8 @@ package org.pneditor.arduino.components;
 import org.pneditor.arduino.ArduinoManager;
 import org.pneditor.arduino.components.common.ArduinoComponentSettings;
 import org.pneditor.arduino.components.common.ArduinoComponentType;
+import org.pneditor.editor.PNEditor;
+import org.pneditor.util.LogEditor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +34,8 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
     private JPanel getMyPanel() {
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
+        myPanel.add(new JLabel("Pin: ")); //0
+
         //PIN
         Object[] comboBoxModel = arduinoManager.getUnusedPins(type);
         JComboBox pinComboBox;
@@ -46,12 +50,15 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
             pinComboBox = new JComboBox(newComboBoxModel);
             pinComboBox.setSelectedItem(pin.byteValue());
         } else {
+            if(comboBoxModel.length == 0) {
+                PNEditor.getRoot().getLogEditor().log("There is no more pin! / Error in communication with Arduino, please restart PNEditor.", LogEditor.logType.ARDUINO);
+                return myPanel;
+            }
             pinComboBox = new JComboBox(comboBoxModel);
             pinComboBox.setSelectedIndex(0);
         }
         pinComboBox.setPreferredSize(new Dimension(50, 25));
 
-        myPanel.add(new JLabel("Pin: ")); //0
         myPanel.add(pinComboBox); //1
 
         myPanel.add(Box.createVerticalStrut(5));

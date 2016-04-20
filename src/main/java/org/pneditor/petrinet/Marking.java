@@ -121,6 +121,12 @@ public class Marking implements Subject {
             throw new IllegalStateException("Number of tokens must be non-negative");
         }
 
+        if(tokens > ((Place)placeNode).getCapacity()) {
+            PNEditor.getRoot().getLogEditor().log("Number of tokens cannot be greater than capacity", LogEditor.logType.PNEDITOR);
+            throw new IllegalStateException("Number of tokens can not be greater than capacity");
+        }
+
+
         Place place = placeNode.getPlace();
 
         if (place == null) {
@@ -202,6 +208,7 @@ public class Marking implements Subject {
         lock.writeLock().lock();
         try {
             if (isEnabled(transition)) {
+                transition.setFiring(true);
                 for (Arc arc : transition.getConnectedArcs()) {
                     if (arc.isPlaceToTransition()) {
                         int tokens = getTokens(arc.getPlaceNode());
@@ -226,6 +233,7 @@ public class Marking implements Subject {
                 success = false;
             }
         } finally {
+            transition.setFiring(false);
             lock.writeLock().unlock();
         }
 
@@ -245,6 +253,7 @@ public class Marking implements Subject {
         try {
             if (transition.getTimer().isActive() || isEnabled(transition)) {
                 PNEditor.getRoot().getLogEditor().log("Phase1 - arc count - " + pinNum + " : " + transition.getConnectedArcs(true).size(), LogEditor.logType.ARDUINO);
+                transition.setFiring(true);
                 for (Arc arc : transition.getConnectedArcs(true)) {
                     int tokens = getTokens(arc.getPlaceNode());
                     if (!arc.getType().equals(Arc.INHIBITOR)) {                    //inhibitor arc doesnt consume tokens
@@ -295,6 +304,7 @@ public class Marking implements Subject {
             success = true;
             notifyArduinoListenersPhase2(transition, destinationPlaces);
         } finally {
+            transition.setFiring(false);
             lock.writeLock().unlock();
         }
 

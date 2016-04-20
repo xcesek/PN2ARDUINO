@@ -27,7 +27,7 @@ public class Servo extends ArduinoComponent {
 
     public Servo(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.BLUE;
+        color = new Color(120, 90, 186);
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.SERVO);

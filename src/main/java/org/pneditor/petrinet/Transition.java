@@ -36,6 +36,8 @@ public class Transition extends TransitionNode implements Cloneable {
     Integer latestFiringTime;
     private SimpleTimer timer;
 
+    private boolean isFiring = false;
+
     @Override
     public void draw(Graphics g, DrawingOptions drawingOptions) {
         if(getArduinoComponent() != null)
@@ -82,6 +84,12 @@ public class Transition extends TransitionNode implements Cloneable {
     public void setTimer(SimpleTimer timer) {
         this.timer = timer;
     }
-    
-    
+
+    public boolean isFiring() {
+        return isFiring;
+    }
+
+    public void setFiring(boolean firing) {
+        isFiring = firing;
+    }
 }

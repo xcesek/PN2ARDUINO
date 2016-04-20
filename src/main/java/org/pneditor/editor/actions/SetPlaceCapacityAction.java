@@ -16,6 +16,7 @@
  */
 package org.pneditor.editor.actions;
 
+import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.RootPflow;
 import org.pneditor.petrinet.Place;
@@ -77,7 +78,12 @@ public class SetPlaceCapacityAction extends AbstractAction {
             int value = (optionPane.getValue() != null) ? ((Integer) optionPane.getValue()).intValue() : JOptionPane.CANCEL_OPTION;
             if (value == JOptionPane.YES_OPTION) {
                 try {
-                    place.setCapacity(Integer.parseInt(capacityField.getText()));
+                    Integer newCapacity = Integer.parseInt(capacityField.getText());
+                    if(newCapacity < PNEditor.getRoot().getCurrentMarking().getTokens(place)) {
+                        PNEditor.getRoot().getLogEditor().log("Capacity cannot be lower than actual marking.", LogEditor.logType.PNEDITOR);
+                    } else {
+                        place.setCapacity(Integer.parseInt(capacityField.getText()));
+                    }
                 } catch (NumberFormatException ignore) {
                     place.setCapacity(10);  // default
                     ((RootPflow) root).getLogEditor().log("Wrong value specified as place capacity. Setting to default value 10", LogEditor.logType.PNEDITOR);

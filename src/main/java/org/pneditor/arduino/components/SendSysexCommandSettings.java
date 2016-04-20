@@ -63,7 +63,7 @@ public class SendSysexCommandSettings extends ArduinoComponentSettings {
         command = (CustomSysexCommand) ((JComboBox) panel.getComponent(1)).getSelectedItem();
         message = ((JTextField) panel.getComponent(5)).getText();
         if(message.length() > 14) {
-            PNEditor.getRoot().getLogEditor().log("Your message is longer then 14 characters, it would by trimmed.", LogEditor.logType.ARDUINO);
+            PNEditor.getRoot().getLogEditor().log("Your message is longer then 14 characters, it will by trimmed.", LogEditor.logType.ARDUINO);
             message = message.substring(0,13);
         }
     }

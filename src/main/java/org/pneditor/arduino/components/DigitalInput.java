@@ -27,7 +27,7 @@ public class DigitalInput extends ArduinoComponent {
 
     public DigitalInput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.PINK;
+        color = new Color(140, 167, 188);
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.INPUT);

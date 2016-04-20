@@ -61,7 +61,7 @@ public class ActivateArduinoAction extends AbstractAction {
                 root.getArduinoManager().getDevice().start();
                 root.getArduinoManager().getDevice().ensureInitializationIsDone();
                 root.getArduinoManager().initializePinMap();
-                ((RootPflow)root).getLogEditor().log("Arduino device is ready", LogEditor.logType.ARDUINO);
+                ((RootPflow)root).getLogEditor().log("Arduino device is now ready", LogEditor.logType.ARDUINO);
                 System.out.println("device is now ready!");
                 //ARDUINO CONTROLLER INITIALIZATION
                 ArduinoController arduinoController = new ArduinoController(root.getArduinoManager(), root.getDocument().getPetriNet().getInitialMarking());

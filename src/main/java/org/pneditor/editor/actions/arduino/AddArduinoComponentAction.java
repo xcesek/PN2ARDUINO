@@ -37,6 +37,7 @@ public class AddArduinoComponentAction extends AbstractAction {
         putValue(NAME, name);
         putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/addArduinoComponent16.png"));
         putValue(SHORT_DESCRIPTION, name);
+        setComponentIcon(type);
         setEnabled(false);
     }
 
@@ -100,6 +101,35 @@ public class AddArduinoComponentAction extends AbstractAction {
             return (String) optionPane.getValue();
         } else {
             return "Cancel";
+        }
+    }
+
+    private void setComponentIcon(ArduinoComponentType type) {
+        switch (type){
+            case INPUT:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/140 167 188 digitalIn.png"));
+                break;
+            case OUTPUT:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/141 224 207 digitalOut.png"));
+                break;
+            case ANALOG:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/237 144 131 analogIn.png"));
+                break;
+            case SERVO:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/120 90 186 servo.png"));
+                break;
+            case MESSAGE:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/195 141 165 sendMessage.png"));
+                break;
+            case CUSTOM_SYSEX:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/198 110 220 sendSysexCommand.png"));
+                break;
+            case PWM:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/237 201 131 PWM.png"));
+                break;
+            default:
+                putValue(SMALL_ICON, GraphicsTools.getIcon("pneditor/arduino/addArduinoComponent16.png"));
+                break;
         }
     }
 }

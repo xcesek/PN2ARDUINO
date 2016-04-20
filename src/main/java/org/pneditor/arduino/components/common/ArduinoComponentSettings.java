@@ -78,7 +78,7 @@ public class ArduinoComponentSettings {
     }
 
     public JPanel getSettingsGui() {
-        actualizeSettingsGUI();
+        //actualizeSettingsGUI();
         return panel;
     }
 
@@ -88,6 +88,5 @@ public class ArduinoComponentSettings {
     public void setInfoPanel(JPanel panel) {
         infoPanel = panel;
     }
-
 
 }

@@ -27,7 +27,7 @@ public class AnalogInput extends ArduinoComponent {
 
     public AnalogInput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.RED;
+        color = new Color(237, 144, 131);
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.ANALOG);

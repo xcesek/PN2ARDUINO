@@ -28,7 +28,7 @@ public class DigitalOutput extends ArduinoComponent {
 
     public DigitalOutput(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.CYAN;
+        color = new Color(141, 224, 207);
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.OUTPUT);

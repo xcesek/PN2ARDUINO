@@ -27,7 +27,7 @@ public class PWM extends ArduinoComponent {
 
     public PWM(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.MAGENTA;
+        color = new Color(237, 201, 131);
         try {
             myPin = arduinoManager.getDevice().getPin(settings.getPin());
             myPin.setMode(Pin.Mode.PWM);

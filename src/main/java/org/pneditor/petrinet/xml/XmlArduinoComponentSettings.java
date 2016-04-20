@@ -12,10 +12,10 @@ public class XmlArduinoComponentSettings {
 
     // ANALOG
     @XmlElement(name = "bottomThreshold")
-    public Double bottomThreshold;
+    public Integer bottomThreshold;
 
     @XmlElement(name = "upThreshold")
-    public Double upThreshold;
+    public Integer upThreshold;
 
     // MESSAGE + CUSTOM SYSEX
     @XmlElement(name = "message")

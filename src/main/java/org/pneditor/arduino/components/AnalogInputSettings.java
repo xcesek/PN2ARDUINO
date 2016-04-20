@@ -20,8 +20,8 @@ import java.awt.*;
  */
 public class AnalogInputSettings extends ArduinoComponentSettings {
 
-    private double bottomThreshold = 0;
-    private double upThreshold = 1023;
+    private Integer bottomThreshold = 0;
+    private Integer upThreshold = 1023;
 
     public AnalogInputSettings(ArduinoManager arduinoManager, Integer pin) {
         super(arduinoManager);
@@ -37,6 +37,8 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
     private JPanel getMyPanel() {
         JPanel myPanel = new JPanel(new GridLayout(0, 2));
 
+        myPanel.add(new JLabel("Pin: ")); //0
+
         //PIN
         Object[] comboBoxModel = arduinoManager.getUnusedPins(type);
         JComboBox pinComboBox;
@@ -51,10 +53,14 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
             pinComboBox = new JComboBox(newComboBoxModel);
             pinComboBox.setSelectedItem(pin.byteValue());
         } else {
+            if(comboBoxModel.length == 0) {
+                PNEditor.getRoot().getLogEditor().log("There is no more pin! / Error in communication with Arduino, please restart PNEditor.", LogEditor.logType.ARDUINO);
+                return myPanel;
+            }
             pinComboBox = new JComboBox(comboBoxModel);
             pinComboBox.setSelectedIndex(0);
         }
-        myPanel.add(new JLabel("Pin: ")); //0
+
         myPanel.add(pinComboBox); //1
 
         myPanel.add(Box.createVerticalStrut(5)); //2
@@ -66,9 +72,9 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         myPanel.add(Box.createHorizontalGlue()); //5
 
         JLabel botomLabel = new JLabel("Bottom Threshold: ", SwingConstants.LEFT);
-        JTextField bottomTextField = new JTextField(((Double) bottomThreshold).toString());
+        JTextField bottomTextField = new JTextField(bottomThreshold.toString());
         JLabel upLabel = new JLabel("Up Threshold: ", SwingConstants.LEFT);
-        JTextField upTextField = new JTextField(((Double) upThreshold).toString());
+        JTextField upTextField = new JTextField(upThreshold.toString());
 
         botomLabel.setEnabled(false);
         bottomTextField.setEnabled(false);
@@ -105,8 +111,8 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
         pin = (((Byte) (((JComboBox) panel.getComponent(1)).getSelectedItem())).intValue());
         if(((JCheckBox) panel.getComponent(4)).isSelected()) {
             try{
-                bottomThreshold = Double.parseDouble (((JTextField) panel.getComponent(7)).getText());
-                upThreshold = Double.parseDouble (((JTextField) panel.getComponent(9)).getText());
+                bottomThreshold = Integer.parseInt (((JTextField) panel.getComponent(7)).getText());
+                upThreshold = Integer.parseInt (((JTextField) panel.getComponent(9)).getText());
                 if(bottomThreshold < 0 ) {
                     bottomThreshold = 0;
                 }
@@ -190,20 +196,20 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
 
     //GETTER & SETTER
 
-    public double getBottomThreshold() {
+    public Integer getBottomThreshold() {
         return bottomThreshold;
     }
 
-    public void setBottomThreshold(double bottomThreshold) {
+    public void setBottomThreshold(Integer bottomThreshold) {
         this.bottomThreshold = bottomThreshold;
         actualizeSettingsGUI();
     }
 
-    public double getUpThreshold() {
+    public Integer getUpThreshold() {
         return upThreshold;
     }
 
-    public void setUpThreshold(double upThreshold) {
+    public void setUpThreshold(Integer upThreshold) {
         this.upThreshold = upThreshold;
         actualizeSettingsGUI();
     }

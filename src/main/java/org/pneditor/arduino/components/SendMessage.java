@@ -26,7 +26,7 @@ public class SendMessage extends ArduinoComponent {
 
     public SendMessage(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
-        color = Color.GRAY;
+        color = new Color(195, 141, 165);
     }
 
     @Override

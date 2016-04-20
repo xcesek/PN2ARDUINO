@@ -31,4 +31,5 @@ public class Colors {
     public static final Color singleSelectedColor = Color.gray;
     public static final Color pointingColor = Color.blue;
     public static final Color subnetColor = new Color(0xb8, 0xcf, 0xe5);
+    public static final Color firingColor = Color.BLUE;
 }

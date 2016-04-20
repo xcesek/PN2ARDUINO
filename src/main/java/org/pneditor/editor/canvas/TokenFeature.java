@@ -111,9 +111,17 @@ class TokenFeature implements Feature {
                 if (element instanceof Transition) {
                     Transition transition = (Transition) element;
                     if (initialMarking.isEnabled(transition)) {
-                        g.setColor(Colors.permittedColor);
+                        if(transition.isFiring()){
+                            g.setColor(Colors.firingColor);
+                        } else {
+                            g.setColor(Colors.permittedColor);
+                        }
                     } else {
-                        g.setColor(Colors.disallowedColor);
+                        if(transition.isFiring()){
+                            g.setColor(Colors.firingColor);
+                        } else {
+                            g.setColor(Colors.disallowedColor);
+                        }
                     }
                     ((Graphics2D) g).setStroke(new BasicStroke(2f));
                     g.drawRect(transition.getStart().x + 1, transition.getStart().y + 1, transition.getWidth() - 3, transition.getHeight() - 3);
