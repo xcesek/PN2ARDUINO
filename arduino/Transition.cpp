@@ -92,7 +92,25 @@ int Transition::isEnabled()
     Node *source = connectedArcs[i]->getSource();
     if (source->getNodeType() == placeType) {
       Place *place = static_cast<Place*>(source);
-      if (place->getTokens() < connectedArcs[i]->getMultiplicity()) internalTriggerActive = 0;
+      switch(connectedArcs[i]->getType()){
+        //regular type
+        case regular:
+          //Serial.print("  (transition) source place arc type : "); Serial.println("regular");
+          if (place->getTokens() < connectedArcs[i]->getMultiplicity())
+            internalTriggerActive = 0;
+          break;
+        //inhibitor type
+        case inhibitor:
+          //Serial.print("  (transition) source place arc type : "); Serial.println("inhibitor");
+          if (place->getTokens() != 0)
+            internalTriggerActive = 0;
+          break;
+        //reset type
+        case reset:
+          //Serial.print("  (transition) source place arc type : "); Serial.println("reset");
+          internalTriggerActive = 1;
+          break;
+      }
     }
     Node *destination = connectedArcs[i]->getDestination();
     if (destination->getNodeType() == placeType) {
