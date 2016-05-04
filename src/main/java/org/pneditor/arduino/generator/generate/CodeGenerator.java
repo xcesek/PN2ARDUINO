@@ -278,7 +278,13 @@ public class CodeGenerator {
                 + ", allPlaces, allPlacesCount"
                 + ");\n");
 
+        buffer.append("firingScheduler->setHelper(helper);\n");
+
         buffer.append("randomSeed(analogRead(0));\n");
+
+        buffer.append(" for (int i = 0; i < allPlacesCount; i++) {\n" +
+                "       allPlaces[i]->apply();\n" +
+                "   }\n");
 
         if (arduinoManager.getBoardSettings().isVerboseOutput()) {
             buffer.append("Serial.println();\n");
@@ -294,15 +300,16 @@ public class CodeGenerator {
 
         buffer.append(" Transition *nextToFire = firingScheduler->nextToFire();\n");
         buffer.append(" if(nextToFire != NULL) nextToFire->fire();\n");
-        buffer.append(" for (int i = 0; i < allPlacesCount; i++) {\n" +
-                "       allPlaces[i]->apply();\n" +
-                "   }\n");
+//        buffer.append(" for (int i = 0; i < allPlacesCount; i++) {\n" +
+//                "       allPlaces[i]->apply();\n" +
+//                "   }\n");
 
         if (arduinoManager.getBoardSettings().isVerboseOutput()) {
             buffer.append("Serial.println();\n");
+            buffer.append("firingScheduler->printActualMarking();\n");
             buffer.append("Serial.println(\"=================================================\");\n");
             buffer.append("Serial.println();\n");
-            buffer.append("delay(5000);\n");
+            buffer.append("delay(50);\n");
         }
         return buffer.toString();
     }

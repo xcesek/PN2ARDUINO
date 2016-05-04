@@ -112,7 +112,7 @@ void Place::apply()
       
     case SERVO:    
       helper->log(F("      (place) servo: ")); helper->logLn((int)(tokens/(capacity*1.0)*180));
-      myservo.write((int)(tokens/(capacity*1.0)*180)); 
+      myservo.write((int)(tokens/(capacity*1.0)*170));
       break;
 
     case LED_DISPLAY: 

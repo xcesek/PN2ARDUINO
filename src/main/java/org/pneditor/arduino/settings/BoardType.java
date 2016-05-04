@@ -12,7 +12,8 @@ import java.util.List;
  */
 public enum BoardType {
     ARDUINO_UNO("Arduino Uno"),
-    ARDUINO_NANO("Arduino Nano");
+    ARDUINO_NANO("Arduino Nano"),
+    ARDUINO_MEGA("Arduino Mega");
 
     private final String boardName;
 

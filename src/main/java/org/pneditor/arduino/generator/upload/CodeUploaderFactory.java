@@ -1,5 +1,6 @@
 package org.pneditor.arduino.generator.upload;
 
+import org.pneditor.arduino.generator.upload.board.ArduinoMegaUploader;
 import org.pneditor.arduino.generator.upload.board.ArduinoNanoUploader;
 import org.pneditor.arduino.generator.upload.board.ArduinoUnoUploader;
 import org.pneditor.arduino.settings.BoardType;
@@ -23,6 +24,9 @@ public class CodeUploaderFactory {
             break;
             case ARDUINO_NANO:
                 selectedBoard = new ArduinoNanoUploader();
+                break;
+            case ARDUINO_MEGA:
+                selectedBoard = new ArduinoMegaUploader();
                 break;
             default:
                 selectedBoard = new ArduinoUnoUploader();

@@ -25,7 +25,7 @@ Transition::Transition(char* _id, int _pin, FunctionType _functionType)
   delayOccurrenceType = NO;
   priority = 0;
 
-  helper->log(F("(transition) initializing transition with ID: ")); helper->log(id);  helper->log(" -> ");
+  helper->log(F("(transition) initializing transition with ID: ")); helper->log(getId());  helper->log(" -> ");
   
   switch (functionType) {
     case DIGITAL_IN:
