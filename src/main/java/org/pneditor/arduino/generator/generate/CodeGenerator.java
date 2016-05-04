@@ -277,6 +277,7 @@ public class CodeGenerator {
                 + ", allTransitions, allTransitionsCount"
                 + ", allPlaces, allPlacesCount"
                 + ");\n");
+        buffer.append("firingScheduler->setHelper(helper);\n");
 
         buffer.append("firingScheduler->setHelper(helper);\n");
 

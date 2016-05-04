@@ -84,7 +84,7 @@ void Transition::fire()
 
 int Transition::isEnabled()
 {
-  helper->log(F("(transition) checking firability on transition with ID: ")); helper->logLn(id);
+  helper->log(F("(transition) checking firability on transition with ID: ")); helper->logLn(getId());
 
   // internal condition
   int internalTriggerActive = 1;
