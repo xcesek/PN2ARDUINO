@@ -14,25 +14,25 @@ FiringScheduler::FiringScheduler(FiringPolicyType _firingPolicyType, Transition 
     lastFiredTransitionIndex = -1;
 
     // fill priority table
-    Serial.print(F("(FiringScheduler) init priority table (unsorted): "));
+    helper->log(F("(FiringScheduler) init priority table (unsorted): "));
     priorityTableInd = (int*) malloc(allTransitionsCount*sizeof(int));
     priorityTable = (int*) malloc(allTransitionsCount*sizeof(int));
     for (int i = 0; i < allTransitionsCount; i++) {
         priorityTable[i] = allTransitions[i]->getPriority();
         priorityTableInd[i] = i;
-        Serial.print(F(" ")); Serial.print(priorityTable[i]);
+        helper->log(F(" ")); helper->log(priorityTable[i]);
     }
     sortTable(priorityTable, priorityTableInd, allTransitionsCount);
 
-    Serial.print(F("\n(FiringScheduler) priority table (sorted): "));
+    helper->log(F("\n(FiringScheduler) priority table (sorted): "));
     for (int i = 0; i < allTransitionsCount; i++) {
-        Serial.print(F(" ")); Serial.print(priorityTable[i]);
+        helper->log(F(" ")); helper->log(priorityTable[i]);
     }
-    Serial.print(F("\n(FiringScheduler) priority table (indexes): "));
+    helper->log(F("\n(FiringScheduler) priority table (indexes): "));
     for (int i = 0; i < allTransitionsCount; i++) {
-        Serial.print(F(" ")); Serial.print(priorityTableInd[i]);
+        helper->log(F(" ")); helper->log(priorityTableInd[i]);
     }
-    Serial.println();
+    helper->logLn("\n");
 }
 
 
@@ -44,7 +44,7 @@ Transition* FiringScheduler::nextToFire()
         for (int i = 0; i < allTransitionsCount; i++) {
             if (allTransitions[i]->isEnabled()) {
                 nextToFire = allTransitions[i];
-                Serial.print(F("(FiringScheduler) strategy: AS_CREATED; fired ind: ")); Serial.println(i);
+                helper->log(F("(FiringScheduler) strategy: AS_CREATED; fired ind: ")); helper->logLn(i);
                 break; // break for loop
             }
         }
@@ -54,7 +54,7 @@ Transition* FiringScheduler::nextToFire()
         for (int i = 0; i < allTransitionsCount; i++) {
             if (allTransitions[priorityTableInd[i]]->isEnabled()) {
                 nextToFire = allTransitions[priorityTableInd[i]];
-                Serial.print(F("(FiringScheduler) strategy: BY_PRIORITY; fired ind: ")); Serial.println(priorityTableInd[i]);
+                helper->log(F("(FiringScheduler) strategy: BY_PRIORITY; fired ind: ")); helper->logLn(priorityTableInd[i]);
                 break; // break for loop
             }
         }
@@ -64,10 +64,10 @@ Transition* FiringScheduler::nextToFire()
         // increment index or reset to zero if has come to an end
         if (lastFiredTransitionIndex >= (allPlacesCount - 1)) {
             lastFiredTransitionIndex = 0;
-            Serial.print(F("(FiringScheduler) strategy: ROUND_ROBIN; resetting index; value: "));Serial.println(lastFiredTransitionIndex);
+            helper->log(F("(FiringScheduler) strategy: ROUND_ROBIN; resetting index; value: "));helper->logLn(lastFiredTransitionIndex);
         } else {
             lastFiredTransitionIndex++;
-            Serial.print(F("(FiringScheduler) strategy: ROUND_ROBIN; incrementing index; value: "));Serial.println(lastFiredTransitionIndex);
+            helper->log(F("(FiringScheduler) strategy: ROUND_ROBIN; incrementing index; value: "));helper->logLn(lastFiredTransitionIndex);
         }
 
         // now find next enabled transition
@@ -75,8 +75,8 @@ Transition* FiringScheduler::nextToFire()
             if (allTransitions[i]->isEnabled()) {
                 nextToFire = allTransitions[i];
                 lastFiredTransitionIndex = i; // update index
-                Serial.print(F("(FiringScheduler) strategy: ROUND_ROBIN; updating index; value: "));Serial.println(lastFiredTransitionIndex);
-                Serial.print(F("(FiringScheduler) fired ind: ")); Serial.println(lastFiredTransitionIndex);
+                helper->log(F("(FiringScheduler) strategy: ROUND_ROBIN; updating index; value: "));helper->logLn(lastFiredTransitionIndex);
+                helper->log(F("(FiringScheduler) fired ind: ")); helper->logLn(lastFiredTransitionIndex);
                 break; // break for loop
             }
         }
@@ -88,7 +88,7 @@ Transition* FiringScheduler::nextToFire()
         for (int i = nextToFireIndex; i < allTransitionsCount; i++) {
             if (allTransitions[i]->isEnabled()) {
                 nextToFire = allTransitions[i];
-                Serial.print(F("(FiringScheduler) strategy: RANDOM; fired ind: ")); Serial.println(i);
+                helper->log(F("(FiringScheduler) strategy: RANDOM; fired ind: ")); helper->logLn(i);
                 break; // break for loop
             }
         }
@@ -96,10 +96,10 @@ Transition* FiringScheduler::nextToFire()
   }
 
    if(nextToFire != NULL) {
-        Serial.print("(FiringScheduler) choosing transition with ID: ");
-        Serial.println(nextToFire->getId());
+        helper->log("(FiringScheduler) choosing transition with ID: ");
+        helper->logLn(nextToFire->getId());
    } else {
-        Serial.println(F("(FiringScheduler) NO transition to fire!"));
+        helper->logLn(F("(FiringScheduler) NO transition to fire!"));
    }
 
   return nextToFire;
@@ -126,4 +126,18 @@ void FiringScheduler::sortTable(int *priority_arr, int* indexes_arr, int array_s
       }
     }
   }
+}
+
+void FiringScheduler::printActualMarking() {
+    for (int i = 0; i < allPlacesCount; i++) {
+        helper->log(allPlaces[i]->getId());
+        helper->log(":");
+        helper->log(allPlaces[i]->getTokens());
+        helper->log(",   ");
+    }
+    helper->logLn("\n");
+}
+
+void FiringScheduler::setHelper(Helper *_helper) {
+  helper = _helper;
 }
