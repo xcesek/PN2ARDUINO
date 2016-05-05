@@ -62,15 +62,15 @@ public class ToggleComReaderAction extends AbstractAction {
             }
 
             if (comReader == null) { // for the first time
-                comReader = new ArduinoComReader(boardSettings.getPort(), ((RootPflow) root).getLogEditor());
-                boolean initialized = comReader.init();
+                comReader = new ArduinoComReader(((RootPflow) root).getLogEditor());
+                boolean initialized = comReader.init(boardSettings.getPort());
                 JOptionPane.showMessageDialog(root.getParentFrame(), "Serial connection " + (initialized ? "" : "NOT") + " established", "Arduino serial connection", JOptionPane.INFORMATION_MESSAGE); // :)
             } else { // already initialized, just toggle
                 if (comReader.isOpen()) {
                     boolean closed = comReader.close();
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Serial connection " + (closed ? "closed" : "failed to close"), "Arduino serial connection", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    boolean initialized = comReader.init();
+                    boolean initialized = comReader.init(boardSettings.getPort());
                     JOptionPane.showMessageDialog(root.getParentFrame(), "Serial connection " + (initialized ? "opened" : "failed to open"), "Arduino serial connection", JOptionPane.INFORMATION_MESSAGE);
                 }
             }

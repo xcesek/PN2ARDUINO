@@ -15,13 +15,14 @@ public class ArduinoComReader implements SerialPortEventListener {
     private LogEditor logEditor;
     private SerialPort serialPort;
 
-    public ArduinoComReader(String port, LogEditor logEditor) {
+    public ArduinoComReader(LogEditor logEditor) {
         this.logEditor = logEditor;
-        this.serialPort = new SerialPort(port);
     }
 
-    public boolean init() {
+    public boolean init(String portNubmer) {
         try {
+            close();    // try to close quietly
+            serialPort = new SerialPort(portNubmer);
             serialPort.openPort();
             serialPort.setParams(
                     SerialPort.BAUDRATE_9600,
@@ -41,17 +42,19 @@ public class ArduinoComReader implements SerialPortEventListener {
 
     public boolean close() {
         try {
-            serialPort.closePort();
+            if (serialPort != null) {
+                serialPort.removeEventListener();
+                serialPort.closePort();
+                serialPort = null;
+            }
             return true;
-
         } catch (SerialPortException e) {
-            logEditor.log("Cannot close connection to Arduino device", LogEditor.logType.PNEDITOR);
             return false;
         }
     }
 
     public boolean isOpen() {
-        return serialPort.isOpened();
+        return serialPort != null ? serialPort.isOpened() : false;
     }
 
 
