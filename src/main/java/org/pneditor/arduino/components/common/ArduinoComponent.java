@@ -80,6 +80,7 @@ public class ArduinoComponent {
     }
 
     public ArduinoComponentSettings getSettings() {
+        //settings.actualizeSettingsGUI();
         return settings;
     }
 

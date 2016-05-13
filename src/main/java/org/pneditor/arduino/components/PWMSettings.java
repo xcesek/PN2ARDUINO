@@ -78,7 +78,18 @@ public class PWMSettings extends ArduinoComponentSettings {
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
+        // free old pin
+        if (pin != null) {
+            int index = arduinoManager.getUsedPins().indexOf(pin.byteValue());
+            if (index != -1) {
+                arduinoManager.getUsedPins().remove(index);
+            }
+        }
+        // add new pin
         pin = (((Byte) (((JComboBox) panel.getComponent(1)).getSelectedItem())).intValue());
+        //Mark pin as used
+        arduinoManager.getUsedPins().add(pin.byteValue());
+
         try {
             value = Integer.parseInt(((JTextField) panel.getComponent(5)).getText());
             if (value < 0) {
@@ -91,10 +102,6 @@ public class PWMSettings extends ArduinoComponentSettings {
             PNEditor.getRoot().getLogEditor().log("Unsupported format of Value!", LogEditor.logType.ARDUINO);
             value = 0;
         }
-
-
-        //Mark pin as used
-        arduinoManager.getUsedPins().add(pin.byteValue());
     }
 
     @Override

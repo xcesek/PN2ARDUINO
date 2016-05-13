@@ -78,7 +78,7 @@ public class ArduinoComponentSettings {
     }
 
     public JPanel getSettingsGui() {
-        //actualizeSettingsGUI();
+        actualizeSettingsGUI();
         return panel;
     }
 

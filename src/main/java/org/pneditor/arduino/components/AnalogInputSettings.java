@@ -108,7 +108,18 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
+        // free old pin
+        if (pin != null) {
+            int index = arduinoManager.getUsedPins().indexOf(pin.byteValue());
+            if (index != -1) {
+                arduinoManager.getUsedPins().remove(index);
+            }
+        }
+        // add new pin
         pin = (((Byte) (((JComboBox) panel.getComponent(1)).getSelectedItem())).intValue());
+        //Mark pin as used
+        arduinoManager.getUsedPins().add(pin.byteValue());
+
         if(((JCheckBox) panel.getComponent(4)).isSelected()) {
             try{
                 bottomThreshold = Integer.parseInt (((JTextField) panel.getComponent(7)).getText());
@@ -134,8 +145,7 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
             upThreshold = 1023;
         }
 
-        //Mark pin as used
-        arduinoManager.getUsedPins().add(pin.byteValue());
+
     }
 
     @Override

@@ -76,7 +76,6 @@ public class DigitalOutputSettings extends ArduinoComponentSettings {
                 arduinoManager.getUsedPins().remove(index);
             }
         }
-
         // add new pin
         pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
         //Mark pin as used

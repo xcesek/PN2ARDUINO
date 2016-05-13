@@ -71,7 +71,16 @@ public class DigitalInputSettings extends ArduinoComponentSettings {
 
     @Override
     public void parseSettingsGUI(JPanel panel) {
+        // free old pin
+        if (pin != null) {
+            int index = arduinoManager.getUsedPins().indexOf(pin.byteValue());
+            if (index != -1) {
+                arduinoManager.getUsedPins().remove(index);
+            }
+        }
+        // add new pin
         pin = (((Byte) (((JComboBox) (panel.getComponent(1))).getSelectedItem())).intValue());
+        //Mark pin as used
         arduinoManager.getUsedPins().add(pin.byteValue());
     }
 
