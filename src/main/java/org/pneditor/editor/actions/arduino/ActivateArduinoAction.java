@@ -20,6 +20,8 @@ import org.firmata4j.IODevice;
 import org.firmata4j.firmata.FirmataDevice;
 import org.pneditor.arduino.ArduinoController;
 import org.pneditor.arduino.BoardSettings;
+import org.pneditor.arduino.DeviceEventListener;
+import org.pneditor.editor.PNEditor;
 import org.pneditor.editor.Root;
 import org.pneditor.editor.RootPflow;
 import org.pneditor.editor.canvas.Canvas;
@@ -61,25 +63,22 @@ public class ActivateArduinoAction extends AbstractAction {
                 root.getArduinoManager().getDevice().start();
                 root.getArduinoManager().getDevice().ensureInitializationIsDone();
                 root.getArduinoManager().initializePinMap();
-                ((RootPflow)root).getLogEditor().log("Arduino device is now ready", LogEditor.logType.ARDUINO);
-                System.out.println("device is now ready!");
+                root.getArduinoManager().getDevice().addEventListener(new DeviceEventListener());
+                PNEditor.getRoot().getLogEditor().log("Arduino device is now ready", LogEditor.logType.ARDUINO);
                 //ARDUINO CONTROLLER INITIALIZATION
                 ArduinoController arduinoController = new ArduinoController(root.getArduinoManager(), root.getDocument().getPetriNet().getInitialMarking());
                 alreadyActivated = true;
-
-
             } catch (IOException exception) {
                 if (exception.getCause().toString().contains("Port busy")) {
-                    ((RootPflow)root).getLogEditor().log("Port busy / Device is already started", LogEditor.logType.ARDUINO);
-                    System.out.println("Port busy / Device is already started");
+                    PNEditor.getRoot().getLogEditor().log("Port busy / Device is already started", LogEditor.logType.ARDUINO);
                 } else if (exception.getCause().toString().contains("Port not found")) {
-                    ((RootPflow)root).getLogEditor().log("Port not found (check if arduino board is connected)", LogEditor.logType.ARDUINO);
-                    System.out.println("Port not found (check if arduino board is connected)");
+                    PNEditor.getRoot().getLogEditor().log("Port not found (check if arduino board is connected)", LogEditor.logType.ARDUINO);
                 } else {
-                    System.out.println("!! ERROR: device start failed.");
+                    PNEditor.getRoot().getLogEditor().log("ERROR: Cannot start Firmata device!", LogEditor.logType.ARDUINO);
                     exception.printStackTrace();
                 }
             } catch (InterruptedException exception) {
+                PNEditor.getRoot().getLogEditor().log("Connection timeout", LogEditor.logType.ARDUINO);
                 exception.printStackTrace();
             }
         }

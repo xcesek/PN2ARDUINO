@@ -53,15 +53,18 @@ public class DigitalOutput extends ArduinoComponent {
         try {
             myPin.setValue(1);
         } catch (IOException e) {
+            PNEditor.getRoot().getLogEditor().log("Problem activating: " + settings.getPin(), LogEditor.logType.ARDUINO);
             e.printStackTrace();
         }
     }
 
     @Override
     public void deactivate() {
+        PNEditor.getRoot().getLogEditor().log("Deactivating: " + settings.getPin(), LogEditor.logType.ARDUINO);
         try {
             myPin.setValue(0);
         } catch (IOException e) {
+            PNEditor.getRoot().getLogEditor().log("Problem deactivating: " + settings.getPin(), LogEditor.logType.ARDUINO);
             e.printStackTrace();
         }
     }

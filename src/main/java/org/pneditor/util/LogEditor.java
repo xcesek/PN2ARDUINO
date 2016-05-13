@@ -1,3 +1,4 @@
+
 package org.pneditor.util;
 
 import javax.swing.*;
@@ -19,9 +20,12 @@ public class LogEditor extends JPanel implements ActionListener {
     private Frame parentFrame;
     private final static String newline = "\n";
 
+    private LogEditorFileWriter logEditorFileWriter;
+
     public enum logType {
         ARDUINO, PNEDITOR
     }
+
     private logType textAreaType;
 
     public LogEditor(String title, Frame parent) {
@@ -74,23 +78,27 @@ public class LogEditor extends JPanel implements ActionListener {
         bottomButtonPanel = new JPanel(new BorderLayout());
         bottomButtonPanel.add(clearButton, BorderLayout.WEST);
 
-        this.add(bottomButtonPanel,BorderLayout.SOUTH);
+        this.add(bottomButtonPanel, BorderLayout.SOUTH);
 
         pneditorButton.addActionListener(this);
         arduinoButton.addActionListener(this);
         clearButton.addActionListener(this);
+
+        logEditorFileWriter = new LogEditorFileWriter("PNEditorArduino.log");
     }
 
     public void log(String logMessage, logType textAreaType) {
 
         this.revalidate();
         SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat fileFormatter = new SimpleDateFormat("d-M-y HH:mm:ss");
         Date d = new Date();
 
-        switch(textAreaType){
+        switch (textAreaType) {
             case ARDUINO:
                 arduinoButton.doClick();
                 textAreaArduinoLog.append("[" + s.format(d) + "] " + logMessage + newline);
+                logEditorFileWriter.write("[" + fileFormatter.format(d) + "] " + logMessage + newline);
                 textAreaArduinoLog.setCaretPosition(textAreaArduinoLog.getDocument().getLength());
                 break;
             case PNEDITOR:
@@ -119,7 +127,7 @@ public class LogEditor extends JPanel implements ActionListener {
             pneditorButton.setBackground(Color.white);
             arduinoButton.setBackground(Color.blue);
             this.repaint();
-        } else if(e.getSource().equals(clearButton)){
+        } else if (e.getSource().equals(clearButton)) {
             textAreaArduinoLog.setText(null);
             textAreaPneditorLog.setText(null);
             this.repaint();

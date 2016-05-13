@@ -28,7 +28,7 @@ public class SendSysexCommand extends ArduinoComponent {
     public SendSysexCommand(ArduinoComponentType type, ArduinoComponentSettings settings, ArduinoManager arduinoManager, Node node) {
         super(type, settings, arduinoManager, node);
         color = new Color(198, 110, 220);
-        arduinoManager.getDevice().addEventListener(EventListener.getInstance());
+        //arduinoManager.getDevice().addEventListener(EventListener.getInstance());
     }
 
     @Override
@@ -51,8 +51,10 @@ public class SendSysexCommand extends ArduinoComponent {
         msg[msg.length - 1] = FirmataToken.END_SYSEX;
 
         try {
+            PNEditor.getRoot().getLogEditor().log("Sending Sysex Command: " + ((SendSysexCommandSettings) settings).getCommand(), LogEditor.logType.ARDUINO);
             arduinoManager.getDevice().sendMessage(msg);
         } catch (IOException e) {
+            PNEditor.getRoot().getLogEditor().log("Problem Sending Sysex Command: " + ((SendSysexCommandSettings) settings).getCommand(), LogEditor.logType.ARDUINO);
             e.printStackTrace();
         }
     }
@@ -69,42 +71,42 @@ public class SendSysexCommand extends ArduinoComponent {
 
 
 
-    private static class EventListener implements IODeviceEventListener {
-        private static EventListener eventListener;
-
-        private EventListener(){}
-
-        public static EventListener getInstance(){
-            if(eventListener == null) {
-                eventListener = new EventListener();
-            }
-            return eventListener;
-        }
-
-        @Override
-        public void onStart(IOEvent ioEvent) {
-
-        }
-
-        @Override
-        public void onStop(IOEvent ioEvent) {
-
-        }
-
-        @Override
-        public void onPinChange(IOEvent ioEvent) {
-
-        }
-
-        @Override
-        public void onI2cMessageReceive(IOEvent ioEvent, byte b, byte b1, byte[] bytes) {
-
-        }
-
-        @Override
-        public void onMessageReceive(IOEvent ioEvent, String s) {
-            PNEditor.getRoot().getLogEditor().log("Arduino sent message: " + s, LogEditor.logType.ARDUINO);
-        }
-    }
+//    private static class EventListener implements IODeviceEventListener {
+//        private static EventListener eventListener;
+//
+//        private EventListener(){}
+//
+//        public static EventListener getInstance(){
+//            if(eventListener == null) {
+//                eventListener = new EventListener();
+//            }
+//            return eventListener;
+//        }
+//
+//        @Override
+//        public void onStart(IOEvent ioEvent) {
+//
+//        }
+//
+//        @Override
+//        public void onStop(IOEvent ioEvent) {
+//
+//        }
+//
+//        @Override
+//        public void onPinChange(IOEvent ioEvent) {
+//
+//        }
+//
+//        @Override
+//        public void onI2cMessageReceive(IOEvent ioEvent, byte b, byte b1, byte[] bytes) {
+//
+//        }
+//
+//        @Override
+//        public void onMessageReceive(IOEvent ioEvent, String s) {
+//            PNEditor.getRoot().getLogEditor().log("Arduino sent message: " + s, LogEditor.logType.ARDUINO);
+//        }
+//    }
 
 }

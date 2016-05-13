@@ -1,21 +1,22 @@
 package org.pneditor.editor.time;
 
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import org.pneditor.editor.PNEditor;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.Transition;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SimpleTimer {
 
     private long seconds;
     private long elapsedSeconds;
-    // Timer timer;
-    Timer timer2;
+    private Timer timer;
     boolean isActive;
     private Marking marking;
     private Transition transition;
+    private String oldLabel = "";
 
 
     private class SecondsCounter extends TimerTask {
@@ -25,11 +26,14 @@ public class SimpleTimer {
             PNEditor.getRoot().repaintCanvas();
             elapsedSeconds--;
             transition.setLabel(String.valueOf(elapsedSeconds));
-            if (elapsedSeconds < 1) {
-                marking.firePhase2(transition);
-                isActive = false;
-                PNEditor.getRoot().repaintCanvas();
+            if (elapsedSeconds <= 0) {
                 cancel();
+                setActive(false);
+                transition.setLabel(oldLabel);
+                elapsedSeconds = seconds;
+                PNEditor.getRoot().repaintCanvas();
+
+                marking.firePhase2(transition);
             }
         }
     }
@@ -43,28 +47,36 @@ public class SimpleTimer {
         this.transition = transition;
         this.marking = marking;
 
-        timer2 = new Timer();
-        isActive = true;
+        timer = new Timer();
+        setActive(true);
 
-        if(marking.firePhase1(transition)){
-            timer2.scheduleAtFixedRate(new SecondsCounter(), 0, 1000);
+        if (marking.firePhase1(transition)) {
+            oldLabel = transition.getLabel();
+            transition.setLabel(oldLabel);
+            PNEditor.getRoot().repaintCanvas();
+
+            timer.scheduleAtFixedRate(new SecondsCounter(), 1000, 1000);
         }
     }
 
     public void cancel() {
-        isActive = false;
-        timer2.cancel();
+        setActive(false);
+        timer.cancel();
     }
 
     public void resetTimer() {
-        if (isActive) {
+        if (isActive()) {
             cancel();
         }
         elapsedSeconds = seconds;
     }
 
-    public boolean isActive() {
+    public synchronized boolean isActive() {
         return isActive;
+    }
+
+    public synchronized void setActive(boolean active) {
+        isActive = active;
     }
 
     private int determineDelaySeconds(int earliestFiringTime, int latestFiringTime) {

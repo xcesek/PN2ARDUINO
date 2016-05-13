@@ -66,6 +66,7 @@ public class AnalogInput extends ArduinoComponent {
     public boolean isEnabled(){
         double bottomThreshold = ((AnalogInputSettings) settings).getBottomThreshold();
         double upThreshold = ((AnalogInputSettings) settings).getUpThreshold();
+        //PNEditor.getRoot().getLogEditor().log("Check isEnable: " + settings.getPin(), LogEditor.logType.ARDUINO);
         if(myPin.getValue() >= bottomThreshold && myPin.getValue() <= upThreshold) {
             return true;
         } else {

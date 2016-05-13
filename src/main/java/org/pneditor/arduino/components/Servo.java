@@ -48,19 +48,22 @@ public class Servo extends ArduinoComponent {
 
     @Override
     public void activate() {
-        PNEditor.getRoot().getLogEditor().log("Firing: " + settings.getPin(), LogEditor.logType.ARDUINO);
+        PNEditor.getRoot().getLogEditor().log("Activating: " + settings.getPin(), LogEditor.logType.ARDUINO);
         try {
             myPin.setValue(((ServoSettings) settings).getValue());
         } catch (IOException e) {
+            PNEditor.getRoot().getLogEditor().log("Problem activating: " + settings.getPin(), LogEditor.logType.ARDUINO);
             e.printStackTrace();
         }
     }
 
     @Override
     public void deactivate() {
+        PNEditor.getRoot().getLogEditor().log("Deactivating: " + settings.getPin(), LogEditor.logType.ARDUINO);
         try {
             myPin.setValue(0);
         } catch (IOException e) {
+            PNEditor.getRoot().getLogEditor().log("Problem deactivating: " + settings.getPin(), LogEditor.logType.ARDUINO);
             e.printStackTrace();
         }
     }

@@ -715,7 +715,7 @@ public class RootPflow implements Root, WindowListener, ListSelectionListener, S
 //        subnetMenu.add(convertTransitionToSubnet);
 
         timeMenu.add(setTimingPolicy);
-        timeMenu.add(runTimer);
+        //timeMenu.add(runTimer);
 
         // ARDUINO RELATED
         arduinoMenu.add(setBoard);

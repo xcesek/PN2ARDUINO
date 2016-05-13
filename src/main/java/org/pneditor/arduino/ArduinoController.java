@@ -105,7 +105,8 @@ public class ArduinoController implements ArduinoListener {
 
                 if(destinationPlaces.size() != 0) {
                     for(Node place : destinationPlaces) {
-                        if(place.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) place) > 0) {
+                       // if(place.hasArduinoComponent() && ((Marking)marking).getTokens((PlaceNode) place) > 0) {
+                            if(place.hasArduinoComponent()) {
                             place.getArduinoComponent().activate();
                         }
                     }

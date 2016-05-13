@@ -39,9 +39,9 @@ public class DigitalInput extends ArduinoComponent {
     }
 
     @Override
-    public void freeResources(){
+    public void freeResources() {
         int index = arduinoManager.getUsedPins().indexOf(getSettings().getPin().byteValue());
-        if(index != -1) {
+        if (index != -1) {
             arduinoManager.getUsedPins().remove(index);
         }
     }
@@ -63,12 +63,13 @@ public class DigitalInput extends ArduinoComponent {
     }
 
     @Override
-    public boolean isEnabled(){
-       if(myPin.getValue() == 0) {
-           return false;
-       } else {
-           return true;
-       }
+    public boolean isEnabled() {
+        //PNEditor.getRoot().getLogEditor().log("Check isEnable: " + settings.getPin(), LogEditor.logType.ARDUINO);
+        if (myPin.getValue() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

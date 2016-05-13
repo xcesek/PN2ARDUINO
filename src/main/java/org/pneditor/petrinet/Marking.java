@@ -252,7 +252,7 @@ public class Marking implements Subject {
         lock.writeLock().lock();
         try {
             if (transition.getTimer().isActive() || isEnabled(transition)) {
-                PNEditor.getRoot().getLogEditor().log("Phase1 - arc count - " + pinNum + " : " + transition.getConnectedArcs(true).size(), LogEditor.logType.ARDUINO);
+                //PNEditor.getRoot().getLogEditor().log("Phase1 - arc count - " + pinNum + " : " + transition.getConnectedArcs(true).size(), LogEditor.logType.ARDUINO);
                 transition.setFiring(true);
                 for (Arc arc : transition.getConnectedArcs(true)) {
                     int tokens = getTokens(arc.getPlaceNode());
@@ -260,14 +260,14 @@ public class Marking implements Subject {
                         if (arc.getType().equals(Arc.RESET)) {                        //reset arc consumes them all
                             setTokens(arc.getPlaceNode(), 0);
                         } else {
-                            PNEditor.getRoot().getLogEditor().log("Phase1 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
+                            //PNEditor.getRoot().getLogEditor().log("Phase1 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
                             setTokens(arc.getPlaceNode(), tokens - arc.getMultiplicity());
-                            PNEditor.getRoot().getLogEditor().log("Phase1 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
+                            //PNEditor.getRoot().getLogEditor().log("Phase1 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
                         }
                     }
                     sourcePlaces.add(arc.getPlaceNode());
                 }
-                PNEditor.getRoot().getLogEditor().log("Phase1 - end " + pinNum, LogEditor.logType.ARDUINO);
+                //PNEditor.getRoot().getLogEditor().log("Phase1 - end " + pinNum, LogEditor.logType.ARDUINO);
                 success = true;
                 notifyArduinoListenersPhase1(sourcePlaces, transition);
 
@@ -292,15 +292,15 @@ public class Marking implements Subject {
         }
         lock.writeLock().lock();
         try {
-            PNEditor.getRoot().getLogEditor().log("Phase2 - arc count - "+pinNum+" : " + transition.getConnectedArcs(false).size(), LogEditor.logType.ARDUINO);
+            //PNEditor.getRoot().getLogEditor().log("Phase2 - arc count - "+pinNum+" : " + transition.getConnectedArcs(false).size(), LogEditor.logType.ARDUINO);
             for (Arc arc : transition.getConnectedArcs(false)) {
                 int tokens = getTokens(arc.getPlaceNode());
-                PNEditor.getRoot().getLogEditor().log("Phase2 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
+                //PNEditor.getRoot().getLogEditor().log("Phase2 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
                 setTokens(arc.getPlaceNode(), tokens + arc.getMultiplicity());
-                PNEditor.getRoot().getLogEditor().log("Phase2 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
+                //PNEditor.getRoot().getLogEditor().log("Phase2 - set tokens - " + pinNum + " : " + getTokens(arc.getPlaceNode()), LogEditor.logType.ARDUINO);
                 destinationPlaces.add(arc.getPlaceNode());
             }
-            PNEditor.getRoot().getLogEditor().log("Phase2 - end - " + pinNum, LogEditor.logType.ARDUINO);
+            //PNEditor.getRoot().getLogEditor().log("Phase2 - end - " + pinNum, LogEditor.logType.ARDUINO);
             success = true;
             notifyArduinoListenersPhase2(transition, destinationPlaces);
         } finally {
@@ -308,7 +308,7 @@ public class Marking implements Subject {
             lock.writeLock().unlock();
         }
 
-        PNEditor.getRoot().getLogEditor().log("************************************", LogEditor.logType.ARDUINO);
+        //PNEditor.getRoot().getLogEditor().log("************************************", LogEditor.logType.ARDUINO);
 
         return success;
     }
