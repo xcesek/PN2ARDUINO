@@ -86,13 +86,13 @@ public class SendSysexCommandSettings extends ArduinoComponentSettings {
         JTextArea inputContent = new JTextArea();
         inputContent.setEditable(false);
         inputContent.setFont(new Font("Serif", Font.PLAIN, 12));
-        inputContent.append("- Command: choise of custom command byte value" + newline);
+        inputContent.append("- Command: choice of custom command byte value" + newline);
         inputContent.append("- Message: custom message, not longer than 14 characters" + newline);
 
         JTextArea netTitle = new JTextArea();
         netTitle.setEditable(false);
         netTitle.setFont(new Font("Serif", Font.BOLD, 13));
-        netTitle.append("Petri net support: ");
+        netTitle.append("Petri net supports: ");
 
         JTextArea netContent = new JTextArea();
         netContent.setEditable(false);

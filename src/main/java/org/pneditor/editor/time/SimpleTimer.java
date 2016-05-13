@@ -87,4 +87,8 @@ public class SimpleTimer {
         Random randomGenerator = new Random();
         return randomGenerator.nextInt(latestFiringTime - earliestFiringTime) + earliestFiringTime;
     }
+
+    public long getSeconds() {
+        return seconds;
+    }
 }

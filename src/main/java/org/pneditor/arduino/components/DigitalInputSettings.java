@@ -88,12 +88,12 @@ public class DigitalInputSettings extends ArduinoComponentSettings {
         JTextArea netTitle = new JTextArea();
         netTitle.setEditable(false);
         netTitle.setFont(new Font("Serif", Font.BOLD, 13));
-        netTitle.append("Petri net support: ");
+        netTitle.append("Petri net supports: ");
 
         JTextArea netContent = new JTextArea();
         netContent.setEditable(false);
         netContent.setFont(new Font("Serif", Font.PLAIN, 12));
-        netContent.append("- condition if transition is fireable" + newline);
+        netContent.append("- represents a condition when transition is fireable" + newline);
 
         panel.add(netTitle);
         panel.add(netContent);

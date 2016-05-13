@@ -212,7 +212,7 @@ public class DocumentImporter {
             if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
                 if (!warningShowed) {
                     warningShowed = true;
-                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components \n\n If you want to use Arduino Component, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net supports Arduino Components \n\n If you want to use Arduino Components, please set Arduino board first\nand reopen project", "Arduino Board Message", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 ArduinoComponentType type = ArduinoComponentType.valueOf(xmlPlace.arduinoComponent.type);
@@ -264,7 +264,9 @@ public class DocumentImporter {
             if (PNEditor.getRoot().getArduinoManager().getDevice() == null) {
                 if (!warningShowed) {
                     warningShowed = true;
-                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net support Arduino Components \n\n If you want to use Arduino Component, please set Arduino board first.", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PNEditor.getRoot().getParentFrame(), "This Petri net supports Arduino Components \n" +
+                            "\n" +
+                            " If you want to use Arduino Components, please set Arduino board first\n and reopen project", "Arduino Board Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 ArduinoComponentType type = ArduinoComponentType.valueOf(xmlTransition.arduinoComponent.type);

@@ -120,7 +120,7 @@ public class PWMSettings extends ArduinoComponentSettings {
         JTextArea netTitle = new JTextArea();
         netTitle.setEditable(false);
         netTitle.setFont(new Font("Serif", Font.BOLD, 13));
-        netTitle.append("Petri net support: ");
+        netTitle.append("Petri net supports: ");
 
         JTextArea netContent = new JTextArea();
         netContent.setEditable(false);
