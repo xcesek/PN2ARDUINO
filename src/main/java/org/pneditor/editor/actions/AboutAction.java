@@ -42,12 +42,13 @@ public class AboutAction extends AbstractAction {
         JOptionPane.showOptionDialog(
                 root.getParentFrame(),
                 root.getAppLongName() + "\n"
-                + "http://www.pneditor.org/\n"
                 + "\n"
                 + "Author: Martin Riesz\n"
                 + "Contributors:\n"
-                + "Milka Knapereková (boundedness algorithm)\n"
-                + "Ján Tančibok (reset and inhibitor arc types)\n"
+                + "Alžbeta Češeková\n"
+                + "Pavol Češek\n"
+                + "Ladislav Briš\n"
+                + "Erik Kučera\n"
                 + "\n"
                 + "Contributions are welcome. Just send a pull request on GitHub."
                 + "\n"

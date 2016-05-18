@@ -41,6 +41,7 @@ public class DigitalOutput extends ArduinoComponent {
 
     @Override
     public void freeResources(){
+        PNEditor.getRoot().getLogEditor().log("Pin " + settings.getPin() + " was released.", LogEditor.logType.ARDUINO);
         int index = arduinoManager.getUsedPins().indexOf(getSettings().getPin().byteValue());
         if(index != -1) {
             arduinoManager.getUsedPins().remove(index);

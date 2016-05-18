@@ -69,44 +69,4 @@ public class SendSysexCommand extends ArduinoComponent {
         return true;
     }
 
-
-
-//    private static class EventListener implements IODeviceEventListener {
-//        private static EventListener eventListener;
-//
-//        private EventListener(){}
-//
-//        public static EventListener getInstance(){
-//            if(eventListener == null) {
-//                eventListener = new EventListener();
-//            }
-//            return eventListener;
-//        }
-//
-//        @Override
-//        public void onStart(IOEvent ioEvent) {
-//
-//        }
-//
-//        @Override
-//        public void onStop(IOEvent ioEvent) {
-//
-//        }
-//
-//        @Override
-//        public void onPinChange(IOEvent ioEvent) {
-//
-//        }
-//
-//        @Override
-//        public void onI2cMessageReceive(IOEvent ioEvent, byte b, byte b1, byte[] bytes) {
-//
-//        }
-//
-//        @Override
-//        public void onMessageReceive(IOEvent ioEvent, String s) {
-//            PNEditor.getRoot().getLogEditor().log("Arduino sent message: " + s, LogEditor.logType.ARDUINO);
-//        }
-//    }
-
 }

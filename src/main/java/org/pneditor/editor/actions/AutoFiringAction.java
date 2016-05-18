@@ -1,3 +1,13 @@
+/**
+ * Created by Alzbeta Cesekova
+ * xbuckuliakova@stuba.sk
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 package org.pneditor.editor.actions;
 
 import org.pneditor.editor.Root;
@@ -6,7 +16,6 @@ import org.pneditor.util.GraphicsTools;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-
 
 public class AutoFiringAction extends AbstractAction {
 

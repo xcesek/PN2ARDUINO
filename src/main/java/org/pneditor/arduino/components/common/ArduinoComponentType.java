@@ -153,7 +153,7 @@ public enum ArduinoComponentType {
     CUSTOM_SYSEX {
         @Override
         public String toString() {
-            return "Send Custom Sysex Command";
+            return "Send Custom SysEx Command";
         }
     },
 }

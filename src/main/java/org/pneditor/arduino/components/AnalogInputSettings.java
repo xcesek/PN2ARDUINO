@@ -125,9 +125,11 @@ public class AnalogInputSettings extends ArduinoComponentSettings {
                 bottomThreshold = Integer.parseInt (((JTextField) panel.getComponent(7)).getText());
                 upThreshold = Integer.parseInt (((JTextField) panel.getComponent(9)).getText());
                 if(bottomThreshold < 0 ) {
+                    PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 0.", LogEditor.logType.ARDUINO);
                     bottomThreshold = 0;
                 }
                 if(upThreshold > 1023 ) {
+                    PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 1023.", LogEditor.logType.ARDUINO);
                     upThreshold = 1023;
                 }
                 if(bottomThreshold > upThreshold) {

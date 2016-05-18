@@ -95,9 +95,11 @@ public class ServoSettings extends ArduinoComponentSettings {
         try {
             value = Integer.parseInt(((JTextField) panel.getComponent(5)).getText());
             if (value < 0) {
+                PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 0.", LogEditor.logType.ARDUINO);
                 value = 0;
             }
             if (value > 180) {
+                PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 180.", LogEditor.logType.ARDUINO);
                 value = 180;
             }
         } catch (NumberFormatException e) {

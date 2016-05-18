@@ -93,9 +93,11 @@ public class PWMSettings extends ArduinoComponentSettings {
         try {
             value = Integer.parseInt(((JTextField) panel.getComponent(5)).getText());
             if (value < 0) {
+                PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 0.", LogEditor.logType.ARDUINO);
                 value = 0;
             }
             if (value > 255) {
+                PNEditor.getRoot().getLogEditor().log("Unsupported value on pin " + pin + ". Value was set to 255.", LogEditor.logType.ARDUINO);
                 value = 255;
             }
         } catch (NumberFormatException e) {

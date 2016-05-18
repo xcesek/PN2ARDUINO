@@ -56,8 +56,8 @@ import java.util.prefs.Preferences;
  */
 public class RootPflow implements Root, WindowListener, ListSelectionListener, SelectionChangedListener {
 
-    private static final String APP_NAME = "PNEditor";
-    private static final String APP_VERSION = "0.70";
+    private static final String APP_NAME = "PN2ARDUINO";
+    private static final String APP_VERSION = "1";
 
     public RootPflow(String[] args) {
 

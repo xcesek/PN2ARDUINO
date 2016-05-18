@@ -40,9 +40,15 @@ public class DeleteElementCommand implements Command {
             //do nothing
         } else if (element instanceof Place) {
             Place place = (Place) element;
+            if(place.hasArduinoComponent()) {
+                place.getArduinoComponent().freeResources();
+            }
             deleteElement = new DeletePlaceNodeCommand(place);
         } else if (element instanceof TransitionNode) {
             TransitionNode transition = (TransitionNode) element;
+            if(transition.hasArduinoComponent()){
+                transition.getArduinoComponent().freeResources();
+            }
             deleteElement = new DeleteTransitionNodeCommand(transition);
         } else if (element instanceof ReferenceArc) {
             ReferenceArc referenceArc = (ReferenceArc) element;
